@@ -1,0 +1,14 @@
+package ee.ttu.kert.maria.script;
+
+public class GistCreator {
+	
+	private String link;
+	
+	public void run() {
+		
+	}
+
+	public String getLink() {
+		return link;
+	}
+}

@@ -1,0 +1,13 @@
+package ee.ttu.kert.maria.gist;
+
+import java.io.Serializable;
+
+@Entity
+@Data
+public class Gist implements Serializable {
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+}

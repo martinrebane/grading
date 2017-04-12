@@ -1,0 +1,14 @@
+package ee.ttu.kert.maria;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import ee.ttu.kert.maria.script.GistCreator;
+
+@SpringBootApplication
+public class JoopApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(JoopApplication.class, args);
+	}
+}

@@ -1,0 +1,20 @@
+package ee.ttu.kert.maria.gist;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+public class GistController {
+	
+	@Autowired
+	private GistService gistService;
+	
+	@RequestMapping(value = "/login/validate", method = RequestMethod.POST)
+    public String validate(Map<String, Object> model, @ModelAttribute("SpringWeb") Gist gist) {
+        return "redirect:/login/";
+    }
+
+}

@@ -1,0 +1,5 @@
+package gist;
+
+public interface GistRepository {
+
+}
