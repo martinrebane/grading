@@ -13,9 +13,8 @@ public class GistController {
 	private GistService gistService;
 	
 	@RequestMapping(value="/pull", method=RequestMethod.POST, consumes="application/json")
-	public Gist pull() {
-		gistService.createGistLink();
-		return new Gist();
+	public String pull() {
+		return gistService.createGistLink();
 	}
 
 }
