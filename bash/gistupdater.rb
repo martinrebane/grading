@@ -3,6 +3,7 @@
 #esimene argument on update'itava gisti id
 
 files = ''
+#path on lopuks ka argumendina
 path = 'D:/Users/mammu/workspace/ITI0011/maria.kert/EX05/src/ee/ttu/java/albumcreation'
 gist_id = ARGV[0]
 

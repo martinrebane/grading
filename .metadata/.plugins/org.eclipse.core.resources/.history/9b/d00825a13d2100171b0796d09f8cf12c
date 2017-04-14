@@ -11,10 +11,5 @@ public class GistController {
 	
 	@Autowired
 	private GistService gistService;
-	
-	@RequestMapping(value="/pull", method=RequestMethod.POST, consumes="application/json")
-	public void pull() {
-		gistService.createGistLink();
-	}
 
 }

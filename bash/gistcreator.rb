@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 files = ''
+#path on lopuks argumendina
 path = 'D:/Users/mammu/workspace/ITI0011/maria.kert/EX05/src/ee/ttu/java/albumcreation'
 
 Dir.foreach(path) do |file|
