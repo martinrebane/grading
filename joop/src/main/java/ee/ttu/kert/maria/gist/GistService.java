@@ -20,7 +20,12 @@ public class GistService {
 	
 	public Gist saveGist(Gist gist) {
 		//siin käivita gist generator ja salvesta link
-		return gistRepository.save(gist);
+		Gist databaseGist = gistRepository.findByUniIdAndTaskName(gist.getUniId(), gist.getTaskName());
+		if (databaseGist == null) {
+			gist.setGistLink(getGistLink());
+			return gistRepository.save(gist);
+		}
+		return databaseGist;
 	}
 	
 	public Gist getGistById(long gistId) {

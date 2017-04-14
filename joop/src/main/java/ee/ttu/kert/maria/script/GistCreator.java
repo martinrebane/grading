@@ -7,10 +7,11 @@ import java.io.InputStreamReader;
 public class GistCreator {
 	
 	private String link;
+	private static final String PATH = "ruby ../bash/gistcreator.rb";
 	
 	public void run() {
 		try {
-			Process process = Runtime.getRuntime().exec("ruby ../bash/gistcreator.rb");
+			Process process = Runtime.getRuntime().exec(PATH);
 			process.waitFor();
 			
 			BufferedReader processIn = new BufferedReader(new InputStreamReader(process.getInputStream()));

@@ -11,11 +11,5 @@ public class GistController {
 	
 	@Autowired
 	private GistService gistService;
-	
-	@RequestMapping(value="/users/add", method=RequestMethod.POST,
-			consumes = "application/json")
-	public Gist addGist(@RequestBody Gist gist) {
-		return null;
-	}
 
 }
