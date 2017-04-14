@@ -12,17 +12,17 @@ public class GistService {
 	@Autowired
 	GistRepository gistRepository;
 	
-	public String getGistLink() {
+	public String createGistLink() {
 		GistCreator creator = new GistCreator();
-		creator.run();
-		return creator.getLink();
+		return creator.createGistLink();
 	}
 	
 	public Gist saveGist(Gist gist) {
 		//siin käivita gist generator ja salvesta link
 		Gist databaseGist = gistRepository.findByUniIdAndTaskName(gist.getUniId(), gist.getTaskName());
 		if (databaseGist == null) {
-			gist.setGistLink(getGistLink());
+			String link = createGistLink();
+			gist.setGistLink(link);
 			return gistRepository.save(gist);
 		}
 		return databaseGist;

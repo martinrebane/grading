@@ -6,12 +6,12 @@ import java.io.InputStreamReader;
 
 public class GistCreator {
 	
-	private String link;
-	private static final String PATH = "ruby ../bash/gistcreator.rb";
+	private static final String CREATE_PATH = "ruby ../bash/gistcreator.rb";
+	private static final String UPDATE_PATH = "ruby ../bash/gistupdater.rb";
 	
-	public void run() {
+	public String createGistLink() {
 		try {
-			Process process = Runtime.getRuntime().exec(PATH);
+			Process process = Runtime.getRuntime().exec(CREATE_PATH);
 			process.waitFor();
 			
 			BufferedReader processIn = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -19,7 +19,7 @@ public class GistCreator {
 			String line;
 			
 			while ((line = processIn.readLine()) != null) {
-                link = line;
+                return line;
             }
 		} catch (IOException e) {
 			System.out.println("IOException");
@@ -30,9 +30,23 @@ public class GistCreator {
 		} catch (Exception e) {
 			System.out.println("Other exception");
 		}
+		return null;
 	}
-
-	public String getLink() {
-		return link;
+	
+	public void updateGist(String gistId) {
+		try {
+			String command = UPDATE_PATH + " " + gistId;
+			Process process = Runtime.getRuntime().exec(command);
+			process.waitFor();
+			
+		} catch (IOException e) {
+			System.out.println("IOException");
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			System.out.println("Interrputed");
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("Other exception");
+		}
 	}
 }
