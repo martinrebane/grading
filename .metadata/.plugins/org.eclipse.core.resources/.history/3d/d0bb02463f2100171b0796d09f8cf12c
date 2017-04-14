@@ -17,4 +17,5 @@ public class GistController {
 		gistService.createGistLink();
 		return new Gist();
 	}
+
 }
