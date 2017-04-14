@@ -35,4 +35,5 @@ public class GistService {
 	public Iterable<Gist> getAllStudentGists(String uniId) {
         return gistRepository.findByUniId(uniId);
     }
+
 }

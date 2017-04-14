@@ -14,7 +14,8 @@ public class GistService {
 	
 	public String createGistLink() {
 		GistCreator creator = new GistCreator();
-		return creator.createGistLink();
+		creator.run();
+		return creator.getLink();
 	}
 	
 	public Gist saveGist(Gist gist) {
@@ -35,4 +36,5 @@ public class GistService {
 	public Iterable<Gist> getAllStudentGists(String uniId) {
         return gistRepository.findByUniId(uniId);
     }
+
 }

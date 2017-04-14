@@ -6,3 +6,6 @@
 1491993410310	Delete element
 1491993747933	Delete element
 1491997632174	Encapsulate field 'link'
+1492181675744	Rename method 'getGistLink'
+1492183069915	Rename method 'run'
+1492183178433	Rename field 'PATH'
