@@ -2,11 +2,8 @@ package ee.ttu.kert.maria.gist;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 public class GistController {
@@ -15,7 +12,7 @@ public class GistController {
 	private GistService gistService;
 	
 	@RequestMapping(value="/pull", method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody Gist pull() {
+	public Gist pull() {
 		gistService.createGistLink();
 		return new Gist();
 	}
