@@ -19,9 +19,9 @@ public class GistController {
 	@RequestMapping(value="/pull", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody Gist pull() {
 		try {
-			String[] env = {"PATH=C:/WINDOWS/system32/cmd.exe"};
+			String[] command = {"PATH=C:/WINDOWS/system32/cmd.exe"};
 			String cmd = "../bash/testinghook.sh";
-			Process process = Runtime.getRuntime().exec(cmd, env);
+			Process process = Runtime.getRuntime().exec(command);
 			process.waitFor();
 			
 			BufferedReader processIn = new BufferedReader(new InputStreamReader(process.getInputStream()));
