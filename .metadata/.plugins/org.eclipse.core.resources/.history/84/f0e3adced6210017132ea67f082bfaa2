@@ -21,7 +21,7 @@ public class GistController {
 		try {
 			String[] env = {"PATH=C:/WINDOWS/system32/cmd.exe"};
 			String cmd = "cmd /c start ../bash/testinghook.sh";
-			Process process = Runtime.getRuntime().exec(cmd);
+			Process process = new ProcessBuilder(cmd).start();
 			process.waitFor();
 			
 			BufferedReader processIn = new BufferedReader(new InputStreamReader(process.getInputStream()));
