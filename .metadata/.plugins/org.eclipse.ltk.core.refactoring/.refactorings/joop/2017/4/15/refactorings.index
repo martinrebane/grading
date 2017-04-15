@@ -9,3 +9,4 @@
 1492181675744	Rename method 'getGistLink'
 1492183069915	Rename method 'run'
 1492183178433	Rename field 'PATH'
+1492257439709	Rename local variable 'command'
