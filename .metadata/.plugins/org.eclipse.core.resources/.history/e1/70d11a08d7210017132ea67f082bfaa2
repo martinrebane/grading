@@ -16,12 +16,11 @@ public class GistController {
 	@Autowired
 	private GistService gistService;
 	
-	private static final String COMMAND = "cmd /c start ../bash/testinghook.sh";
-	
 	@RequestMapping(value="/pull", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody Gist pull() {
 		try {
-			Process process = Runtime.getRuntime().exec(COMMAND);
+			String cmd = "cmd /c start ../bash/testinghook.sh";
+			Process process = Runtime.getRuntime().exec(cmd);
 			process.waitFor();
 			
 			BufferedReader processIn = new BufferedReader(new InputStreamReader(process.getInputStream()));
