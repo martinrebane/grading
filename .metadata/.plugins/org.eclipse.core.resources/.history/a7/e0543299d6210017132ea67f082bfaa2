@@ -20,7 +20,7 @@ public class GistController {
 	public @ResponseBody Gist pull() {
 		try {
 			String[] env = {"PATH=C:/WINDOWS/system32/cmd.exe"};
-			String cmd = "cmd /c start ../bash/testinghook.sh";
+			String cmd = "../bash/testinghook.sh";
 			Process process = new ProcessBuilder(cmd).start();
 			process.waitFor();
 			
