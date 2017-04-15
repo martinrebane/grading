@@ -10,3 +10,4 @@
 1492183069915	Rename method 'run'
 1492183178433	Rename field 'PATH'
 1492257439709	Rename local variable 'command'
+1492258271511	Rename local variable 'path'
