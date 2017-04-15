@@ -1,7 +1,6 @@
 package ee.ttu.kert.maria.gist;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +20,7 @@ public class GistController {
 	
 	@RequestMapping(value="/pull", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody Gist pull() {
-		try {
-			BufferedReader reader = request.getReader();
-			String line;
-			
-			while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-			}
-            
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		BufferedReader reader = request.getReader();
 		
 		return new Gist();
 	}
