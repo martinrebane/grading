@@ -18,6 +18,7 @@ public class GistService {
 	}
 	
 	public Gist saveGist(Gist gist) {
+		//siin käivita gist generator ja salvesta link
 		Gist databaseGist = gistRepository.findByUniIdAndTaskName(gist.getUniId(), gist.getTaskName());
 		if (databaseGist == null) {
 			String link = createGistLink();

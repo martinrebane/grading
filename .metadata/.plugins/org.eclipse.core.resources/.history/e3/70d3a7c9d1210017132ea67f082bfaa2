@@ -1,7 +1,5 @@
 package ee.ttu.kert.maria.gist;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,20 +14,7 @@ public class GistController {
 	
 	@RequestMapping(value="/pull", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody Gist pull() {
-		try {
-			String command = "../bash/testinghook";
-			Process process = Runtime.getRuntime().exec(command);
-			process.waitFor();
-			
-		} catch (IOException e) {
-			System.out.println("IOException");
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			System.out.println("Interrputed");
-			e.printStackTrace();
-		} catch (Exception e) {
-			System.out.println("Other exception");
-		}
+		gistService.createGistLink();
 		return new Gist();
 	}
 }
