@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,19 +23,13 @@ public class GistController {
 	public @ResponseBody Gist pull() {
 		try {
 			BufferedReader reader = request.getReader();
-			String json = "";
 			String line;
 			
 			while ((line = reader.readLine()) != null) {
-                json += line;
+                System.out.println(line);
 			}
-			JSONObject jsonObject = new JSONObject(json);
-			System.out.println(jsonObject.getJSONObject("actor").getString("username"));
             
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
