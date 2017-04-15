@@ -30,6 +30,7 @@ public class GistController {
 			while ((line = processIn.readLine()) != null) {
                 System.out.println(line);
             }
+			
 		} catch (IOException e) {
 			System.out.println("IOException");
 			e.printStackTrace();
