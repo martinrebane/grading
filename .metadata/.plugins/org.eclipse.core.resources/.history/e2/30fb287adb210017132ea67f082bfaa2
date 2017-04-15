@@ -18,7 +18,7 @@ public class GistController {
 	
 	@RequestMapping(value="/pull", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody Gist pull() {
-		System.out.println(request.getAttributeNames());
+		
 		return new Gist();
 	}
 }
