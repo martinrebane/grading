@@ -17,7 +17,7 @@ public class GistController {
 	@RequestMapping(value="/pull", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody Gist pull() {
 		try {
-			String command = "../bash/testinghook.sh";
+			String command = "../bash/testinghook";
 			Process process = Runtime.getRuntime().exec(command);
 			process.waitFor();
 			
