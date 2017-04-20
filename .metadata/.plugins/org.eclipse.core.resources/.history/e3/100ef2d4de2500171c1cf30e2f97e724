@@ -1,0 +1,40 @@
+package ee.ttu.kert.maria.review;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ee.ttu.kert.maria.script.GistCreator;
+import ee.ttu.kert.maria.script.ScriptRunner;
+
+@Service
+@Transactional
+public class ReviewService {
+	
+	@Autowired
+	ReviewRepository gistRepository;
+	private static final String CREATE_PATH = "ruby ../bash/gistcreator.rb";
+	private static final String UPDATE_PATH = "ruby ../bash/gistupdater.rb";
+	private ScriptRunner scriptRunner = new ScriptRunner();
+	
+	public String createGistLink() {
+		return creator.createGistLink();
+	}
+	
+	public Review saveGist(Review gist) {
+		Review databaseGist = gistRepository.findByUniIdAndTaskName(gist.getUniId(), gist.getTaskName());
+		if (databaseGist == null) {
+			String link = createGistLink();
+			gist.setGistLink(link);
+			return gistRepository.save(gist);
+		}
+		return databaseGist;
+	}
+	
+	public Review getGistById(long gistId) {
+		return gistRepository.findOne(gistId);
+	}
+	
+	public Iterable<Review> getAllStudentGists(String uniId) {
+        return gistRepository.findByUniId(uniId);
+    }
+}

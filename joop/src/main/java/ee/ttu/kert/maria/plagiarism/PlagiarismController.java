@@ -1,0 +1,8 @@
+package ee.ttu.kert.maria.plagiarism;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class PlagiarismController {
+
+}

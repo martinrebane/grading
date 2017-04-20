@@ -1,8 +1,0 @@
-package ee.ttu.kert.maria.gist;
-
-public class GistController {
-	
-	@Autowired
-	private GistService gistService;
-
-}

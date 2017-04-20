@@ -1,0 +1,8 @@
+package ee.ttu.kert.maria.git;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class GitController {
+
+}
