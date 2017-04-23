@@ -1,5 +1,0 @@
-package ee.ttu.kert.maria.gist;
-
-public interface GistRepository {
-
-}

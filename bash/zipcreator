@@ -1,0 +1,1 @@
+jar -cMf /path/to/targetArchive.zip sourceDirectory

@@ -3,7 +3,6 @@ package ee.ttu.kert.maria.review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ee.ttu.kert.maria.script.GistCreator;
 import ee.ttu.kert.maria.script.ScriptRunner;
 
 @Service
