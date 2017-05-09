@@ -16,6 +16,7 @@ public class ReviewService {
 	private static final String CREATE_PATH = "ruby ../bash/gistcreator.rb";
 	private static final String UPDATE_PATH = "ruby ../bash/gistupdater.rb";
 	private ScriptRunner scriptRunner = new ScriptRunner();
+	private static final String REPO_PATH = "D:/Users/mammu/workspace/loputoo/repod/";
 
 	public String createReviewLink() {
 		return scriptRunner.run(CREATE_PATH);
@@ -30,17 +31,17 @@ public class ReviewService {
 		Review databaseReview = reviewRepository.findByUniIdAndTaskName(review.getUniId(), review.getTaskName());
 		if (databaseReview == null) {
 			String link = createReviewLink();
-			review.setGistLink(link);
+			review.setReviewLink(link);
 			return reviewRepository.save(review);
 		}
 		return databaseReview;
 	}
 
-	public Review getReviewById(long gistId) {
-		return reviewRepository.findOne(gistId);
+	public Review getReviewById(long reviewID) {
+		return reviewRepository.findOne(reviewID);
 	}
 
-	public Iterable<Review> getAllStudentGists(String uniId) {
+	public Iterable<Review> getAllStudentReviews(String uniId) {
 		return reviewRepository.findByUniId(uniId);
 	}
 }

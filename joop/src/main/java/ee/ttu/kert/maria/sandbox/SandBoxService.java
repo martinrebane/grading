@@ -24,5 +24,13 @@ public class SandBoxService {
 		System.out.println(classPath + " " + mainFile);*/
 		return mainPath;
 	}
+	
+	public SandBox save(SandBox sandBox) {
+		return sandBoxRepository.save(sandBox);
+	}
+	
+	public SandBox getSandBoxById(long id) {
+		return sandBoxRepository.findOne(id);
+	}
 
 }

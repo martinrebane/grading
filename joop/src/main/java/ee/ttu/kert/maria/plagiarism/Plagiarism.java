@@ -1,21 +1,27 @@
 package ee.ttu.kert.maria.plagiarism;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import ee.ttu.kert.maria.entities.Task;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class Plagiarism implements Serializable {
+public class Plagiarism {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+	
+	private String result;
+	
+	@OneToOne
+	private Task task;
 
 }

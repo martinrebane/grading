@@ -5,18 +5,38 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileReader {
 	
 	private File startFolder;
+	private List<File> files;
 
 	public FileReader(String path) {
 		startFolder = new File(path);
+		files = new ArrayList<>();
 	}
 	
 	public String getMain() {
 		return getMain(startFolder);
+	}
+	
+	public List<File> getAllFiles() {
+		return getAllFiles(startFolder);
+	}
+	
+	private List<File> getAllFiles(File folder) {
+		File[] listOfFiles = folder.listFiles();
+		
+		for (File file : listOfFiles) {
+			if (file.isFile()) {
+				files.add(file);
+			} else {
+				return getAllFiles(file);
+			}
+		}
+		return files;
 	}
 
 	private String getMain(File folder) {
