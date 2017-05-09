@@ -1,18 +1,6 @@
 package ee.ttu.kert.maria;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ws.rs.core.MediaType;
-
-import org.eclipse.egit.github.core.Authorization;
-import org.eclipse.egit.github.core.Gist;
-import org.eclipse.egit.github.core.GistFile;
-import org.eclipse.egit.github.core.client.GitHubClient;
-import org.eclipse.egit.github.core.service.GistService;
-import org.eclipse.egit.github.core.service.OAuthService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.sun.jersey.api.client.Client;
@@ -21,6 +9,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 import ee.ttu.kert.maria.helpers.FileReader;
+import ee.ttu.kert.maria.review.ReviewService;
 import ee.ttu.kert.maria.sandbox.SandBoxService;
 
 @SpringBootApplication
@@ -35,7 +24,9 @@ public class JoopApplication {
 		System.out.println(reader.getMain());
 		SandBoxService service = new SandBoxService();
 		service.getMainPath("maria.kert/EX05/src/");
-		createGist();
+		ReviewService reviewService = new ReviewService();
+		//System.out.println(reviewService.createReviewLink());
+		reviewService.updateReview("51b8b0b76733777a660591bdf371b472");
 	}
 	
 	public static ClientResponse sendSimpleMessage() {
@@ -51,53 +42,4 @@ public class JoopApplication {
         return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
                 post(ClientResponse.class, formData);
     }
-	
-	public static void createGist() {
-		GitHubClient client = new GitHubClient();
-		client.setCredentials("mariakert", "Parool123");
-		OAuthService oauthService = new OAuthService(client);
-
-		// Replace with actual login and password
-		//oauthService.getClient().setCredentials("mariakert", "Parool123");
-
-		// Create authorization with 'gist' scope only
-		Authorization auth = new Authorization();
-		auth.setScopes(Arrays.asList("gist"));
-		
-		//VÄGA OLULINE - see peab erinev olema ka iga kord, panna mingi random string generator külge
-		auth.setNote("note2");
-		try {
-			auth = oauthService.createAuthorization(auth);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		// Create Gist service configured with OAuth2 token
-		GistService gistService = new GistService(client);
-		gistService.getClient().setOAuth2Token(auth.getToken());
-
-		// Create Gist
-		Gist gist = new Gist();
-		gist.setPublic(false);
-		gist.setDescription("Created using WOAuth2 token via Java API");
-		GistFile file = new GistFile();
-		Map<String, GistFile> map = new HashMap<>();
-		file.setContent("Gist!");
-		file.setFilename("gist.txt");
-		map.put(file.getFilename(), file);
-		
-		GistFile file2 = new GistFile();
-		file2.setContent("Gist!");
-		file2.setFilename("gist2.txt");
-		map.put(file2.getFilename(), file2);
-		gist.setFiles(map);
-		try {
-			gist = gistService.createGist(gist);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("Created Gist at " + gist.getHtmlUrl());
-	}
 }
