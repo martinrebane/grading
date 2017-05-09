@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,8 +20,8 @@ public class GitController {
 	@Autowired
 	private HttpServletRequest request;
 	
-	@RequestMapping(value="/{uniid}/pull", method=RequestMethod.GET, consumes="application/json")
-	public @ResponseBody Review pull() {
+	@RequestMapping(value="/git/{uniid}/pull", method=RequestMethod.GET, consumes="application/json")
+	public @ResponseBody Review pull(@PathVariable String uniid) {
 		try {
 			BufferedReader reader = request.getReader();
 			String json = "";

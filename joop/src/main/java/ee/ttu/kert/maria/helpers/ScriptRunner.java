@@ -1,4 +1,4 @@
-package ee.ttu.kert.maria.script;
+package ee.ttu.kert.maria.helpers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
