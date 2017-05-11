@@ -1,0 +1,8 @@
+package snippet;
+
+public class Snippet {
+	public static void main(String[] args) {
+		4.7.0.201704051617-r
+	}
+}
+

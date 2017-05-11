@@ -14,9 +14,9 @@ public class ReviewService {
 	@Autowired
 	ReviewRepository reviewRepository;
 
-	private static final String CREATE_PATH = "ruby ../bash/gistcreator.rb";
+	/*private static final String CREATE_PATH = "ruby ../bash/gistcreator.rb";
 	private static final String UPDATE_PATH = "ruby ../bash/gistupdater.rb";
-	private ScriptRunner scriptRunner = new ScriptRunner();
+	private ScriptRunner scriptRunner = new ScriptRunner();*/
 	private static final String REPO_PATH = "D:/Users/mammu/workspace/loputoo/repod/";
 	private GistClient gistClient = new GistClient(REPO_PATH + "maria.kert/EX05/src/");
 

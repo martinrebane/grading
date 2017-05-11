@@ -1,0 +1,5 @@
+package ee.ttu.kert.maria.helpers;
+
+public class GistClient {
+
+}

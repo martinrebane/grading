@@ -1,0 +1,7 @@
+1494256889948	Rename package 'ee.ttu.kert.maria.script'
+1494324870863	Rename method 'getGistById'
+1494324880992	Rename local variable 'gist'
+1494324894240	Rename method 'saveGist'
+1494324947585	Rename local variable 'databaseGist'
+1494345172760	Rename local variable 'repoPath'
+1494488853038	Rename method 'sendSimpleMessage'

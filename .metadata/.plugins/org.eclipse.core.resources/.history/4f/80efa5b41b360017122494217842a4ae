@@ -1,0 +1,7 @@
+package ee.ttu.kert.maria.helpers;
+
+public class MailClient {
+	
+	private static final String API_KEY = "key-530340de58ee7be39a1358ae50b0d786";
+
+}

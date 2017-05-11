@@ -1,22 +1,21 @@
 package ee.ttu.kert.maria;
 
-import javax.ws.rs.core.MediaType;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
 import ee.ttu.kert.maria.helpers.FileReader;
+import ee.ttu.kert.maria.helpers.MailClient;
+import ee.ttu.kert.maria.helpers.ScriptRunner;
 import ee.ttu.kert.maria.review.ReviewService;
 import ee.ttu.kert.maria.sandbox.SandBoxService;
 
 @SpringBootApplication
 public class JoopApplication {
 	
+	//D:\\Program Files\\Git\\git-bash.exe
+	
 	static String path = "D:/Users/mammu/workspace/ITI0011/maria.kert/EX05/src/";
-	private static final String API_KEY = "key-530340de58ee7be39a1358ae50b0d786";
+	private static final String COMMAND = "cmd /c start ../bash/hashcreator.sh " + path;
+	private static final String COMMAND2 = "sh ../bash/zipcreator.sh EX05 agnes.kivistik";
 
 	public static void main(String[] args) {
 		//SpringApplication.run(JoopApplication.class, args);
@@ -26,20 +25,15 @@ public class JoopApplication {
 		service.getMainPath("maria.kert/EX05/src/");
 		ReviewService reviewService = new ReviewService();
 		//System.out.println(reviewService.createReviewLink());
-		reviewService.updateReview("51b8b0b76733777a660591bdf371b472");
+		//reviewService.updateReview("51b8b0b76733777a660591bdf371b472");
+		/*MailClient client = new MailClient();
+		client.setUniid("maria.kert");
+		client.setReviewLink("https://gist.github.com/mariakert/51b8b0b76733777a660591bdf371b472");
+		client.sendEmail();*/
+		
+		ScriptRunner runner = new ScriptRunner();
+		//selle käivitab windowsi cmd-ga ning üritab selle find käsku kasutada
+		runner.run(COMMAND);
+		//runner.run(COMMAND2);
 	}
-	
-	public static ClientResponse sendSimpleMessage() {
-        Client client = Client.create();
-        client.addFilter(new HTTPBasicAuthFilter("api", API_KEY));
-        WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +
-                "e0324f65ae848f4bc645132e.mailgun.org/messages");
-        MultivaluedMapImpl formData = new MultivaluedMapImpl();
-        formData.add("from", "Mailgun Sandbox <postmaster@sandbox040c037ae0324f65ae848f4bc645132e.mailgun.org>");
-        formData.add("to", "Maria Kert <kertmaria@gmail.com>");
-        formData.add("subject", "Hello Maria Kert");
-        formData.add("text", "Congratulations Maria Kert, you just sent an email with Mailgun!  You are truly awesome!");
-        return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
-                post(ClientResponse.class, formData);
-    }
 }

@@ -1,0 +1,102 @@
+package ee.ttu.kert.maria.helpers;
+
+import java.io.File;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.eclipse.egit.github.core.Authorization;
+import org.eclipse.egit.github.core.Gist;
+import org.eclipse.egit.github.core.GistFile;
+import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.service.GistService;
+import org.eclipse.egit.github.core.service.OAuthService;
+
+public class GistClient {
+	
+	private GitHubClient client;
+	private static final String USER = "mariakert";
+	private static final String PASS = "Parool123";
+	private FileReader reader;
+	private SecureRandom secureRandom;
+	
+	public GistClient(String taskPath) {
+		client = new GitHubClient();
+		client.setCredentials(USER, PASS);
+		reader = new FileReader(taskPath);
+		secureRandom = new SecureRandom();
+	}
+	
+	public void createGist() {
+		OAuthService oauthService = new OAuthService(client);
+
+		// Replace with actual login and password
+		//oauthService.getClient().setCredentials("mariakert", "Parool123");
+
+		// Create authorization with 'gist' scope only
+		Authorization auth = new Authorization();
+		auth.setScopes(Arrays.asList("gist"));
+		
+		//VÄGA OLULINE - see peab erinev olema ka iga kord, panna mingi random string generator külge
+		auth.setNote("note2");
+		try {
+			auth = oauthService.createAuthorization(auth);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		// Create Gist service configured with OAuth2 token
+		GistService gistService = new GistService(client);
+		gistService.getClient().setOAuth2Token(auth.getToken());
+
+		// Create Gist
+		Gist gist = new Gist();
+		gist.setPublic(false);
+		gist.setDescription("Created using WOAuth2 token via Java API");
+		GistFile file = new GistFile();
+		Map<String, GistFile> map = new HashMap<>();
+		file.setContent("Gist!");
+		file.setFilename("gist.txt");
+		map.put(file.getFilename(), file);
+		
+		GistFile file2 = new GistFile();
+		file2.setContent("Gist!");
+		file2.setFilename("gist2.txt");
+		map.put(file2.getFilename(), file2);
+		gist.setFiles(map);
+		try {
+			gist = gistService.createGist(gist);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Created Gist at " + gist.getHtmlUrl());
+	}
+	
+	private Map<String, GistFile> addAllFiles() {
+		List<File> files = reader.getAllFiles();
+		Map<String, GistFile> fileMap = new HashMap<>();
+		
+		files.forEach(file -> {
+			String content = reader.read(file);
+			GistFile gistFile = new GistFile();
+			gistFile.setFilename(file.getName());
+			gistFile.setContent(content);
+			fileMap.put(file.getName(), gistFile);
+		});
+		return fileMap;
+	}
+	
+	private String getRandomString() {
+		return new BigInteger(130, secureRandom).toString(32);
+	}
+	
+	private Authorization getAuthorization() {
+		
+	}
+
+}
