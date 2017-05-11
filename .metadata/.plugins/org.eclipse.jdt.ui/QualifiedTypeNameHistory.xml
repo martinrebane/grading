@@ -35,4 +35,6 @@
 <fullyQualifiedTypeName name="lombok.Getter"/>
 <fullyQualifiedTypeName name="javax.persistence.Entity"/>
 <fullyQualifiedTypeName name="lombok.Setter"/>
+<fullyQualifiedTypeName name="ee.ttu.kert.maria.helpers.MailClient"/>
+<fullyQualifiedTypeName name="ee.ttu.kert.maria.helpers.ScriptRunner"/>
 </qualifiedTypeNameHistroy>

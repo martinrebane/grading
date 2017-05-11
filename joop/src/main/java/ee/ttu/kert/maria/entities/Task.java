@@ -27,7 +27,7 @@ public class Task {
 	private String subjectCode;
 	
 	@OneToMany(mappedBy="task", cascade=CascadeType.ALL)
-	private List<Submission> submissions;
+	private List<StudentTask> studentTasks;
 	
 	@OneToOne(mappedBy="task", cascade=CascadeType.ALL)
 	private Plagiarism plagiarism;

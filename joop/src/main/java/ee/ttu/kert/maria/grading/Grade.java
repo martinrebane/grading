@@ -1,15 +1,11 @@
 package ee.ttu.kert.maria.grading;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import ee.ttu.kert.maria.entities.Submission;
+import javax.persistence.OneToOne;
+import ee.ttu.kert.maria.entities.StudentTask;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +20,7 @@ public class Grade {
 	
 	private double grade;
 	
-	@OneToMany(mappedBy="grade", cascade=CascadeType.ALL)
-	private List<Submission> submissions;
+	@OneToOne
+	private StudentTask studentTask;
 
 }

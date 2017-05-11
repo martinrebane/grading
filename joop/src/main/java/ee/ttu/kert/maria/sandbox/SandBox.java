@@ -24,7 +24,7 @@ public class SandBox {
 	
 	private String stderr;
 	
-	@OneToOne(mappedBy="sandbox", cascade=CascadeType.ALL)
+	@OneToOne(mappedBy="sandBox", cascade=CascadeType.ALL)
 	private Submission submission;
 
 }

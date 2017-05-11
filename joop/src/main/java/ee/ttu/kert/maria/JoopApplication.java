@@ -2,6 +2,8 @@ package ee.ttu.kert.maria;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import ee.ttu.kert.maria.entities.Submission;
 import ee.ttu.kert.maria.helpers.FileReader;
 import ee.ttu.kert.maria.helpers.MailClient;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
@@ -13,13 +15,13 @@ public class JoopApplication {
 	
 	//D:\\Program Files\\Git\\git-bash.exe
 	
-	static String path = "D:/Users/mammu/workspace/ITI0011/maria.kert/EX05/src/";
+	/*static String path = "D:/Users/mammu/workspace/ITI0011/maria.kert/EX05/src/";
 	private static final String COMMAND = "cmd /c start ../bash/hashcreator.sh " + path;
-	private static final String COMMAND2 = "sh ../bash/zipcreator.sh EX05 agnes.kivistik";
+	private static final String COMMAND2 = "sh ../bash/zipcreator.sh EX05 agnes.kivistik";*/
 
 	public static void main(String[] args) {
-		//SpringApplication.run(JoopApplication.class, args);
-		FileReader reader = new FileReader(path);
+		SpringApplication.run(JoopApplication.class, args);
+		/*FileReader reader = new FileReader(path);
 		System.out.println(reader.getMain());
 		SandBoxService service = new SandBoxService();
 		service.getMainPath("maria.kert/EX05/src/");
@@ -31,9 +33,11 @@ public class JoopApplication {
 		client.setReviewLink("https://gist.github.com/mariakert/51b8b0b76733777a660591bdf371b472");
 		client.sendEmail();*/
 		
-		ScriptRunner runner = new ScriptRunner();
+		/*ScriptRunner runner = new ScriptRunner();
 		//selle käivitab windowsi cmd-ga ning üritab selle find käsku kasutada
 		runner.run(COMMAND);
-		//runner.run(COMMAND2);
+		//runner.run(COMMAND2);*/
+		
+		//Submission submission = new Submission();
 	}
 }

@@ -1,13 +1,13 @@
 package ee.ttu.kert.maria.entities;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import ee.ttu.kert.maria.grading.Grade;
-import ee.ttu.kert.maria.review.Review;
 import ee.ttu.kert.maria.sandbox.SandBox;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,18 +21,16 @@ public class Submission {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	private String uniid;
+	private String date;
 	
 	@ManyToOne
-	private Task task;
+	private StudentTask studentTask;
 	
 	@OneToOne
 	private SandBox sandBox;
 	
-	@OneToOne
-	private Review review;
-	
-	@ManyToOne
-	private Grade grade;
-
+	public Submission() {
+		LocalDateTime localDateTime = LocalDateTime.now();
+		date = localDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+	}
 }

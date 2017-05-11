@@ -1,15 +1,11 @@
 package ee.ttu.kert.maria.review;
 
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import ee.ttu.kert.maria.entities.Submission;
+import ee.ttu.kert.maria.entities.StudentTask;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,7 +24,7 @@ public class Review {
 	
 	private String reviewLink;
 	
-	@OneToOne(mappedBy="review", cascade = CascadeType.ALL)
-	private Submission submission;
+	@OneToOne
+	private StudentTask studentTask;
 
 }
