@@ -1,4 +1,4 @@
-package ee.ttu.kert.maria.entities;
+package ee.ttu.kert.maria.submission;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import ee.ttu.kert.maria.sandbox.SandBox;
+import ee.ttu.kert.maria.studenttask.StudentTask;
 import lombok.Getter;
 import lombok.Setter;
 

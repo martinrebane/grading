@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-import ee.ttu.kert.maria.entities.Task;
+import ee.ttu.kert.maria.task.Task;
 import lombok.Getter;
 import lombok.Setter;
 

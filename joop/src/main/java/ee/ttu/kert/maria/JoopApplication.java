@@ -3,27 +3,27 @@ package ee.ttu.kert.maria;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import ee.ttu.kert.maria.entities.Submission;
 import ee.ttu.kert.maria.helpers.FileReader;
-import ee.ttu.kert.maria.helpers.MailClient;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 import ee.ttu.kert.maria.review.ReviewService;
 import ee.ttu.kert.maria.sandbox.SandBoxService;
+import ee.ttu.kert.maria.submission.Submission;
 
 @SpringBootApplication
 public class JoopApplication {
 	
 	//D:\\Program Files\\Git\\git-bash.exe
 	
-	/*static String path = "D:/Users/mammu/workspace/ITI0011/maria.kert/EX05/src/";
-	private static final String COMMAND = "cmd /c start ../bash/hashcreator.sh " + path;
+	//static String path = "D:/Users/mammu/workspace/ITI0011/maria.kert/EX05/src/";
+	//static String path = "D:/Users/mammu/workspace/loputoo/loputoo/joop/src/";
+	/*private static final String COMMAND = "cmd /c start ../bash/hashcreator.sh " + path;
 	private static final String COMMAND2 = "sh ../bash/zipcreator.sh EX05 agnes.kivistik";*/
 
 	public static void main(String[] args) {
-		SpringApplication.run(JoopApplication.class, args);
+		//SpringApplication.run(JoopApplication.class, args);
 		/*FileReader reader = new FileReader(path);
 		System.out.println(reader.getMain());
-		SandBoxService service = new SandBoxService();
+		/*SandBoxService service = new SandBoxService();
 		service.getMainPath("maria.kert/EX05/src/");
 		ReviewService reviewService = new ReviewService();
 		//System.out.println(reviewService.createReviewLink());

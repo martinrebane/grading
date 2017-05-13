@@ -1,4 +1,4 @@
-package ee.ttu.kert.maria.entities;
+package ee.ttu.kert.maria.studenttask;
 
 import java.util.List;
 
@@ -10,8 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
 import ee.ttu.kert.maria.grading.Grade;
 import ee.ttu.kert.maria.review.Review;
+import ee.ttu.kert.maria.submission.Submission;
+import ee.ttu.kert.maria.task.Task;
 import lombok.Getter;
 import lombok.Setter;
 

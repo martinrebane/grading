@@ -1,4 +1,4 @@
-package ee.ttu.kert.maria.helpers;
+package ee.ttu.kert.maria.mail;
 
 import javax.ws.rs.core.MediaType;
 
@@ -8,14 +8,20 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
-public class MailClient {
+public class MailGunService implements MailService{
 	
 	private static final String API_KEY = "key-530340de58ee7be39a1358ae50b0d786";
 	private String uniid;
 	private String reviewLink;
 	private String subject = "JOOP tagasiside";
 	
-	public ClientResponse sendEmail() {
+	@Override
+	public void sendFeedback(String uniid, String reviewLink) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private ClientResponse sendEmail() {
         Client client = Client.create();
         client.addFilter(new HTTPBasicAuthFilter("api", API_KEY));
         WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +

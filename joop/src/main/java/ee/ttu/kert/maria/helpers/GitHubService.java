@@ -15,7 +15,7 @@ import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.GistService;
 import org.eclipse.egit.github.core.service.OAuthService;
 
-public class GistClient {
+public class GitHubService {
 	
 	private GitHubClient client;
 	private static final String USER = "mariakert";
@@ -23,7 +23,7 @@ public class GistClient {
 	private FileReader reader;
 	private SecureRandom secureRandom;
 	
-	public GistClient(String taskPath) {
+	public GitHubService(String taskPath) {
 		client = new GitHubClient();
 		client.setCredentials(USER, PASS);
 		reader = new FileReader(taskPath);

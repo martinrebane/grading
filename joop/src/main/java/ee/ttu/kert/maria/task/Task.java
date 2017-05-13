@@ -1,4 +1,4 @@
-package ee.ttu.kert.maria.entities;
+package ee.ttu.kert.maria.task;
 
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import ee.ttu.kert.maria.plagiarism.Plagiarism;
+import ee.ttu.kert.maria.studenttask.StudentTask;
 import lombok.Getter;
 import lombok.Setter;
 

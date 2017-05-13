@@ -89,8 +89,8 @@ public class FileReader {
 		String result;
 		try {
 			List<String> lines = Files.readAllLines(filePath);
-			result = lines.stream().filter(line -> line.contains("public static void main(String[] args)")).findAny()
-					.orElse(null);
+			result = lines.stream().filter(line -> line.trim().startsWith("public static void main(String[] args)"))
+					.findAny().orElse(null);
 
 			if (result == null) {
 				return false;

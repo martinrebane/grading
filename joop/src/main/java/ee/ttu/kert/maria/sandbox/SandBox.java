@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-import ee.ttu.kert.maria.entities.Submission;
+import ee.ttu.kert.maria.submission.Submission;
 import lombok.Getter;
 import lombok.Setter;
 
