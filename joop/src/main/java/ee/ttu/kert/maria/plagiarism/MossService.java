@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ee.ttu.kert.maria.configuration.Configuration;
+import ee.ttu.kert.maria.helpers.FileReader;
+import ee.ttu.kert.maria.helpers.ScriptRunner;
 import it.zielke.moji.MossException;
 import it.zielke.moji.SocketClient;
 
@@ -23,7 +27,9 @@ public class MossService implements PlagiarismService {
 	private PlagiarismRepository plagiarismRepository;
 	
 	private static final String PLAGIARISM_PATH = Configuration.getPlagiarismPath();
+	private static final String REPO_PATH = Configuration.getRepoPath();
 	private static final String MOSS_USERID = Configuration.getMossUserid();
+	private static final String COPY_SCRIPT_PATH = "../bash/copyfiles.sh";
 
 	@Override
 	public String run(String taskName) {
@@ -37,6 +43,7 @@ public class MossService implements PlagiarismService {
 			for (File file : studentFiles) {
 				client.uploadFile(file);
 			}
+			client.sendQuery();
 			URL results = client.getResultURL();
 			return results.toString();
 		} catch (MossException e) {
@@ -52,4 +59,32 @@ public class MossService implements PlagiarismService {
 		return null;
 	}
 
+	@Override
+	public void transferFiles(String uniid, String taskName) {
+		String projectPath = REPO_PATH + uniid + "/" + taskName + "/src/";
+		String destPath = PLAGIARISM_PATH + taskName + "/" + uniid + "/";
+		
+		FileReader reader = new FileReader(projectPath);
+		List<File> files = reader.getAllFiles();
+		ScriptRunner scriptRunner = new ScriptRunner();
+		List<String> folderPaths = new ArrayList<>();
+		
+		for (File file : files) {
+			String fullPath = file.getAbsolutePath();
+			String folderPath = fullPath.substring(0, fullPath.lastIndexOf("\\") + 1).replaceAll("\\\\", "/");
+			if (!folderPaths.contains(folderPath)) {
+				folderPaths.add(folderPath);
+			}
+		}
+		
+		for (String folderPath : folderPaths) {
+			System.out.println(folderPath);
+			String[] command = {"cmd", "/c", "start", COPY_SCRIPT_PATH, folderPath, destPath};
+			System.out.println(scriptRunner.run(command));
+		}
+	}
+	
+	public Plagiarism save(Plagiarism plagiarism) {
+		return plagiarismRepository.save(plagiarism);
+	}
 }
