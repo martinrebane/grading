@@ -1,22 +1,21 @@
 #!/bin/bash
 
-path=$1
-hashpath="D:/Users/mammu/workspace/loputoo/hashes" 
+projectpath=$1
+hashpath=$2 #"D:/Users/mammu/workspace/loputoo/hashes"
+echo $hashpath
 
-cd $path
+cd $projectpath
 
 #D:/Users/mammu/workspace/ITI0011/maria.kert/EX05/src/
-
 #find $path -type f -print0 | xargs -0 sha1sum
-
-value="$(find $path -type f -print0 | xargs -0 sha1sum)"
 #value=`find $path -type f -print0 | xargs -0 sha1sum`
-
 #echo "${value}"
 #echo $value
 
+value="$(find $projectpath -type f -print0 | xargs -0 sha1sum)"
 #see on ilmselt vajalik ainult windowsis testimiseks, kui just ei tahagi, et ta hashi faili kirjutaks
-folders=$(echo $path | tr "/" "\n")
+echo $value
+folders=$(echo $projectpath | tr "/" "\n")
 taskfolder=""
 uniid=""
 
@@ -39,6 +38,7 @@ do
 done
 
 target="$hashpath/$uniid"
+echo $target
 
 mkdir -p $target
 

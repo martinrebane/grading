@@ -2,6 +2,10 @@ package ee.ttu.kert.maria.git;
 
 public interface VersionControlService {
 	
-	public void pull();
+	public String pull(String uniid, String subjectCode);
+	
+	public String getHash(String uniid, String taskName);
+	
+	public String createHash(String uniid, String taskname);
 
 }

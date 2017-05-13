@@ -2,9 +2,7 @@ package ee.ttu.kert.maria.git;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,16 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ee.ttu.kert.maria.review.Review;
-
 @Controller
 public class GitController {
 	
 	@Autowired
 	private HttpServletRequest request;
 	
-	@RequestMapping(value="/git/{uniid}/pull", method=RequestMethod.GET, consumes="application/json")
-	public @ResponseBody Review pull(@PathVariable String uniid) {
+	@Autowired
+	private GitService gitService;
+	
+	@RequestMapping(value="/git/pull/{subjectCode}/{uniid}/", method=RequestMethod.GET, consumes="application/json")
+	public @ResponseBody String pull(@PathVariable String uniid, @PathVariable String subjectCode) {
 		try {
 			BufferedReader reader = request.getReader();
 			String json = "";
@@ -42,7 +41,7 @@ public class GitController {
 			e.printStackTrace();
 		}*/
 		
-		return new Review();
+		return gitService.pull(uniid, subjectCode);
 	}
 
 }

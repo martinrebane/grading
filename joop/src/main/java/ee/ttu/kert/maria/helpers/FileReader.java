@@ -25,6 +25,28 @@ public class FileReader {
 	public List<File> getAllFiles() {
 		return getAllFiles(startFolder);
 	}
+	
+	public String read(File file) {
+		if (file == null) return null;
+		
+		Path path = Paths.get(file.getAbsolutePath());
+
+		String result = "";
+
+		try {
+			List<String> lines = Files.readAllLines(path);
+			for (String line : lines) {
+				result += line + "\n";
+			}
+
+			if ("".equals(result)) {
+				return null;
+			}
+			return result;
+		} catch (IOException e) {
+			return null;
+		}
+	}
 
 	private List<File> getAllFiles(File folder) {
 		File[] listOfFiles = folder.listFiles();
@@ -62,26 +84,6 @@ public class FileReader {
 			}
 		}
 		return null;
-	}
-
-	public String read(File file) {
-		Path path = Paths.get(file.getAbsolutePath());
-
-		String result = "";
-
-		try {
-			List<String> lines = Files.readAllLines(path);
-			for (String line : lines) {
-				result += line + "\n";
-			}
-
-			if ("".equals(result)) {
-				return null;
-			}
-			return result;
-		} catch (IOException e) {
-			return null;
-		}
 	}
 
 	private boolean isMain(String path) {

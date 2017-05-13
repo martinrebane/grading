@@ -5,8 +5,8 @@
 task=$1
 uniid=$2
 
-repopath="D:/Users/mammu/workspace/loputoo/repod"
-zippath="D:/Users/mammu/workspace/loputoo/zips" 
+repopath=$3 #"D:/Users/mammu/workspace/loputoo/repod"
+zippath=$4 #"D:/Users/mammu/workspace/loputoo/zips" 
 
 cd $repopath/$uniid/$task/src/
 mkdir -p ../../zips/$task/

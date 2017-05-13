@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 public class ScriptRunner {
 
-	public String run(String command) {
+	public String run(String[] command) {
 		try {
 			Process process = Runtime.getRuntime().exec(command);
 			process.waitFor();
@@ -17,7 +17,6 @@ public class ScriptRunner {
 			String line;
 
 			while ((line = processIn.readLine()) != null) {
-				System.out.println(line);
 				ret += line;
 			}
 

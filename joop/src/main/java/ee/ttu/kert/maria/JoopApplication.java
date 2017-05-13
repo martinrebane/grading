@@ -3,6 +3,7 @@ package ee.ttu.kert.maria;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import ee.ttu.kert.maria.git.GitService;
 import ee.ttu.kert.maria.helpers.FileReader;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 import ee.ttu.kert.maria.review.ReviewService;
@@ -39,5 +40,10 @@ public class JoopApplication {
 		//runner.run(COMMAND2);*/
 		
 		//Submission submission = new Submission();
+		GitService service = new GitService();
+		//System.out.println(service.pull("ago.luberg", "123"));
+		//System.out.println(service.getHash("ago.luberg", "EX01"));
+		//System.out.println(service.createHash("ago.luberg", "EX01"));
+		System.out.println(service.getHash("ago.luberg", "EX01"));
 	}
 }

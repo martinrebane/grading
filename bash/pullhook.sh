@@ -2,7 +2,7 @@
 
 uniid=$(echo $1 | awk '{print tolower($0)}')
 echo $uniid
-path="D:/Users/mammu/workspace/loputoo/repod/$uniid/"
+path="$2/$uniid"
 
 cd $path
 
