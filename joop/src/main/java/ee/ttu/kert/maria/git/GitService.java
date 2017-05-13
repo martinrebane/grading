@@ -28,7 +28,7 @@ public class GitService implements VersionControlService {
 
 	@Override
 	public String getHash(String uniid, String taskName) {
-		String path = HASH_PATH + "/" + uniid + "/" + taskName;
+		String path = HASH_PATH + uniid + "/" + taskName;
 		FileReader reader = new FileReader(path);
 		path += ".txt";
 		File file = new File(path);

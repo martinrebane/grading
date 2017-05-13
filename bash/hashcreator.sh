@@ -1,7 +1,7 @@
 #!/bin/bash
 
 projectpath=$1
-hashpath=$2 #"D:/Users/mammu/workspace/loputoo/hashes"
+hashpath=$2 #"D:/Users/mammu/workspace/loputoo/hashes/"
 echo $hashpath
 
 cd $projectpath
@@ -37,7 +37,7 @@ do
 	fi
 done
 
-target="$hashpath/$uniid"
+target="$hashpath$uniid"
 echo $target
 
 mkdir -p $target

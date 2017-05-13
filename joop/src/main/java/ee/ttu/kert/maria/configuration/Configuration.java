@@ -4,7 +4,7 @@ public class Configuration {
 	
 	private static final String REPO_PATH = "D:/Users/mammu/workspace/loputoo/repod/";
 	
-	private static final String HASH_PATH = "D:/Users/mammu/workspace/loputoo/hashes";
+	private static final String HASH_PATH = "D:/Users/mammu/workspace/loputoo/hashes/";
 	
 	private static final String ZIP_PATH = "D:/Users/mammu/workspace/loputoo/zips/";
 	

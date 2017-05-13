@@ -42,10 +42,8 @@ public class JoopApplication {
 		//Submission submission = new Submission();
 		GitService service = new GitService();
 		//System.out.println(service.pull("ago.luberg", "123"));
+		System.out.println(service.getHash("ago.luberg", "EX01"));
+		System.out.println(service.createHash("ago.luberg", "EX01"));
 		//System.out.println(service.getHash("ago.luberg", "EX01"));
-		//System.out.println(service.createHash("ago.luberg", "EX01"));
-		//System.out.println(service.getHash("ago.luberg", "EX01"));
-		FileReader reader = new FileReader("D:/Users/mammu/workspace/loputoo/repod/ago.luberg/EX05/");
-		System.out.println(reader.getAllFiles());
 	}
 }

@@ -7,7 +7,7 @@ import ee.ttu.kert.maria.configuration.Configuration;
 
 @Service
 @Transactional
-public class PlagiarismService {
+public class PlagiarismService implements AppropriationService {
 	
 	private static final String PLAGIARISM_PATH = Configuration.getPlagiarismPath();
 

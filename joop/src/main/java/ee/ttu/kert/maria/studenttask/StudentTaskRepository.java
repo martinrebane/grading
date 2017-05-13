@@ -1,0 +1,11 @@
+package ee.ttu.kert.maria.studenttask;
+
+import org.springframework.data.repository.CrudRepository;
+
+import ee.ttu.kert.maria.task.Task;
+
+public interface StudentTaskRepository extends CrudRepository<StudentTask, Long> {
+	
+	StudentTask findByTaskAndUniid(Task task, String uniid);
+	
+}
