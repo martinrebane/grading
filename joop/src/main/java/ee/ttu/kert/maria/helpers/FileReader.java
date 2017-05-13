@@ -11,19 +11,17 @@ import java.util.List;
 public class FileReader {
 
 	private File startFolder;
-	private List<File> files;
 
 	public FileReader(String path) {
 		startFolder = new File(path);
-		files = new ArrayList<>();
 	}
 
-	public String getMain() {
-		return getMain(startFolder);
+	public String getMainPath() {
+		return getMainPath(startFolder);
 	}
 
 	public List<File> getAllFiles() {
-		return getAllFiles(startFolder);
+		return getAllFiles(startFolder, new ArrayList<>());
 	}
 	
 	public String read(File file) {
@@ -48,20 +46,20 @@ public class FileReader {
 		}
 	}
 
-	private List<File> getAllFiles(File folder) {
+	private List<File> getAllFiles(File folder, List<File> files) {
 		File[] listOfFiles = folder.listFiles();
 
 		for (File file : listOfFiles) {
 			if (file.isFile()) {
 				files.add(file);
 			} else {
-				return getAllFiles(file);
+				return getAllFiles(file, files);
 			}
 		}
 		return files;
 	}
 
-	private String getMain(File folder) {
+	private String getMainPath(File folder) {
 		File[] listOfFiles = folder.listFiles();
 
 		for (File file : listOfFiles) {
@@ -71,7 +69,7 @@ public class FileReader {
 					return file.getName();
 				}
 			} else {
-				String finalPath = getMain(file);
+				String finalPath = getMainPath(file);
 				if (finalPath != null) {
 					if (folder.equals(startFolder)) {
 						String absolutePath = folder.getAbsolutePath();

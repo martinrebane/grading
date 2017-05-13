@@ -16,12 +16,28 @@ public class MailGunService implements MailService{
 	private String subject = "JOOP tagasiside";
 	
 	@Override
-	public void sendFeedback(String uniid, String reviewLink) {
-		// TODO Auto-generated method stub
-		
+	public void sendFeedback(String uniid, String reviewLink, String subject) {
+		setUniid(uniid);
+		setReviewLink(reviewLink);
+		setSubject(subject);
+		sendEmail();
 	}
 	
 	private ClientResponse sendEmail() {
+        Client client = Client.create();
+        client.addFilter(new HTTPBasicAuthFilter("api", API_KEY));
+        WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +
+                "e0324f65ae848f4bc645132e.mailgun.org/messages");
+        MultivaluedMapImpl formData = new MultivaluedMapImpl();
+        formData.add("from", "Mailgun Sandbox <postmaster@sandbox040c037ae0324f65ae848f4bc645132e.mailgun.org>");
+        formData.add("to", uniid + " <" + uniid + "@ttu.ee>");
+        formData.add("subject", subject);
+        formData.add("text", "Tagasiside asub lingil: " + reviewLink);
+        return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
+                post(ClientResponse.class, formData);
+    }
+	
+	private ClientResponse sendEmailWorking() {
         Client client = Client.create();
         client.addFilter(new HTTPBasicAuthFilter("api", API_KEY));
         WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +

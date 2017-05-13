@@ -19,7 +19,7 @@ public class SandBoxService {
 	
 	public String getMainPath(String taskPath) {
 		reader = new FileReader(REPO_PATH + taskPath);
-		String mainPath = reader.getMain();
+		String mainPath = reader.getMainPath();
 		System.out.println(mainPath);
 		/*String classPath = mainPath.substring(0, mainPath.lastIndexOf('/'));
 		String mainFile = mainPath.substring(mainPath.lastIndexOf('/') + 1);

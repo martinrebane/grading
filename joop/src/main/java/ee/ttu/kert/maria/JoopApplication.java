@@ -44,6 +44,8 @@ public class JoopApplication {
 		//System.out.println(service.pull("ago.luberg", "123"));
 		//System.out.println(service.getHash("ago.luberg", "EX01"));
 		//System.out.println(service.createHash("ago.luberg", "EX01"));
-		System.out.println(service.getHash("ago.luberg", "EX01"));
+		//System.out.println(service.getHash("ago.luberg", "EX01"));
+		FileReader reader = new FileReader("D:/Users/mammu/workspace/loputoo/repod/ago.luberg/EX05/");
+		System.out.println(reader.getAllFiles());
 	}
 }

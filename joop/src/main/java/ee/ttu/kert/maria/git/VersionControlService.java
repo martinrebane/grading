@@ -6,6 +6,6 @@ public interface VersionControlService {
 	
 	public String getHash(String uniid, String taskName);
 	
-	public String createHash(String uniid, String taskname);
+	public String createHash(String uniid, String taskName);
 
 }

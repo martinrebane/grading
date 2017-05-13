@@ -32,21 +32,25 @@ public class GitHubService {
 	
 	public String createGist() {
 		Authorization auth = getGistAuthorization();
+		Gist gist;
 
-		// Create Gist service configured with OAuth2 token
-		GistService gistService = new GistService(client);
-		gistService.getClient().setOAuth2Token(auth.getToken());
-
-		// Create Gist
-		Gist gist = new Gist();
-		gist.setPublic(false);
-		gist.setDescription("JOOP");
-		Map<String, GistFile> map = addAllFiles();
-		gist.setFiles(map);
 		try {
+			// Create Gist service configured with OAuth2 token
+			GistService gistService = new GistService(client);
+			gistService.getClient().setOAuth2Token(auth.getToken());
+	
+			// Create Gist
+			gist = new Gist();
+			gist.setPublic(false);
+			gist.setDescription("JOOP");
+			Map<String, GistFile> map = addAllFiles();
+			gist.setFiles(map);
+
 			gist = gistService.createGist(gist);
 		} catch (IOException e) {
-			e.printStackTrace();
+			return null;
+		} catch (Exception e) {
+			return null;
 		}
 		return gist.getHtmlUrl();
 	}
@@ -95,7 +99,7 @@ public class GitHubService {
 		try {
 			auth = oauthService.createAuthorization(auth);
 			return auth;
-		} catch (IOException e1) {
+		} catch (IOException e) {
 			return null;
 		}
 	}
