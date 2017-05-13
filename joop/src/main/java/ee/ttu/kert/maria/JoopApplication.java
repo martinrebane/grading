@@ -7,7 +7,7 @@ import ee.ttu.kert.maria.git.GitService;
 import ee.ttu.kert.maria.helpers.FileReader;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 import ee.ttu.kert.maria.review.ReviewService;
-import ee.ttu.kert.maria.sandbox.SandBoxService;
+import ee.ttu.kert.maria.sandbox.EmbeddablService;
 import ee.ttu.kert.maria.submission.Submission;
 
 @SpringBootApplication

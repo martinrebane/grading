@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class SandBoxController {
 	
 	@Autowired
-	SandBoxService sandBoxService;
+	EmbeddablService sandBoxService;
 	
 	@RequestMapping(value="/sandbox/{task}/{uniid}", method=RequestMethod.GET, consumes="application/json")
 	public @ResponseBody String getMainPath(@PathVariable String task, @PathVariable String uniid) {

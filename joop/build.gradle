@@ -29,6 +29,7 @@ dependencies {
 	compile('com.sun.jersey:jersey-bundle:1.19.3')
 	compile('com.google.code.gson:gson:2.8.0')
 	compile('org.mariadb.jdbc:mariadb-java-client:1.5.9')
+	compile('it.zielke:moji:1.0.2')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
