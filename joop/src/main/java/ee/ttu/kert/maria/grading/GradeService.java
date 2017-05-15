@@ -1,6 +1,5 @@
 package ee.ttu.kert.maria.grading;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,8 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class GradeService {
 	
-	@Autowired
 	private GradeRepository gradeRepository;
+	
+	public GradeService(GradeRepository gradeRepository) {
+		this.gradeRepository = gradeRepository;
+	}
 	
 	public Grade saveGrade(Grade grade) {
 		return gradeRepository.save(grade);

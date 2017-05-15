@@ -1,6 +1,5 @@
 package ee.ttu.kert.maria.submission;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,8 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SubmissionService {
 	
-	@Autowired
 	private SubmissionRepository submissionRepository;
+	
+	public SubmissionService(SubmissionRepository repository) {
+		submissionRepository = repository;
+	}
 	
 	public Submission save(Submission submission) {
 		return submissionRepository.save(submission);

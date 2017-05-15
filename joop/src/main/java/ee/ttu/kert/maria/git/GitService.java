@@ -2,10 +2,9 @@ package ee.ttu.kert.maria.git;
 
 import java.io.File;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import ee.ttu.kert.maria.configuration.Configuration;
 import ee.ttu.kert.maria.helpers.FileReader;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 
@@ -13,23 +12,36 @@ import ee.ttu.kert.maria.helpers.ScriptRunner;
 @Transactional
 public class GitService implements VersionControlService {
 	
-	private static final String PULL_SCRIPT_PATH = "../bash/pullhook.sh"; //tulevikus ilmselt cmd /c start --> sh
-	private static final String HASH_SCRIPT_PATH = "../bash/hashcreator.sh";
-	private static final String REPO_PATH = Configuration.getRepoPath();
-	private static final String HASH_PATH = Configuration.getHashPath();
+	@Value("${paths.scripts.pull}")
+	private String pullScriptPath;
+	
+	@Value("${paths.scripts.hash}")
+	private String hashScriptPath;
+	
+	@Value("${paths.files.repos}")
+	private String repoPath;
+	
+	@Value("${paths.files.hash}")
+	private String hashPath;
+	
 	private ScriptRunner scriptRunner;
+	
+	public GitService() {
+		scriptRunner = new ScriptRunner();
+	}
 	
 	@Override
 	public String pull(String uniid, String subjectCode) {
-		String[] command = {"cmd", "/c", "start", PULL_SCRIPT_PATH, uniid, REPO_PATH};
+		String[] command = {"cmd", "/c", "start", pullScriptPath, uniid, repoPath};
 		scriptRunner = new ScriptRunner();
 		return scriptRunner.run(command);
 	}
 
 	@Override
 	public String getHash(String uniid, String taskName) {
-		String path = HASH_PATH + uniid + "/" + taskName;
-		FileReader reader = new FileReader(path);
+		String path = hashPath + uniid + "/" + taskName;
+		FileReader reader = new FileReader();
+		reader.setPath(path);
 		path += ".txt";
 		File file = new File(path);
 		return reader.read(file);
@@ -37,9 +49,9 @@ public class GitService implements VersionControlService {
 
 	@Override
 	public String createHash(String uniid, String taskName) {
-		String projectPath = REPO_PATH + uniid + "/" + taskName + "/src/";
+		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
 		scriptRunner = new ScriptRunner();
-		String[] command = {"cmd", "/c", "start", HASH_SCRIPT_PATH, projectPath, HASH_PATH};
+		String[] command = {"cmd", "/c", "start", hashScriptPath, projectPath, hashPath};
 		return scriptRunner.run(command);
 	}
 }

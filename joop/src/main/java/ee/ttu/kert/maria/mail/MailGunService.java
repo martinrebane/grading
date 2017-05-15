@@ -2,30 +2,32 @@ package ee.ttu.kert.maria.mail;
 
 import javax.ws.rs.core.MediaType;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
-public class MailGunService implements MailService{
+@Service
+public class MailGunService implements MailService {
 	
-	private static final String API_KEY = "key-530340de58ee7be39a1358ae50b0d786";
+	@Value("${mailgun.apikey}")
+	private String apiKey;
 	private String uniid;
 	private String reviewLink;
 	private String subject = "JOOP tagasiside";
 	
 	@Override
 	public void sendFeedback(String uniid, String reviewLink, String subject) {
-		setUniid(uniid);
-		setReviewLink(reviewLink);
-		setSubject(subject);
-		sendEmail();
+		sendEmail(uniid, reviewLink, subject);
 	}
 	
-	private ClientResponse sendEmail() {
+	private ClientResponse sendEmail(String uniid, String reviewLink, String subject) {
         Client client = Client.create();
-        client.addFilter(new HTTPBasicAuthFilter("api", API_KEY));
+        client.addFilter(new HTTPBasicAuthFilter("api", apiKey));
         WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +
                 "e0324f65ae848f4bc645132e.mailgun.org/messages");
         MultivaluedMapImpl formData = new MultivaluedMapImpl();
@@ -39,7 +41,7 @@ public class MailGunService implements MailService{
 	
 	private ClientResponse sendEmailWorking() {
         Client client = Client.create();
-        client.addFilter(new HTTPBasicAuthFilter("api", API_KEY));
+        client.addFilter(new HTTPBasicAuthFilter("api", this.subject));
         WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +
                 "e0324f65ae848f4bc645132e.mailgun.org/messages");
         MultivaluedMapImpl formData = new MultivaluedMapImpl();

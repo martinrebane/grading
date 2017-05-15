@@ -10,10 +10,9 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import ee.ttu.kert.maria.configuration.Configuration;
 import ee.ttu.kert.maria.helpers.FileReader;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 import it.zielke.moji.MossException;
@@ -26,17 +25,26 @@ public class MossService implements PlagiarismService {
 	@Autowired
 	private PlagiarismRepository plagiarismRepository;
 	
-	private static final String PLAGIARISM_PATH = Configuration.getPlagiarismPath();
-	private static final String REPO_PATH = Configuration.getRepoPath();
-	private static final String MOSS_USERID = Configuration.getMossUserid();
-	private static final String COPY_SCRIPT_PATH = "../bash/copyfiles.sh";
+	@Value("${paths.files.plagiarism}")
+	private String plagiarismPath;
+	
+	@Value("${paths.files.repos}")
+	private String repoPath;
+	
+	@Value("${moss.userid}")
+	private String moss_userid;
+	
+	@Value("${paths.scripts.copy}")
+	private String copyScriptPath;
 
 	@Override
 	public String run(String taskName) {
-		String path = PLAGIARISM_PATH + taskName;
+		String path = plagiarismPath + taskName;
 		Collection<File> studentFiles = FileUtils.listFiles(new File(path), new String[] {"java"}, true);
 		SocketClient client = new SocketClient();
-		client.setUserID(MOSS_USERID);
+		client.setUserID(moss_userid);
+		System.out.println(moss_userid);
+		System.out.println(plagiarismRepository);
 		try {
 			client.setLanguage("java");
 			client.run();
@@ -61,10 +69,11 @@ public class MossService implements PlagiarismService {
 
 	@Override
 	public void transferFiles(String uniid, String taskName) {
-		String projectPath = REPO_PATH + uniid + "/" + taskName + "/src/";
-		String destPath = PLAGIARISM_PATH + taskName + "/" + uniid + "/";
+		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
+		String destPath = plagiarismPath + taskName + "/" + uniid + "/";
 		
-		FileReader reader = new FileReader(projectPath);
+		FileReader reader = new FileReader();
+		reader.setPath(projectPath);
 		List<File> files = reader.getAllFiles();
 		ScriptRunner scriptRunner = new ScriptRunner();
 		List<String> folderPaths = new ArrayList<>();
@@ -79,7 +88,7 @@ public class MossService implements PlagiarismService {
 		
 		for (String folderPath : folderPaths) {
 			System.out.println(folderPath);
-			String[] command = {"cmd", "/c", "start", COPY_SCRIPT_PATH, folderPath, destPath};
+			String[] command = {"cmd", "/c", "start", copyScriptPath, folderPath, destPath};
 			System.out.println(scriptRunner.run(command));
 		}
 	}

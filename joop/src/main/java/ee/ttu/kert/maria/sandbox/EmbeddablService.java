@@ -1,24 +1,32 @@
 package ee.ttu.kert.maria.sandbox;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import ee.ttu.kert.maria.configuration.Configuration;
 import ee.ttu.kert.maria.helpers.FileReader;
 
 @Service
 @Transactional
 public class EmbeddablService {
 	
-	@Autowired
 	SandBoxRepository sandBoxRepository;
 	private FileReader reader;
-	private static final String REPO_PATH = Configuration.getRepoPath();
-	private static final String ZIP_PATH = Configuration.getZipPath();
+	
+	@Value("${paths.files.repos}")
+	private String repoPath;
+	
+	@Value("${paths.files.zips}")
+	private String zipPath;
+	
+	public EmbeddablService(SandBoxRepository sandBoxRepository) {
+		this.sandBoxRepository = sandBoxRepository;
+		reader = new FileReader();
+	}
 	
 	public String getMainPath(String taskPath) {
-		reader = new FileReader(REPO_PATH + taskPath);
+		String projectPath = repoPath + taskPath;
+		//reader = new FileReader();
+		reader.setPath(projectPath);
 		String mainPath = reader.getMainPath();
 		System.out.println(mainPath);
 		/*String classPath = mainPath.substring(0, mainPath.lastIndexOf('/'));

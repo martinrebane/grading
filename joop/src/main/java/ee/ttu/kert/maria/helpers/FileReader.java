@@ -12,9 +12,9 @@ public class FileReader {
 
 	private File startFolder;
 
-	public FileReader(String path) {
+	/*public FileReader(String path) {
 		startFolder = new File(path);
-	}
+	}*/
 
 	public String getMainPath() {
 		return getMainPath(startFolder);
@@ -44,6 +44,11 @@ public class FileReader {
 		} catch (IOException e) {
 			return null;
 		}
+	}
+
+	public void setPath(String path) {
+		File startFolder = new File(path);
+		this.startFolder = startFolder;
 	}
 
 	private List<File> getAllFiles(File folder, List<File> files) {

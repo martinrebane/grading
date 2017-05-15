@@ -3,7 +3,6 @@ package ee.ttu.kert.maria.git;
 import java.io.BufferedReader;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,11 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class GitController {
 	
-	@Autowired
 	private HttpServletRequest request;
-	
-	@Autowired
 	private GitService gitService;
+	
+	public GitController(HttpServletRequest request, GitService gitService) {
+		this.gitService = gitService;
+		this.request = request;
+	}
 	
 	@RequestMapping(value="/git/pull/{subjectCode}/{uniid}/", method=RequestMethod.GET, consumes="application/json")
 	public @ResponseBody String pull(@PathVariable String uniid, @PathVariable String subjectCode) {

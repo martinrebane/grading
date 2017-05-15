@@ -1,13 +1,15 @@
 package ee.ttu.kert.maria.review;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class ReviewController {
 	
-	@Autowired
-	private ReviewService reviewService;
+	private GitHubService reviewService;
+	
+	public ReviewController(GitHubService reviewService) {
+		this.reviewService = reviewService;
+	}
 	
 	
 }
