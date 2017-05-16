@@ -16,7 +16,7 @@ public class PlagiarismController {
 	}
 	
 	@RequestMapping(value="/plagiarism/{task}", method=RequestMethod.GET)
-	public @ResponseBody String getMainPath(@PathVariable String task) {
+	public @ResponseBody String run(@PathVariable String task) {
 		return mossService.run(task);
 	}
 

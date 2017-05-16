@@ -1,6 +1,5 @@
 package ee.ttu.kert.maria.task;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,8 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TaskService {
 	
-	@Autowired
 	private TaskRepository taskRepository;
+	
+	public TaskService(TaskRepository taskRepository) {
+		this.taskRepository = taskRepository;
+	}
 	
 	public Task getByName(String name) {
 		return taskRepository.findByName(name);

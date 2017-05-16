@@ -23,7 +23,7 @@ import ee.ttu.kert.maria.helpers.FileReader;
 @Transactional
 public class GitHubService implements ReviewService {
 
-	ReviewRepository reviewRepository;
+	private ReviewRepository reviewRepository;
 	private FileReader reader;
 	private SecureRandom secureRandom;
 	private GitHubClient client;
@@ -42,6 +42,7 @@ public class GitHubService implements ReviewService {
 		reader = new FileReader();
 		secureRandom = new SecureRandom();
 		client = new GitHubClient();
+		client.setCredentials(user, pass);
 	}
 
 	@Override
@@ -115,7 +116,7 @@ public class GitHubService implements ReviewService {
 	}
 
 	private Map<String, GistFile> addAllFiles(String taskPath) {
-		reader.setPath(repoPath + taskPath);
+		reader.setPath(repoPath + taskPath + "/src/");
 		List<File> files = reader.getAllFiles();
 		Map<String, GistFile> fileMap = new HashMap<>();
 
@@ -134,7 +135,6 @@ public class GitHubService implements ReviewService {
 	}
 
 	private Authorization getGistAuthorization() {
-		client.setCredentials(user, pass);
 		OAuthService oauthService = new OAuthService(client);
 		Authorization auth = new Authorization();
 		auth.setScopes(Arrays.asList("gist"));

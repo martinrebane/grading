@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +20,7 @@ import it.zielke.moji.SocketClient;
 @Service
 @Transactional
 public class MossService implements PlagiarismService {
-	
-	@Autowired
+
 	private PlagiarismRepository plagiarismRepository;
 	
 	@Value("${paths.files.plagiarism}")
@@ -32,19 +30,21 @@ public class MossService implements PlagiarismService {
 	private String repoPath;
 	
 	@Value("${moss.userid}")
-	private String moss_userid;
+	private String mossUserid;
 	
 	@Value("${paths.scripts.copy}")
 	private String copyScriptPath;
+	
+	public MossService(PlagiarismRepository plagiarismRepository) {
+		this.plagiarismRepository = plagiarismRepository;
+	}
 
 	@Override
 	public String run(String taskName) {
 		String path = plagiarismPath + taskName;
 		Collection<File> studentFiles = FileUtils.listFiles(new File(path), new String[] {"java"}, true);
 		SocketClient client = new SocketClient();
-		client.setUserID(moss_userid);
-		System.out.println(moss_userid);
-		System.out.println(plagiarismRepository);
+		client.setUserID(mossUserid);
 		try {
 			client.setLanguage("java");
 			client.run();
@@ -55,13 +55,10 @@ public class MossService implements PlagiarismService {
 			URL results = client.getResultURL();
 			return results.toString();
 		} catch (MossException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

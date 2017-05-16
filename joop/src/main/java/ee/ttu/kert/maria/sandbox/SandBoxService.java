@@ -4,12 +4,8 @@ public interface SandBoxService {
 	
 	public String sendProject(String uniid, String taskName);
 	
-	public String getMainPath();
+	public String getMainPath(String taskPath);
 	
 	public String zipProject(String uniid, String taskName);
-	
-	public SandBox save(SandBox sandBox);
-	
-	public SandBox get(long id);
 
 }
