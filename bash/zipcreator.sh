@@ -6,7 +6,7 @@ task=$1
 uniid=$2
 
 repopath=$3 #"D:/Users/mammu/workspace/loputoo/repod"
-zippath=$4 #"D:/Users/mammu/workspace/loputoo/zips" 
+zippath=$4 #"D:/Users/mammu/workspace/loputoo/zips"
 
 cd $repopath$uniid/$task/src/
 mkdir -p $zippath$task/ #../../zips/$task/'
@@ -19,7 +19,7 @@ done
 
 mkdir -p $task
 
-if [ $zipfolder == */ ]
+if [[ $zipfolder == */ ]]
 then
 	for f in $repopath$uniid/$task/src/* ; do
 		if [[ -f $f ]]
@@ -32,6 +32,8 @@ else
 fi
 
 jar -cMf $zippath$task/$uniid.zip $task
+
+chmod +x $zippath$task/$uniid.zip
 
 rm -r $task
 

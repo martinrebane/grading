@@ -4,7 +4,7 @@ public interface SandBoxService {
 	
 	public String sendProject(String uniid, String taskName);
 	
-	public String getMainPath(String taskPath);
+	public String getMainPath(String uniid, String taskName);
 	
 	public String zipProject(String uniid, String taskName);
 

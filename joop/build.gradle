@@ -13,6 +13,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'org.eclipse.jdt.core'
 
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
@@ -30,6 +31,8 @@ dependencies {
 	compile('com.google.code.gson:gson:2.8.0')
 	compile('org.mariadb.jdbc:mariadb-java-client:1.5.9')
 	compile('it.zielke:moji:1.0.2')
+	compile('org.eclipse.jdt:org.eclipse.jdt.core:3.12.3')
+	compile('org.eclipse.jdt:launching:3.3.0-v20070510')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')

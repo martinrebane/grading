@@ -17,7 +17,7 @@ public class SandBoxController {
 	
 	@RequestMapping(value="/sandbox/{task}/{uniid}", method=RequestMethod.GET)
 	public @ResponseBody String getMainPath(@PathVariable String task, @PathVariable String uniid) {
-		return sandBoxService.getMainPath(uniid + "/" + task + "/src/");
+		return sandBoxService.getMainPath(uniid, task);
 	}
 	
 	@RequestMapping(value="/sandbox/save", method=RequestMethod.POST)

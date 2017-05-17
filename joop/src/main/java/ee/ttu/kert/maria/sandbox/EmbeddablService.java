@@ -36,12 +36,11 @@ public class EmbeddablService implements SandBoxService {
 	}
 	
 	@Override
-	public String getMainPath(String taskPath) {
-		String projectPath = repoPath + taskPath;
+	public String getMainPath(String uniid, String taskName) {
+		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
 		//reader = new FileReader();
 		reader.setPath(projectPath);
 		String mainPath = reader.getMainPath();
-		System.out.println(mainPath);
 		/*String classPath = mainPath.substring(0, mainPath.lastIndexOf('/'));
 		String mainFile = mainPath.substring(mainPath.lastIndexOf('/') + 1);
 		System.out.println(classPath + " " + mainFile);*/

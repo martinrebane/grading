@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class IDEController {
 	
-	private IDEService ideService;
+	private EclipseService ideService;
 	
-	public IDEController(IDEService ideService) {
+	public IDEController(EclipseService ideService) {
 		this.ideService = ideService;
 	}
 

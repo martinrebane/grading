@@ -45,6 +45,17 @@ public class FileReader {
 			return null;
 		}
 	}
+	
+	public String getPackagePath() {
+		String mainPath = getMainPath(startFolder);
+		if (mainPath == null) return null;
+		
+		if (mainPath.indexOf("/") == mainPath.lastIndexOf("/")) {
+			return "";
+		} else {
+			return mainPath.substring(mainPath.indexOf("/") + 1, mainPath.lastIndexOf("/")).replaceAll("/", ".");
+		}
+	}
 
 	public void setPath(String path) {
 		File startFolder = new File(path);
