@@ -41,6 +41,7 @@ public class MossService implements PlagiarismService {
 
 	@Override
 	public String run(String taskName) {
+		if (!plagiarismPath.endsWith("/")) plagiarismPath += "/";
 		String path = plagiarismPath + taskName;
 		Collection<File> studentFiles = FileUtils.listFiles(new File(path), new String[] { "java" }, true);
 		SocketClient client = new SocketClient();
@@ -66,6 +67,8 @@ public class MossService implements PlagiarismService {
 
 	@Override
 	public void transferFiles(String uniid, String taskName) {
+		if (!repoPath.endsWith("/")) repoPath += "/";
+		if (!plagiarismPath.endsWith("/")) plagiarismPath += "/";
 		System.out.println(uniid);
 		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
 		String destPath = plagiarismPath + taskName + "/" + uniid + "/";

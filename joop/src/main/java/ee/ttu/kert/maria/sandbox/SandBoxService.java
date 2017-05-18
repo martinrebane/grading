@@ -7,5 +7,7 @@ public interface SandBoxService {
 	public String getMainPath(String uniid, String taskName);
 	
 	public String zipProject(String uniid, String taskName);
+	
+	public String getPackagePath(String uniid, String taskName);
 
 }

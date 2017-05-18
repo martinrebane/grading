@@ -32,6 +32,7 @@ public class GitService implements VersionControlService {
 	
 	@Override
 	public String pull(String uniid, String subjectCode) {
+		if (!repoPath.endsWith("/")) repoPath += "/";
 		String[] command = {"bash", pullScriptPath, uniid, repoPath};
 		scriptRunner = new ScriptRunner();
 		return scriptRunner.run(command);
@@ -39,6 +40,7 @@ public class GitService implements VersionControlService {
 
 	@Override
 	public String getHash(String uniid, String taskName) {
+		if (!hashPath.endsWith("/")) hashPath += "/";
 		String path = hashPath + uniid + "/" + taskName;
 		FileReader reader = new FileReader();
 		reader.setPath(path);
@@ -49,6 +51,8 @@ public class GitService implements VersionControlService {
 
 	@Override
 	public String createHash(String uniid, String taskName) {
+		if (!repoPath.endsWith("/")) repoPath += "/";
+		if (!hashPath.endsWith("/")) hashPath += "/";
 		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
 		scriptRunner = new ScriptRunner();
 		String[] command = {"bash", hashScriptPath, projectPath, hashPath};

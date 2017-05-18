@@ -19,6 +19,7 @@ paths:
       plagiarism: "/mnt/d/Users/mammu/workspace/loputoo/plagiarism/"
       repos: "/mnt/d/Users/mammu/workspace/loputoo/repod/"
       zips: "/mnt/d/Users/mammu/workspace/loputoo/zips/"
+      embeddabl: "/mnt/d/Users/mammu/workspace/loputoo/embeddabl/"
    scripts:
       pull: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/pullhook.sh"
       hash: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/hashcreator.sh"
@@ -26,3 +27,5 @@ paths:
       zip: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/zipper.sh"
       copy: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/copyfiles.sh"
       project: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/projectcreator.sh"
+   templates:
+      project: "/mnt/d/Users/mammu/workspace/loputoo/templates/Template/"

@@ -46,6 +46,18 @@ public class FileReader {
 		}
 	}
 	
+	public List<String> readAllLines(File file) {
+		if (file == null) return null;
+		
+		Path path = Paths.get(file.getAbsolutePath());
+
+		try {
+			return Files.readAllLines(path);
+		} catch (IOException e) {
+			return null;
+		}
+	}
+	
 	public String getPackagePath() {
 		String mainPath = getMainPath(startFolder);
 		if (mainPath == null) return null;

@@ -17,7 +17,7 @@ public class EmbeddablService implements SandBoxService {
 	@Value("${paths.files.repos}")
 	private String repoPath;
 	
-	@Value("${paths.files.zips}")
+	@Value("${paths.files.embeddabl}")
 	private String zipPath;
 	
 	@Value("${paths.scripts.zip}")
@@ -40,6 +40,7 @@ public class EmbeddablService implements SandBoxService {
 	
 	@Override
 	public String getMainPath(String uniid, String taskName) {
+		if (!repoPath.endsWith("/")) repoPath += "/";
 		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
 		//reader = new FileReader();
 		reader.setPath(projectPath);
@@ -52,12 +53,22 @@ public class EmbeddablService implements SandBoxService {
 	
 	@Override
 	public String zipProject(String uniid, String taskName) {
+		if (!zipPath.endsWith("/")) zipPath += "/";
+		if (!repoPath.endsWith("/")) repoPath += "/";
 		String[] command = {"bash", embeddablScriptPath, taskName, uniid, repoPath, zipPath};
 		String source = scriptRunner.run(command);
 		source = source.substring(0, source.lastIndexOf("/"));
 		System.out.println("Source: " + source);
 		String[] command2 = {"bash", zipScriptPath, uniid, taskName, source, zipPath + taskName};
 		return scriptRunner.run(command2);
+	}
+	
+	@Override
+	public String getPackagePath(String uniid, String taskName) {
+		if (!repoPath.endsWith("/")) repoPath += "/";
+		String path = repoPath + uniid + "/" + taskName + "/src/";
+		reader.setPath(path);
+		return reader.getPackagePath();
 	}
 	
 	public SandBox save(SandBox sandBox) {
