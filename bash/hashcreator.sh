@@ -1,8 +1,5 @@
-#!/bin/bash
-
 projectpath=$1
 hashpath=$2 #"D:/Users/mammu/workspace/loputoo/hashes/"
-echo $hashpath
 
 cd $projectpath
 
@@ -11,11 +8,9 @@ cd $projectpath
 #value=`find $path -type f -print0 | xargs -0 sha1sum`
 #echo "${value}"
 #echo $value
-
+folders=$(echo $projectpath | tr "/" "\n")
 value="$(find $projectpath -type f -print0 | xargs -0 sha1sum)"
 #see on ilmselt vajalik ainult windowsis testimiseks, kui just ei tahagi, et ta hashi faili kirjutaks
-echo $value
-folders=$(echo $projectpath | tr "/" "\n")
 taskfolder=""
 uniid=""
 
@@ -38,8 +33,8 @@ do
 done
 
 target="$hashpath$uniid"
-echo $target
 
 mkdir -p $target
-
+touch $target/$taskfolder.txt
 echo $value > $target/$taskfolder.txt
+echo $value

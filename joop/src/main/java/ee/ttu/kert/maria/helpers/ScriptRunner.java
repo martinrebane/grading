@@ -17,6 +17,7 @@ public class ScriptRunner {
 			String line;
 
 			while ((line = processIn.readLine()) != null) {
+				System.out.println(line);
 				ret += line;
 			}
 
@@ -36,6 +37,7 @@ public class ScriptRunner {
 			System.out.println("Interrputed");
 			e.printStackTrace();
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			System.out.println("Other exception");
 		}
 		return null;

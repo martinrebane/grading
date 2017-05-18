@@ -15,12 +15,14 @@ mailgun:
    apikey: key-530340de58ee7be39a1358ae50b0d786
 paths:
    files:
-      hash: "D:/Users/mammu/workspace/loputoo/hashes/"
-      plagiarism: "D:/Users/mammu/workspace/loputoo/plagiarism/"
-      repos: "D:/Users/mammu/workspace/loputoo/repod/"
-      zips: "D:/Users/mammu/workspace/loputoo/zips/"
+      hash: "/mnt/d/Users/mammu/workspace/loputoo/hashes/"
+      plagiarism: "/mnt/d/Users/mammu/workspace/loputoo/plagiarism/"
+      repos: "/mnt/d/Users/mammu/workspace/loputoo/repod/"
+      zips: "/mnt/d/Users/mammu/workspace/loputoo/zips/"
    scripts:
-      pull: "D:/Users/mammu/workspace/loputoo/loputoo/bash/pullhook.sh"
-      hash: "D:/Users/mammu/workspace/loputoo/loputoo/bash/hashcreator.sh"
-      zip: "D:/Users/mammu/workspace/loputoo/loputoo/bash/zipcreator.sh"
-      copy: "D:/Users/mammu/workspace/loputoo/loputoo/bash/copyfiles.sh"
+      pull: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/pullhook.sh"
+      hash: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/hashcreator.sh"
+      embeddabl: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/embeddabl.sh"
+      zip: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/zipper.sh"
+      copy: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/copyfiles.sh"
+      project: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/projectcreator.sh"

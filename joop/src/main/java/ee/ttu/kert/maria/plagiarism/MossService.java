@@ -22,19 +22,19 @@ import it.zielke.moji.SocketClient;
 public class MossService implements PlagiarismService {
 
 	private PlagiarismRepository plagiarismRepository;
-	
+
 	@Value("${paths.files.plagiarism}")
 	private String plagiarismPath;
-	
+
 	@Value("${paths.files.repos}")
 	private String repoPath;
-	
+
 	@Value("${moss.userid}")
 	private String mossUserid;
-	
+
 	@Value("${paths.scripts.copy}")
 	private String copyScriptPath;
-	
+
 	public MossService(PlagiarismRepository plagiarismRepository) {
 		this.plagiarismRepository = plagiarismRepository;
 	}
@@ -42,7 +42,7 @@ public class MossService implements PlagiarismService {
 	@Override
 	public String run(String taskName) {
 		String path = plagiarismPath + taskName;
-		Collection<File> studentFiles = FileUtils.listFiles(new File(path), new String[] {"java"}, true);
+		Collection<File> studentFiles = FileUtils.listFiles(new File(path), new String[] { "java" }, true);
 		SocketClient client = new SocketClient();
 		client.setUserID(mossUserid);
 		try {
@@ -66,30 +66,33 @@ public class MossService implements PlagiarismService {
 
 	@Override
 	public void transferFiles(String uniid, String taskName) {
+		System.out.println(uniid);
 		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
 		String destPath = plagiarismPath + taskName + "/" + uniid + "/";
-		
+
 		FileReader reader = new FileReader();
-		reader.setPath(projectPath);
+		System.out.println(projectPath.replace("/mnt/d", "D:"));
+		reader.setPath(projectPath.replace("/mnt/d", "D:"));
 		List<File> files = reader.getAllFiles();
 		ScriptRunner scriptRunner = new ScriptRunner();
 		List<String> folderPaths = new ArrayList<>();
-		
+
 		for (File file : files) {
 			String fullPath = file.getAbsolutePath();
-			String folderPath = fullPath.substring(0, fullPath.lastIndexOf("\\") + 1).replaceAll("\\\\", "/");
+			String folderPath = fullPath.substring(0, fullPath.lastIndexOf("\\") + 1).replaceAll("\\\\", "/")
+					.replace("D:", "/mnt/d");
 			if (!folderPaths.contains(folderPath)) {
 				folderPaths.add(folderPath);
 			}
 		}
-		
+
 		for (String folderPath : folderPaths) {
 			System.out.println(folderPath);
-			String[] command = {"cmd", "/c", "start", copyScriptPath, folderPath, destPath};
+			String[] command = { "bash", copyScriptPath, folderPath, destPath };
 			System.out.println(scriptRunner.run(command));
 		}
 	}
-	
+
 	public Plagiarism save(Plagiarism plagiarism) {
 		return plagiarismRepository.save(plagiarism);
 	}

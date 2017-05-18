@@ -58,8 +58,8 @@ public class GitHubService implements ReviewService {
 	public Review saveReview(Review review) {
 		Review databaseReview = reviewRepository.findByUniIdAndTaskName(review.getUniId(), review.getTaskName());
 		if (databaseReview == null) {
-			String link = createLink(review.getStudentTask().getUniid(), review.getStudentTask().getTask().getName());
-			review.setReviewLink(link);
+			/*String link = createLink(review.getStudentTask().getUniid(), review.getStudentTask().getTask().getName());
+			review.setReviewLink(link);*/
 			return reviewRepository.save(review);
 		}
 		return databaseReview;

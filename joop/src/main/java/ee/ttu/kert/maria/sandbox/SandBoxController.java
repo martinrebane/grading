@@ -15,9 +15,9 @@ public class SandBoxController {
 		sandBoxService = embeddablService;
 	}
 	
-	@RequestMapping(value="/sandbox/{task}/{uniid}", method=RequestMethod.GET)
+	@RequestMapping(value="/sandbox/{uniid}/{task}", method=RequestMethod.GET)
 	public @ResponseBody String getMainPath(@PathVariable String task, @PathVariable String uniid) {
-		return sandBoxService.getMainPath(uniid, task);
+		return sandBoxService.zipProject(uniid, task);
 	}
 	
 	@RequestMapping(value="/sandbox/save", method=RequestMethod.POST)

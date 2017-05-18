@@ -19,7 +19,6 @@ public class EclipseService implements IDEService {
 		FileReader reader = new FileReader();
 		reader.setPath(projectPath);
 		String packagePath = reader.getPackagePath();
-		
 	}
 	
 	public String zip(String uniid, String taskName) {

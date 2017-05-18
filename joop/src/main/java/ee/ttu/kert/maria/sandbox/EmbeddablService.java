@@ -23,6 +23,9 @@ public class EmbeddablService implements SandBoxService {
 	@Value("${paths.scripts.zip}")
 	private String zipScriptPath;
 	
+	@Value("${paths.scripts.embeddabl}")
+	private String embeddablScriptPath;
+	
 	public EmbeddablService(SandBoxRepository sandBoxRepository) {
 		this.sandBoxRepository = sandBoxRepository;
 		reader = new FileReader();
@@ -49,8 +52,12 @@ public class EmbeddablService implements SandBoxService {
 	
 	@Override
 	public String zipProject(String uniid, String taskName) {
-		String[] command = {"cmd" , "/c", "start", taskName, uniid, repoPath, zipPath};
-		return scriptRunner.run(command);
+		String[] command = {"bash", embeddablScriptPath, taskName, uniid, repoPath, zipPath};
+		String source = scriptRunner.run(command);
+		source = source.substring(0, source.lastIndexOf("/"));
+		System.out.println("Source: " + source);
+		String[] command2 = {"bash", zipScriptPath, uniid, taskName, source, zipPath + taskName};
+		return scriptRunner.run(command2);
 	}
 	
 	public SandBox save(SandBox sandBox) {

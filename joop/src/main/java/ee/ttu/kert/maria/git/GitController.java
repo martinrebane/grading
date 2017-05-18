@@ -20,9 +20,9 @@ public class GitController {
 		this.request = request;
 	}
 	
-	@RequestMapping(value="/git/pull/{subjectCode}/{uniid}/", method=RequestMethod.GET, consumes="application/json")
+	@RequestMapping(value="/git/pull/{uniid}/{subjectCode}/", method=RequestMethod.GET)
 	public @ResponseBody String pull(@PathVariable String uniid, @PathVariable String subjectCode) {
-		try {
+		/*try {
 			BufferedReader reader = request.getReader();
 			String json = "";
 			String line;
@@ -30,19 +30,19 @@ public class GitController {
 			while ((line = reader.readLine()) != null) {
                 json += line;
 			}
-			System.out.println("JSON: " + json);
+			//System.out.println("JSON: " + json);
 			/*JSONObject jsonObject = new JSONObject(json);
 			//sellest saaks bitbucketi järgi requesti username'i, et siis git pull õiges kohas teha
-			System.out.println(jsonObject.getJSONObject("actor").getString("username"));*/
+			System.out.println(jsonObject.getJSONObject("actor").getString("username"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}/* catch (JSONException e) {
+		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
 		
-		return gitService.pull(uniid, subjectCode);
+		return gitService.pull(uniid, "");
 	}
 
 }
