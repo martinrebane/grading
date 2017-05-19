@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ee.ttu.kert.maria.helpers.FileReader;
+import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 
 @Service
@@ -42,7 +42,7 @@ public class EclipseService implements IDEService {
 		String templateFilePath = projectTemplatePath + ".project";
 		templateFilePath = templateFilePath.replace("/mnt/d", "D:");
 
-		FileReader reader = new FileReader();
+		FileHandler reader = new FileHandler();
 		List<String> lines = reader.readAllLines(templateFilePath);
 		lines = replaceLine(lines, "<name>", "<name>" + taskName + "</name>");
 

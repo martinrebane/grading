@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileReader {
+public class FileHandler {
 
 	private File startFolder;
 

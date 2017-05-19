@@ -17,14 +17,14 @@ import org.eclipse.egit.github.core.service.OAuthService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ee.ttu.kert.maria.helpers.FileReader;
+import ee.ttu.kert.maria.helpers.FileHandler;
 
 @Service
 @Transactional
 public class GitHubService implements ReviewService {
 
 	private ReviewRepository reviewRepository;
-	private FileReader reader;
+	private FileHandler reader;
 	private SecureRandom secureRandom;
 	private GitHubClient client;
 
@@ -39,7 +39,7 @@ public class GitHubService implements ReviewService {
 
 	public GitHubService(ReviewRepository reviewRepository) {
 		this.reviewRepository = reviewRepository;
-		reader = new FileReader();
+		reader = new FileHandler();
 		secureRandom = new SecureRandom();
 		client = new GitHubClient();
 		client.setCredentials(user, pass);

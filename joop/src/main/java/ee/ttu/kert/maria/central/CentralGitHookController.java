@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class CentralController {
+public class CentralGitHookController {
 	
-	private CentralService centralService;
+	private CentralGitHookService centralService;
 	
-	public CentralController(CentralService centralService) {
+	public CentralGitHookController(CentralGitHookService centralService) {
 		this.centralService = centralService;
 	}
 	

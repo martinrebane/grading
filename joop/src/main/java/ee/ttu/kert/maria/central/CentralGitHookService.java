@@ -25,7 +25,7 @@ import ee.ttu.kert.maria.task.TaskService;
 
 @Service
 @Transactional
-public class CentralService {
+public class CentralGitHookService {
 	
 	@Value("${paths.files.repos}")
 	private String repoPath;
@@ -38,7 +38,7 @@ public class CentralService {
 	private EmbeddablService embeddablService;
 	private GitService gitService;
 
-	public CentralService(TaskService taskService, StudentTaskService studentTaskService,
+	public CentralGitHookService(TaskService taskService, StudentTaskService studentTaskService,
 			SubmissionService submissionService, MossService mossService, GitHubService gitHubService,
 			GradeService gradeService, EmbeddablService embeddablService, GitService gitService) {
 				this.taskService = taskService;

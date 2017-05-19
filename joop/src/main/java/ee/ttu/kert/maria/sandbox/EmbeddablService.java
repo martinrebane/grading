@@ -3,7 +3,7 @@ package ee.ttu.kert.maria.sandbox;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ee.ttu.kert.maria.helpers.FileReader;
+import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 
 @Service
@@ -11,7 +11,7 @@ import ee.ttu.kert.maria.helpers.ScriptRunner;
 public class EmbeddablService implements SandBoxService {
 	
 	private SandBoxRepository sandBoxRepository;
-	private FileReader reader;
+	private FileHandler reader;
 	private ScriptRunner scriptRunner;
 	
 	@Value("${paths.files.repos}")
@@ -28,7 +28,7 @@ public class EmbeddablService implements SandBoxService {
 	
 	public EmbeddablService(SandBoxRepository sandBoxRepository) {
 		this.sandBoxRepository = sandBoxRepository;
-		reader = new FileReader();
+		reader = new FileHandler();
 		scriptRunner = new ScriptRunner();
 	}
 	

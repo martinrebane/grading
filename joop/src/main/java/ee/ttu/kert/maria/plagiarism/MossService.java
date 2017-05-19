@@ -12,7 +12,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ee.ttu.kert.maria.helpers.FileReader;
+import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 import it.zielke.moji.MossException;
 import it.zielke.moji.SocketClient;
@@ -73,7 +73,7 @@ public class MossService implements PlagiarismService {
 		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
 		String destPath = plagiarismPath + taskName + "/" + uniid + "/";
 
-		FileReader reader = new FileReader();
+		FileHandler reader = new FileHandler();
 		System.out.println(projectPath.replace("/mnt/d", "D:"));
 		List<File> files = reader.getAllFiles(projectPath.replace("/mnt/d", "D:"));
 		ScriptRunner scriptRunner = new ScriptRunner();

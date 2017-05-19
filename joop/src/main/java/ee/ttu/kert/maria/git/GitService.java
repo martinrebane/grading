@@ -5,7 +5,7 @@ import java.io.File;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ee.ttu.kert.maria.helpers.FileReader;
+import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 
 @Service
@@ -42,7 +42,7 @@ public class GitService implements VersionControlService {
 	public String getHash(String uniid, String taskName) {
 		if (!hashPath.endsWith("/")) hashPath += "/";
 		String path = hashPath + uniid + "/" + taskName;
-		FileReader reader = new FileReader();
+		FileHandler reader = new FileHandler();
 		path += ".txt";
 		return reader.read(path);
 	}
