@@ -75,8 +75,7 @@ public class MossService implements PlagiarismService {
 
 		FileReader reader = new FileReader();
 		System.out.println(projectPath.replace("/mnt/d", "D:"));
-		reader.setPath(projectPath.replace("/mnt/d", "D:"));
-		List<File> files = reader.getAllFiles();
+		List<File> files = reader.getAllFiles(projectPath.replace("/mnt/d", "D:"));
 		ScriptRunner scriptRunner = new ScriptRunner();
 		List<String> folderPaths = new ArrayList<>();
 

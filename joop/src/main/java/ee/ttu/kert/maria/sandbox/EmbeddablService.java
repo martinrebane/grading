@@ -42,12 +42,7 @@ public class EmbeddablService implements SandBoxService {
 	public String getMainPath(String uniid, String taskName) {
 		if (!repoPath.endsWith("/")) repoPath += "/";
 		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
-		//reader = new FileReader();
-		reader.setPath(projectPath);
-		String mainPath = reader.getMainPath();
-		/*String classPath = mainPath.substring(0, mainPath.lastIndexOf('/'));
-		String mainFile = mainPath.substring(mainPath.lastIndexOf('/') + 1);
-		System.out.println(classPath + " " + mainFile);*/
+		String mainPath = reader.getMainPath(projectPath.replace("/mnt/d", "D:"));
 		return mainPath;
 	}
 	
@@ -67,8 +62,7 @@ public class EmbeddablService implements SandBoxService {
 	public String getPackagePath(String uniid, String taskName) {
 		if (!repoPath.endsWith("/")) repoPath += "/";
 		String path = repoPath + uniid + "/" + taskName + "/src/";
-		reader.setPath(path);
-		return reader.getPackagePath();
+		return reader.getPackagePath(path.replace("/mnt/d", "D:"));
 	}
 	
 	public SandBox save(SandBox sandBox) {

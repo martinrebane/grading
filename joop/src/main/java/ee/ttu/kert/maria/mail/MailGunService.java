@@ -16,16 +16,21 @@ public class MailGunService implements MailService {
 	
 	@Value("${mailgun.apikey}")
 	private String apiKey;
+	
+	@Value("${gist.link}")
+	private String gistLink;
+	
 	private String uniid;
 	private String reviewLink;
 	private String subject = "JOOP tagasiside";
 	
 	@Override
-	public void sendFeedback(String uniid, String reviewLink, String subject) {
-		sendEmail(uniid, reviewLink, subject);
+	public String sendFeedback(String uniid, String reviewId, String subject) {
+		sendEmail(uniid, reviewId, subject);
+		return "sent";
 	}
 	
-	private ClientResponse sendEmail(String uniid, String reviewLink, String subject) {
+	private ClientResponse sendEmail(String uniid, String reviewId, String subject) {
         Client client = Client.create();
         client.addFilter(new HTTPBasicAuthFilter("api", apiKey));
         WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +
@@ -34,12 +39,12 @@ public class MailGunService implements MailService {
         formData.add("from", "Mailgun Sandbox <postmaster@sandbox040c037ae0324f65ae848f4bc645132e.mailgun.org>");
         formData.add("to", uniid + " <" + uniid + "@ttu.ee>");
         formData.add("subject", subject);
-        formData.add("text", "Tagasiside asub lingil: " + reviewLink);
+        formData.add("text", "Tagasiside asub lingil: " + gistLink + reviewId);
         return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
                 post(ClientResponse.class, formData);
     }
 	
-	private ClientResponse sendEmailWorking() {
+	private ClientResponse sendEmailWorking(String uniid, String reviewId, String subject) {
         Client client = Client.create();
         client.addFilter(new HTTPBasicAuthFilter("api", this.subject));
         WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +
@@ -48,7 +53,7 @@ public class MailGunService implements MailService {
         formData.add("from", "Mailgun Sandbox <postmaster@sandbox040c037ae0324f65ae848f4bc645132e.mailgun.org>");
         formData.add("to", "Maria Kert <kertmaria@gmail.com>");
         formData.add("subject", subject);
-        formData.add("text", "Tagasiside asub lingil: " + reviewLink);
+        formData.add("text", "Tagasiside asub lingil: " + gistLink + reviewId);
         return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
                 post(ClientResponse.class, formData);
     }

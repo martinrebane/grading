@@ -2,6 +2,7 @@ package ee.ttu.kert.maria.helpers;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,17 +17,20 @@ public class FileReader {
 		startFolder = new File(path);
 	}*/
 
-	public String getMainPath() {
+	public String getMainPath(String path) {
+		setPath(path);
 		return getMainPath(startFolder);
 	}
 
-	public List<File> getAllFiles() {
+	public List<File> getAllFiles(String path) {
+		setPath(path);
 		return getAllFiles(startFolder, new ArrayList<>());
 	}
 	
-	public String read(File file) {
-		if (file == null) return null;
+	public String read(String filePath) {
+		if (filePath == null) return null;
 		
+		File file = new File(filePath);
 		Path path = Paths.get(file.getAbsolutePath());
 
 		String result = "";
@@ -46,9 +50,10 @@ public class FileReader {
 		}
 	}
 	
-	public List<String> readAllLines(File file) {
-		if (file == null) return null;
+	public List<String> readAllLines(String filePath) {
+		if (filePath == null) return null;
 		
+		File file = new File(filePath);
 		Path path = Paths.get(file.getAbsolutePath());
 
 		try {
@@ -58,7 +63,8 @@ public class FileReader {
 		}
 	}
 	
-	public String getPackagePath() {
+	public String getPackagePath(String path) {
+		setPath(path);
 		String mainPath = getMainPath(startFolder);
 		if (mainPath == null) return null;
 		
@@ -68,8 +74,19 @@ public class FileReader {
 			return mainPath.substring(mainPath.indexOf("/") + 1, mainPath.lastIndexOf("/")).replaceAll("/", ".");
 		}
 	}
+	
+	public boolean writeLines(List<String> lines, String path) {
+		Path p = Paths.get(path);
+		try {
+			Files.write(p, lines, StandardCharsets.UTF_8);
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
-	public void setPath(String path) {
+	private void setPath(String path) {
 		File startFolder = new File(path);
 		this.startFolder = startFolder;
 	}

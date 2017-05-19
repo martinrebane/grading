@@ -6,6 +6,8 @@ spring:
    jpa:
       hibernate:
          ddl-auto: update
+gist:
+   link: "https://gist.github.com/mariakert/"
 moss:
    userid: "567472279"
 github:

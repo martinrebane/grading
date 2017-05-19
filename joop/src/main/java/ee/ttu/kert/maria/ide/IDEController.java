@@ -17,8 +17,7 @@ public class IDEController {
 	
 	@RequestMapping(value="/ide/{uniid}/{taskName}", method=RequestMethod.GET)
 	public @ResponseBody String get(@PathVariable String uniid, @PathVariable String taskName) {
-		ideService.createProject(uniid, taskName);
-		return "done";
+		return ideService.createProject(uniid, taskName);
 	}
 
 }

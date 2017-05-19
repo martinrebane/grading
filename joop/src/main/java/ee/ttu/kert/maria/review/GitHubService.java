@@ -95,7 +95,7 @@ public class GitHubService implements ReviewService {
 		} catch (Exception e) {
 			return null;
 		}
-		return gist.getHtmlUrl();
+		return gist.getId();
 	}
 
 	private String updateGist(String id, String uniid, String taskName) {
@@ -109,19 +109,19 @@ public class GitHubService implements ReviewService {
 			Map<String, GistFile> map = addAllFiles(uniid + "/" + taskName);
 			gist.setFiles(map);
 			gistService.updateGist(gist);
-			return gist.getHtmlUrl();
+			return gist.getId();
 		} catch (IOException e) {
 			return null;
 		}
 	}
 
 	private Map<String, GistFile> addAllFiles(String taskPath) {
-		reader.setPath(repoPath + taskPath + "/src/");
-		List<File> files = reader.getAllFiles();
+		String path = repoPath + taskPath + "/src/";
+		List<File> files = reader.getAllFiles(path.replace("/mnt/d", "D:"));
 		Map<String, GistFile> fileMap = new HashMap<>();
 
 		files.forEach(file -> {
-			String content = reader.read(file);
+			String content = reader.read(file.getAbsolutePath());
 			GistFile gistFile = new GistFile();
 			gistFile.setFilename(file.getName());
 			gistFile.setContent(content);
