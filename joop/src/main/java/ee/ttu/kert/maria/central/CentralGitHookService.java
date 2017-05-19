@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ee.ttu.kert.maria.git.GitService;
 import ee.ttu.kert.maria.grading.Grade;
 import ee.ttu.kert.maria.grading.GradeService;
+import ee.ttu.kert.maria.ide.EclipseService;
 import ee.ttu.kert.maria.plagiarism.MossService;
 import ee.ttu.kert.maria.plagiarism.Plagiarism;
 import ee.ttu.kert.maria.review.GitHubService;
@@ -26,7 +27,7 @@ import ee.ttu.kert.maria.task.TaskService;
 @Service
 @Transactional
 public class CentralGitHookService {
-	
+
 	@Value("${paths.files.repos}")
 	private String repoPath;
 	private TaskService taskService;
@@ -37,39 +38,42 @@ public class CentralGitHookService {
 	private GradeService gradeService;
 	private EmbeddablService embeddablService;
 	private GitService gitService;
+	private EclipseService eclipseService;
 
 	public CentralGitHookService(TaskService taskService, StudentTaskService studentTaskService,
 			SubmissionService submissionService, MossService mossService, GitHubService gitHubService,
-			GradeService gradeService, EmbeddablService embeddablService, GitService gitService) {
-				this.taskService = taskService;
-				this.studentTaskService = studentTaskService;
-				this.submissionService = submissionService;
-				this.mossService = mossService;
-				this.gitHubService = gitHubService;
-				this.gradeService = gradeService;
-				this.embeddablService = embeddablService;
-				this.gitService = gitService;
+			GradeService gradeService, EmbeddablService embeddablService, GitService gitService,
+			EclipseService eclipseService) {
+		this.taskService = taskService;
+		this.studentTaskService = studentTaskService;
+		this.submissionService = submissionService;
+		this.mossService = mossService;
+		this.gitHubService = gitHubService;
+		this.gradeService = gradeService;
+		this.embeddablService = embeddablService;
+		this.gitService = gitService;
+		this.eclipseService = eclipseService;
 	}
 
 	public void init(String uniid, String subjectCode) {
 		gitService.pull(uniid, "");
-		
+
 		String path = repoPath.replace("/mnt/d", "D:");
 		path += uniid;
 		System.out.println(path);
 		File repo = new File(path);
 		File[] allTasks = repo.listFiles();
-		
+
 		for (File taskFolder : allTasks) {
 			String taskName = taskFolder.getName();
 			if (!taskName.startsWith(".")) {
 				Task task = makeTask(uniid, taskName);
 				StudentTask studentTask = makeStudentTask(uniid, taskName, task);
-				Submission submission = makeSubmission(uniid, taskName, studentTask);
+				makeSubmission(uniid, taskName, studentTask);
 			}
 		}
 	}
-	
+
 	private Task makeTask(String uniid, String taskName) {
 		Task task = taskService.getByName(taskName);
 		if (task == null) {
@@ -86,7 +90,7 @@ public class CentralGitHookService {
 		}
 		return task;
 	}
-	
+
 	private StudentTask makeStudentTask(String uniid, String taskName, Task task) {
 		StudentTask studentTask = studentTaskService.getByTaskAndUniid(task, uniid);
 		if (studentTask == null) {
@@ -108,7 +112,7 @@ public class CentralGitHookService {
 		}
 		return studentTask;
 	}
-	
+
 	private Submission makeSubmission(String uniid, String taskName, StudentTask studentTask) {
 		String currentHash = gitService.getHash(uniid, taskName);
 		String newHash = gitService.createHash(uniid, taskName);
@@ -121,6 +125,7 @@ public class CentralGitHookService {
 			submission.setSandBox(embeddablService.save(sandBox));
 			submission.setStudentTask(studentTask);
 			studentTask.getSubmissions().add(submission);
+			eclipseService.createProject(uniid, taskName);
 			return submissionService.save(submission);
 		}
 		return null;

@@ -2,8 +2,6 @@ package ee.ttu.kert.maria.review;
 
 public interface ReviewService {
 	
-	public String createLink(String uniid, String taskName);
-	
-	public String updateReview(String id, String uniid, String taskName);
+	public String getLink(String uniid, String taskName);
 
 }

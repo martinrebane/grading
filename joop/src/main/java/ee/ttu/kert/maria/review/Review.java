@@ -23,7 +23,7 @@ public class Review {
 	
 	private String taskName;
 	
-	private String reviewLink;
+	private String reviewId;
 	
 	@OneToOne
 	private StudentTask studentTask;
