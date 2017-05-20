@@ -1,0 +1,121 @@
+package ee.ttu.kert.maria.helpers;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+public class FileReader {
+
+	private File startFolder;
+
+	/*public FileReader(String path) {
+		startFolder = new File(path);
+	}*/
+
+	public String getMainPath() {
+		return getMainPath(startFolder);
+	}
+
+	public List<File> getAllFiles() {
+		return getAllFiles(startFolder, new ArrayList<>());
+	}
+	
+	public String read(File file) {
+		if (file == null) return null;
+		
+		Path path = Paths.get(file.getAbsolutePath());
+
+		String result = "";
+
+		try {
+			List<String> lines = Files.readAllLines(path);
+			for (String line : lines) {
+				result += line + "\n";
+			}
+
+			if ("".equals(result)) {
+				return null;
+			}
+			return result;
+		} catch (IOException e) {
+			return null;
+		}
+	}
+	
+	public String getPackagePath() {
+		String mainPath = getMainPath(startFolder);
+		if (mainPath == null) return null;
+		
+		if (mainPath.indexOf("/") == mainPath.lastIndexOf("/")) {
+			return "";
+		} else {
+			return mainPath.substring(mainPath.indexOf("/" + 1), mainPath.lastIndexOf("/")).replaceAll("/", ".");
+		}
+	}
+
+	public void setPath(String path) {
+		File startFolder = new File(path);
+		this.startFolder = startFolder;
+	}
+
+	private List<File> getAllFiles(File folder, List<File> files) {
+		File[] listOfFiles = folder.listFiles();
+
+		for (File file : listOfFiles) {
+			if (file.isFile()) {
+				files.add(file);
+			} else {
+				return getAllFiles(file, files);
+			}
+		}
+		return files;
+	}
+
+	private String getMainPath(File folder) {
+		System.out.println(folder);
+		File[] listOfFiles = folder.listFiles();
+		System.out.println(listOfFiles);
+
+		for (File file : listOfFiles) {
+			if (file.isFile()) {
+				String absolutePath = file.getAbsolutePath();
+				if (isMain(absolutePath)) {
+					return file.getName();
+				}
+			} else {
+				String finalPath = getMainPath(file);
+				if (finalPath != null) {
+					if (folder.equals(startFolder)) {
+						String absolutePath = folder.getAbsolutePath();
+						String[] pathFolders = absolutePath.split("\\\\");
+						String taskFolder = pathFolders[pathFolders.length - 2] + "/";
+						return taskFolder + file.getName() + "/" + finalPath;
+					}
+					return file.getName() + "/" + finalPath;
+				}
+			}
+		}
+		return null;
+	}
+
+	private boolean isMain(String path) {
+		Path filePath = Paths.get(path);
+		String result;
+		try {
+			List<String> lines = Files.readAllLines(filePath);
+			result = lines.stream().filter(line -> line.trim().startsWith("public static void main(String[] args)"))
+					.findAny().orElse(null);
+
+			if (result == null) {
+				return false;
+			}
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
+	}
+}

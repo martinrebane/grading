@@ -1,10 +1,10 @@
 package ee.ttu.kert.maria.sandbox;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import ee.ttu.kert.maria.submission.Submission;
 
 @Controller
 public class SandBoxController {
@@ -15,14 +15,8 @@ public class SandBoxController {
 		sandBoxService = embeddablService;
 	}
 	
-	@RequestMapping(value="/sandbox/{uniid}/{task}", method=RequestMethod.GET)
-	public @ResponseBody String getMainPath(@PathVariable String task, @PathVariable String uniid) {
-		return sandBoxService.zipProject(uniid, task);
+	@RequestMapping(value="/sandbox/update", method=RequestMethod.POST)
+	public SandBox update(Submission submission) {
+		return sandBoxService.updateSandBox(submission);
 	}
-	
-	@RequestMapping(value="/sandbox/save", method=RequestMethod.POST)
-	public SandBox save(SandBox sandBox) {
-		return sandBoxService.save(sandBox);
-	}
-
 }

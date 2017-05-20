@@ -1,0 +1,15 @@
+package ee.ttu.kert.maria.configuration;
+
+public class Configuration {
+	
+	private static final String REPO_PATH = "";
+	
+	private static final String HASH_PATH = "";
+	
+	private static final String ZIP_PATH = "";
+	
+	private static final String GITHUB_USER = "";
+	
+	private static final String GITHUB_PASS = "";
+
+}

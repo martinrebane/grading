@@ -13,10 +13,6 @@ public class FileHandler {
 
 	private File startFolder;
 
-	/*public FileReader(String path) {
-		startFolder = new File(path);
-	}*/
-
 	public String getMainPath(String path) {
 		setPath(path);
 		return getMainPath(startFolder);

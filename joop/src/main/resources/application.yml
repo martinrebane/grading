@@ -6,13 +6,12 @@ spring:
    jpa:
       hibernate:
          ddl-auto: update
-gist:
-   link: "https://gist.github.com/mariakert/"
 moss:
    userid: "567472279"
 github:
    user: mariakert
    pass: Parool123
+   gistlink: "https://gist.github.com/mariakert/"
 mailgun:
    apikey: key-530340de58ee7be39a1358ae50b0d786
 paths:
@@ -23,7 +22,7 @@ paths:
       zips: "/mnt/d/Users/mammu/workspace/loputoo/zips/"
       embeddabl: "/mnt/d/Users/mammu/workspace/loputoo/embeddabl/"
    scripts:
-      pull: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/pullhook.sh"
+      pull: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/pull.sh"
       hash: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/hashcreator.sh"
       embeddabl: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/embeddabl.sh"
       zip: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/zipper.sh"

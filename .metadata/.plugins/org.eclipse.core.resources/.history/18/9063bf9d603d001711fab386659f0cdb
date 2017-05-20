@@ -1,0 +1,7 @@
+package ee.ttu.kert.maria.review;
+
+public interface ReviewService {
+	
+	public String getLink(StudentTask studentTask);
+
+}

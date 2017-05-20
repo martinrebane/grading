@@ -1,0 +1,7 @@
+package ee.ttu.kert.maria.plagiarism;
+
+public interface AppropriationService {
+	
+	public void run(String taskName);
+
+}

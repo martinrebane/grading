@@ -1,0 +1,81 @@
+package ee.ttu.kert.maria.mail;
+
+import javax.ws.rs.core.MediaType;
+
+import org.springframework.beans.factory.annotation.Value;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
+
+public class MailGunService implements MailService {
+	
+	@Value("${mailgun.apikey}")
+	private String apiKey;
+	private String uniid;
+	private String reviewLink;
+	private String subject = "JOOP tagasiside";
+	
+	@Override
+	public void sendFeedback(String uniid, String reviewLink, String subject) {
+		setUniid(uniid);
+		setReviewLink(reviewLink);
+		setSubject(subject);
+		sendEmail();
+	}
+	
+	private ClientResponse sendEmail() {
+        Client client = Client.create();
+        client.addFilter(new HTTPBasicAuthFilter("api", apiKey));
+        WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +
+                "e0324f65ae848f4bc645132e.mailgun.org/messages");
+        MultivaluedMapImpl formData = new MultivaluedMapImpl();
+        formData.add("from", "Mailgun Sandbox <postmaster@sandbox040c037ae0324f65ae848f4bc645132e.mailgun.org>");
+        formData.add("to", uniid + " <" + uniid + "@ttu.ee>");
+        formData.add("subject", subject);
+        formData.add("text", "Tagasiside asub lingil: " + reviewLink);
+        return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
+                post(ClientResponse.class, formData);
+    }
+	
+	private ClientResponse sendEmailWorking() {
+        Client client = Client.create();
+        client.addFilter(new HTTPBasicAuthFilter("api", apiKey));
+        WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +
+                "e0324f65ae848f4bc645132e.mailgun.org/messages");
+        MultivaluedMapImpl formData = new MultivaluedMapImpl();
+        formData.add("from", "Mailgun Sandbox <postmaster@sandbox040c037ae0324f65ae848f4bc645132e.mailgun.org>");
+        formData.add("to", "Maria Kert <kertmaria@gmail.com>");
+        formData.add("subject", subject);
+        formData.add("text", "Tagasiside asub lingil: " + reviewLink);
+        return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
+                post(ClientResponse.class, formData);
+    }
+
+	public String getUniid() {
+		return uniid;
+	}
+
+	public void setUniid(String uniid) {
+		this.uniid = uniid;
+	}
+
+	public String getReviewLink() {
+		return reviewLink;
+	}
+
+	public void setReviewLink(String reviewLink) {
+		this.reviewLink = reviewLink;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+}

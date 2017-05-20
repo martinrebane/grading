@@ -1,0 +1,150 @@
+package ee.ttu.kert.maria.review;
+
+import java.io.File;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.eclipse.egit.github.core.Authorization;
+import org.eclipse.egit.github.core.Gist;
+import org.eclipse.egit.github.core.GistFile;
+import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.service.GistService;
+import org.eclipse.egit.github.core.service.OAuthService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ee.ttu.kert.maria.helpers.FileReader;
+
+@Service
+@Transactional
+public class GitHubService implements ReviewService {
+
+	private ReviewRepository reviewRepository;
+	private FileReader reader;
+	private SecureRandom secureRandom;
+	private GitHubClient client;
+
+	@Value("${paths.files.repos}")
+	private String repoPath;
+
+	@Value("${github.user}")
+	private String user;
+
+	@Value("${github.pass}")
+	private String pass;
+
+	public GitHubService(ReviewRepository reviewRepository) {
+		this.reviewRepository = reviewRepository;
+		reader = new FileReader();
+		secureRandom = new SecureRandom();
+		client = new GitHubClient();
+	}
+
+	@Override
+	public String createLink(String uniid, String taskName) {
+		return createGist(uniid, taskName);
+	}
+
+	@Override
+	public String updateReview(String id, String uniid, String taskName) {
+		return updateGist(id, uniid, taskName);
+	}
+
+	public Review saveReview(Review review) {
+		Review databaseReview = reviewRepository.findByUniIdAndTaskName(review.getUniId(), review.getTaskName());
+		if (databaseReview == null) {
+			String link = createLink(review.getStudentTask().getUniid(), review.getStudentTask().getTask().getName());
+			review.setReviewLink(link);
+			return reviewRepository.save(review);
+		}
+		return databaseReview;
+	}
+
+	public Review getReviewById(long reviewID) {
+		return reviewRepository.findOne(reviewID);
+	}
+
+	public Iterable<Review> getAllStudentReviews(String uniId) {
+		return reviewRepository.findByUniId(uniId);
+	}
+
+	private String createGist(String uniid, String taskName) {
+		Authorization auth = getGistAuthorization();
+		Gist gist;
+
+		try {
+			// Create Gist service configured with OAuth2 token
+			GistService gistService = new GistService(client);
+			gistService.getClient().setOAuth2Token(auth.getToken());
+
+			// Create Gist
+			gist = new Gist();
+			gist.setPublic(false);
+			gist.setDescription("JOOP");
+			Map<String, GistFile> map = addAllFiles(uniid + "/" + taskName);
+			gist.setFiles(map);
+
+			gist = gistService.createGist(gist);
+		} catch (IOException e) {
+			return null;
+		} catch (Exception e) {
+			return null;
+		}
+		return gist.getHtmlUrl();
+	}
+
+	private String updateGist(String id, String uniid, String taskName) {
+		Authorization auth = getGistAuthorization();
+
+		// Create Gist service configured with OAuth2 token
+		GistService gistService = new GistService(client);
+		gistService.getClient().setOAuth2Token(auth.getToken());
+		try {
+			Gist gist = gistService.getGist(id);
+			Map<String, GistFile> map = addAllFiles(uniid + "/" + taskName);
+			gist.setFiles(map);
+			gistService.updateGist(gist);
+			return gist.getHtmlUrl();
+		} catch (IOException e) {
+			return null;
+		}
+	}
+
+	private Map<String, GistFile> addAllFiles(String taskPath) {
+		reader.setPath(repoPath + taskPath);
+		List<File> files = reader.getAllFiles();
+		Map<String, GistFile> fileMap = new HashMap<>();
+
+		files.forEach(file -> {
+			String content = reader.read(file);
+			GistFile gistFile = new GistFile();
+			gistFile.setFilename(file.getName());
+			gistFile.setContent(content);
+			fileMap.put(file.getName(), gistFile);
+		});
+		return fileMap;
+	}
+
+	private String getRandomString() {
+		return new BigInteger(130, secureRandom).toString(32);
+	}
+
+	private Authorization getGistAuthorization() {
+		client.setCredentials(user, pass);
+		OAuthService oauthService = new OAuthService(client);
+		Authorization auth = new Authorization();
+		auth.setScopes(Arrays.asList("gist"));
+		// no authorization possible without this, has to be unique every time
+		auth.setNote(getRandomString());
+		try {
+			auth = oauthService.createAuthorization(auth);
+			return auth;
+		} catch (IOException e) {
+			return null;
+		}
+	}
+}

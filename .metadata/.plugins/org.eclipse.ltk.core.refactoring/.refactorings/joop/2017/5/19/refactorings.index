@@ -6,3 +6,25 @@
 1494345172760	Rename local variable 'repoPath'
 1494488853038	Rename method 'sendSimpleMessage'
 1494510079998	Delete element
+1494663395882	Delete element
+1494663510451	Copy compilation unit
+1494663527236	Rename type 'MailClient'
+1494663897396	Delete element
+1494665229276	Copy compilation unit
+1494665244435	Delete element
+1494665316294	Move compilation unit
+1494665336759	Rename package 'ee.ttu.kert.maria.entities'
+1494665431705	Rename type 'GistClient'
+1494671015643	Rename field 'gistClient'
+1494679128412	Rename local variable 'path'
+1494679223878	Rename field 'COMMAND'
+1494682632752	Rename local variable 'taskname'
+1494683065307	Rename field 'PULL_COMMAND'
+1494683076022	Rename field 'HASH_COMMAND'
+1494684314694	Rename method 'getMain'
+1494684323256	Rename method 'getMain'
+1494693559075	Rename local variable 'task'
+1494696032253	Rename type 'PlagiarismService'
+1494696042062	Rename type 'AppropriationService'
+1494696209828	Rename type 'SandBoxService'
+1494696222835	Rename type 'ResultService'

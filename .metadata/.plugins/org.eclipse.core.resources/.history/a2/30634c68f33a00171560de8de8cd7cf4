@@ -1,0 +1,42 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('com.sun.jersey:jersey-bundle:1.19.3')
+	compile('com.google.code.gson:gson:2.8.0')
+	compile('org.mariadb.jdbc:mariadb-java-client:1.5.9')
+	compile('it.zielke:moji:1.0.2')
+	compile('org.eclipse.jdt:org.eclipse.jdt.core:3.12.3')	
+	compile('org.eclipse.jdt:launching:3.3.0-v20070510')
+	runtime('org.springframework.boot:spring-boot-devtools')
+	compileOnly('org.projectlombok:lombok')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+plugins {
+	id 'org.eclipse.jdt.core' version '3.12.3'
+}

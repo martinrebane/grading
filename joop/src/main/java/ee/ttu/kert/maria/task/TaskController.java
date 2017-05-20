@@ -22,7 +22,13 @@ public class TaskController {
 	@RequestMapping(value="/task/{taskName}", method=RequestMethod.GET)
 	public @ResponseBody List<StudentTask> getStudentTasks(@PathVariable String taskName) {
 		Task task = taskService.getByName(taskName);
+		System.out.println(task);
 		if (task == null) return new ArrayList<>();
 		return task.getStudentTasks();
+	}
+	
+	@RequestMapping(value="/task/get", method=RequestMethod.GET)
+	public @ResponseBody Iterable<Task> getAllTasks() {
+		return taskService.getAll();
 	}
 }

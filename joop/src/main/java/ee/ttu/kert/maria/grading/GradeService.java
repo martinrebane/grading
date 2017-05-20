@@ -16,13 +16,5 @@ public class GradeService {
 	public Grade saveGrade(Grade grade) {
 		return gradeRepository.save(grade);
 	}
-	
-	public Grade getGrade(long id) {
-		return gradeRepository.findOne(id);
-	}
-	
-	public Iterable<Grade> getAllGrades() {
-		return gradeRepository.findAll();
-	}
 
 }

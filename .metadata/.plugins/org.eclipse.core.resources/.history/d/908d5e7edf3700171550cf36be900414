@@ -1,0 +1,48 @@
+package ee.ttu.kert.maria.git;
+
+import java.io.File;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ee.ttu.kert.maria.configuration.Configuration;
+import ee.ttu.kert.maria.helpers.FileReader;
+import ee.ttu.kert.maria.helpers.ScriptRunner;
+
+@Service
+@Transactional
+public class GitService implements VersionControlService {
+	
+	private static final String PULL_COMMAND = "../bash/pullhook.sh"; //tulevikus ilmselt cmd /c start --> sh
+	private static final String HASH_COMMAND = "../bash/hashcreator.sh";
+	private static final String REPO_PATH = Configuration.getRepoPath();
+	private static final String HASH_PATH = Configuration.getHashPath();
+	private ScriptRunner scriptRunner;
+	
+	@Override
+	public String pull(String uniid, String subjectCode) {
+		String[] command = {"cmd", "/c", "start", PULL_COMMAND, uniid, REPO_PATH};
+		scriptRunner = new ScriptRunner();
+		return scriptRunner.run(command);
+	}
+
+	@Override
+	public String getHash(String uniid, String taskName) {
+		String path = HASH_PATH + uniid + "/" + taskName;
+		FileReader reader = new FileReader(path);
+		
+		path += ".txt";
+		File file = new File(path);
+		System.out.println(file == null);
+		System.out.println(file.getAbsolutePath());
+		return reader.read(file);
+	}
+
+	@Override
+	public String createHash(String uniid, String taskname) {
+		String projectPath = REPO_PATH + uniid + "/" + taskname + "/src/";
+		scriptRunner = new ScriptRunner();
+		String[] command = {"cmd", "/c", "start", HASH_COMMAND, projectPath, HASH_PATH};
+		return scriptRunner.run(command);
+	}
+}

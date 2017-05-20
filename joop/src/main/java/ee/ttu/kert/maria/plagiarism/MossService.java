@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
+import ee.ttu.kert.maria.task.Task;
 import it.zielke.moji.MossException;
 import it.zielke.moji.SocketClient;
 
@@ -40,9 +41,12 @@ public class MossService implements PlagiarismService {
 	}
 
 	@Override
-	public String run(String taskName) {
+	public Plagiarism run(Task task) {
+		String taskName = task.getName();
 		if (!plagiarismPath.endsWith("/")) plagiarismPath += "/";
 		String path = plagiarismPath + taskName;
+		
+		//code from https://github.com/nordicway/moji
 		Collection<File> studentFiles = FileUtils.listFiles(new File(path), new String[] { "java" }, true);
 		SocketClient client = new SocketClient();
 		client.setUserID(mossUserid);
@@ -54,7 +58,9 @@ public class MossService implements PlagiarismService {
 			}
 			client.sendQuery();
 			URL results = client.getResultURL();
-			return results.toString();
+			Plagiarism plagiarism = task.getPlagiarism();
+			plagiarism.setResult(results.toString());
+			return plagiarismRepository.save(plagiarism);
 		} catch (MossException e) {
 			e.printStackTrace();
 		} catch (UnknownHostException e) {

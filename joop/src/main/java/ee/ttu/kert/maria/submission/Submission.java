@@ -24,6 +24,8 @@ public class Submission {
 	
 	private String date;
 	
+	private String location;
+	
 	@ManyToOne
 	private StudentTask studentTask;
 	

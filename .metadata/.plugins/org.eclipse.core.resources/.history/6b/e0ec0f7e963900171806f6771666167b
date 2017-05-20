@@ -1,0 +1,64 @@
+package ee.ttu.kert.maria.review;
+
+import java.security.SecureRandom;
+
+import org.eclipse.egit.github.core.client.GitHubClient;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ee.ttu.kert.maria.helpers.FileReader;
+
+@Service
+@Transactional
+public class GitHubService implements CodeReviewService {
+
+	ReviewRepository reviewRepository;
+	private FileReader reader;
+	private SecureRandom secureRandom;
+	private GitHubClient client;
+	
+	@Value("${paths.files.reops}")
+	private String repoPath;
+	
+	@Value("${github.user}")
+	private String user;
+	
+	@Value("${github.pass}")
+	private String pass;
+	
+	
+	public GitHubService(ReviewRepository reviewRepository) {
+		this.reviewRepository = reviewRepository;
+	}
+	
+	@Override
+	public String createLink() {
+		return gitHubService.createGist();
+	}
+
+	@Override
+	public String updateReview(String id) {
+		//String updateCommand = UPDATE_PATH + " " + id;
+		//return scriptRunner.run(updateCommand);
+		return gitHubService.updateGist(id);
+	}
+
+	public Review saveReview(Review review) {
+		Review databaseReview = reviewRepository.findByUniIdAndTaskName(review.getUniId(), review.getTaskName());
+		if (databaseReview == null) {
+			String link = createLink();
+			review.setReviewLink(link);
+			return reviewRepository.save(review);
+		}
+		return databaseReview;
+	}
+
+	public Review getReviewById(long reviewID) {
+		return reviewRepository.findOne(reviewID);
+	}
+
+	public Iterable<Review> getAllStudentReviews(String uniId) {
+		return reviewRepository.findByUniId(uniId);
+	}
+}

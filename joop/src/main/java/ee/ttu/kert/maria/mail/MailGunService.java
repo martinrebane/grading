@@ -17,36 +17,37 @@ public class MailGunService implements MailService {
 	@Value("${mailgun.apikey}")
 	private String apiKey;
 	
-	@Value("${gist.link}")
+	@Value("${github.gistlink}")
 	private String gistLink;
-	
-	private String uniid;
-	private String reviewLink;
-	private String subject = "JOOP tagasiside";
 	
 	@Override
 	public String sendFeedback(String uniid, String reviewId, String subject) {
-		sendEmail(uniid, reviewId, subject);
+		ClientResponse response = sendEmail(uniid, reviewId, subject);
+		if (response == null) return null;
 		return "sent";
 	}
 	
 	private ClientResponse sendEmail(String uniid, String reviewId, String subject) {
-        Client client = Client.create();
-        client.addFilter(new HTTPBasicAuthFilter("api", apiKey));
-        WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +
-                "e0324f65ae848f4bc645132e.mailgun.org/messages");
-        MultivaluedMapImpl formData = new MultivaluedMapImpl();
-        formData.add("from", "Mailgun Sandbox <postmaster@sandbox040c037ae0324f65ae848f4bc645132e.mailgun.org>");
-        formData.add("to", uniid + " <" + uniid + "@ttu.ee>");
-        formData.add("subject", subject);
-        formData.add("text", "Tagasiside asub lingil: " + gistLink + reviewId);
-        return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
-                post(ClientResponse.class, formData);
+		try {
+			Client client = Client.create();
+	        client.addFilter(new HTTPBasicAuthFilter("api", apiKey));
+	        WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +
+	                "e0324f65ae848f4bc645132e.mailgun.org/messages");
+	        MultivaluedMapImpl formData = new MultivaluedMapImpl();
+	        formData.add("from", "Mailgun Sandbox <postmaster@sandbox040c037ae0324f65ae848f4bc645132e.mailgun.org>");
+	        formData.add("to", uniid + " <" + uniid + "@ttu.ee>");
+	        formData.add("subject", subject);
+	        formData.add("text", "Tagasiside asub lingil: " + gistLink + reviewId);
+	        return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
+	                post(ClientResponse.class, formData);
+		} catch (Exception e) {
+			return null;
+		}
     }
 	
 	private ClientResponse sendEmailWorking(String uniid, String reviewId, String subject) {
         Client client = Client.create();
-        client.addFilter(new HTTPBasicAuthFilter("api", this.subject));
+        client.addFilter(new HTTPBasicAuthFilter("api", subject));
         WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +
                 "e0324f65ae848f4bc645132e.mailgun.org/messages");
         MultivaluedMapImpl formData = new MultivaluedMapImpl();
@@ -57,29 +58,5 @@ public class MailGunService implements MailService {
         return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
                 post(ClientResponse.class, formData);
     }
-
-	public String getUniid() {
-		return uniid;
-	}
-
-	public void setUniid(String uniid) {
-		this.uniid = uniid;
-	}
-
-	public String getReviewLink() {
-		return reviewLink;
-	}
-
-	public void setReviewLink(String reviewLink) {
-		this.reviewLink = reviewLink;
-	}
-
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
 
 }

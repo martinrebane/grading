@@ -1,0 +1,54 @@
+package ee.ttu.kert.maria.review;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+public class GitHubService implements CodeReviewService {
+
+	ReviewRepository reviewRepository;
+
+	/*private static final String CREATE_PATH = "ruby ../bash/gistcreator.rb";
+	private static final String UPDATE_PATH = "ruby ../bash/gistupdater.rb";
+	private ScriptRunner scriptRunner = new ScriptRunner();*/
+	
+	@Value("${paths.files.reops}")
+	private String repoPath;
+	private GitHubService gitHubService = new GitHubService(repoPath + "maria.kert/EX05/src/");
+	
+	public GitHubService(ReviewRepository reviewRepository) {
+		this.reviewRepository = reviewRepository;
+	}
+	
+	@Override
+	public String createLink() {
+		return gitHubService.createGist();
+	}
+
+	@Override
+	public String updateReview(String id) {
+		//String updateCommand = UPDATE_PATH + " " + id;
+		//return scriptRunner.run(updateCommand);
+		return gitHubService.updateGist(id);
+	}
+
+	public Review saveReview(Review review) {
+		Review databaseReview = reviewRepository.findByUniIdAndTaskName(review.getUniId(), review.getTaskName());
+		if (databaseReview == null) {
+			String link = createLink();
+			review.setReviewLink(link);
+			return reviewRepository.save(review);
+		}
+		return databaseReview;
+	}
+
+	public Review getReviewById(long reviewID) {
+		return reviewRepository.findOne(reviewID);
+	}
+
+	public Iterable<Review> getAllStudentReviews(String uniId) {
+		return reviewRepository.findByUniId(uniId);
+	}
+}

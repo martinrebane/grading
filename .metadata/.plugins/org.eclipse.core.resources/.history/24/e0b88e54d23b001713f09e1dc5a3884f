@@ -1,0 +1,28 @@
+spring:
+   datasource:
+      url: jdbc:mariadb://localhost:3306/joopdatabase
+      username: root
+      password: Parool123
+   jpa:
+      hibernate:
+         ddl-auto: update
+moss:
+   userid: "567472279"
+github:
+   user: mariakert
+   pass: Parool123
+mailgun:
+   apikey: key-530340de58ee7be39a1358ae50b0d786
+paths:
+   files:
+      hash: "D:/Users/mammu/workspace/loputoo/hashes/"
+      plagiarism: "D:/Users/mammu/workspace/loputoo/plagiarism/"
+      repos: "D:/Users/mammu/workspace/loputoo/repod/"
+      zips: "D:/Users/mammu/workspace/loputoo/zips/"
+   scripts:
+      pull: "D:/Users/mammu/workspace/loputoo/loputoo/bash/pullhook.sh"
+      hash: "D:/Users/mammu/workspace/loputoo/loputoo/bash/hashcreator.sh"
+      embeddabl: "D:/Users/mammu/workspace/loputoo/loputoo/bash/embeddabl.sh"
+      zip: "D:/Users/mammu/workspace/loputoo/loputoo/bash/zipper.sh"
+      copy: "D:/Users/mammu/workspace/loputoo/loputoo/bash/copyfiles.sh"
+      project: "D:/Users/mammu/workspace/loputoo/loputoo/bash/projectcreator.sh"

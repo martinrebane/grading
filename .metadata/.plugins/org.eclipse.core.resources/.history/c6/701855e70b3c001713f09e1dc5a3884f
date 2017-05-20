@@ -1,0 +1,62 @@
+package ee.ttu.kert.maria.ide;
+
+import java.io.File;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ee.ttu.kert.maria.helpers.FileReader;
+import ee.ttu.kert.maria.helpers.ScriptRunner;
+
+@Service
+@Transactional
+public class EclipseService implements IDEService {
+	
+	@Value("${paths.files.repos}")
+	private String repoPath;
+	
+	@Value("${paths.files.zips}")
+	private String zipPath;
+	
+	@Value("${paths.scripts.zip}")
+	private String zipScriptPath;
+	
+	@Value("${paths.scripts.project}")
+	private String projectCreatorPath;
+	
+	@Value("${paths.templates.project}")
+	private String projectTemplatePath;
+	
+	private ScriptRunner scriptRunner;
+	
+	public EclipseService() {
+		scriptRunner = new ScriptRunner();
+	}
+
+	@Override
+	public void createProject(String uniid, String taskName) {
+		if (!repoPath.endsWith("/")) repoPath += "/";
+		if (!zipPath.endsWith("/")) zipPath += "/";
+		if (!projectTemplatePath.endsWith("/")) projectTemplatePath += "/";
+		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
+		String templateFilePath = projectTemplatePath + ".project";
+		
+		File templateFile = new File(templateFilePath);
+		FileReader reader = new FileReader();
+		String[] lines = reader.readAllLines(templateFile);
+		
+		for (int i = 0; i < lines.length; i++) {
+			if (lines[i].contains("<name>")) {
+				String toBeReplaced = lines[i].substring(lines[i].indexOf("<name>"));
+				String replaceString = "<name>" + taskName + "</name>";
+			}
+		}
+	}
+	
+	public String zip(String uniid, String taskName) {
+		
+		return null;
+	}
+
+}

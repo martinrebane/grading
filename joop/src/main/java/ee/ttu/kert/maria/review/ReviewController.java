@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import ee.ttu.kert.maria.studenttask.StudentTask;
 
 @Controller
@@ -15,9 +16,9 @@ public class ReviewController {
 		this.reviewService = reviewService;
 	}
 	
-	@RequestMapping(value = "/review/get_link", method = RequestMethod.GET)
-	public String getLink(@RequestBody StudentTask studentTask) {
-		return reviewService.getLink(studentTask.getUniid(), studentTask.getTask().getName());
+	@RequestMapping(value = "/review/update", method = RequestMethod.POST)
+	public Review update(@RequestBody StudentTask studentTask) {
+		return reviewService.updateReview(studentTask);
 	}
 	
 }

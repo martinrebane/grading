@@ -1,0 +1,18 @@
+package ee.ttu.kert.maria.task;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ee.ttu.kert.maria.studenttask.StudentTask;
+
+@Service
+@Transactional
+public class TaskService {
+	
+	@Autowired
+	private TaskRepository taskRepository;
+	
+	public Iterable<StudentTask> get
+
+}

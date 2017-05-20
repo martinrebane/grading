@@ -24,6 +24,12 @@ public class SandBox {
 	
 	private String stderr;
 	
+	private String location;
+	
+	private String mainPath;
+	
+	private String packagePath;
+	
 	@OneToOne(mappedBy="sandBox", cascade=CascadeType.ALL)
 	private Submission submission;
 

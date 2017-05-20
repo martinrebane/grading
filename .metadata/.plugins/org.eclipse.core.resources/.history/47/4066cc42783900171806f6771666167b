@@ -1,0 +1,10 @@
+spring:
+   datasource:
+      url: jdbc:mariadb://localhost:3306/joopdatabase
+      username: root
+      password: Parool123
+   jpa:
+      hibernate:
+         ddl-auto: update
+moss:
+   userid: "567472279"

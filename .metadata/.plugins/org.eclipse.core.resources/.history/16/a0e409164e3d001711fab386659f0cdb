@@ -1,0 +1,33 @@
+spring:
+   datasource:
+      url: jdbc:mariadb://localhost:3306/joopdatabase
+      username: root
+      password: Parool123
+   jpa:
+      hibernate:
+         ddl-auto: update
+gist:
+   link: "https://gist.github.com/mariakert/"
+moss:
+   userid: "567472279"
+github:
+   user: mariakert
+   pass: Parool123
+mailgun:
+   apikey: key-530340de58ee7be39a1358ae50b0d786
+paths:
+   files:
+      hash: "/mnt/d/Users/mammu/workspace/loputoo/hashes/"
+      plagiarism: "/mnt/d/Users/mammu/workspace/loputoo/plagiarism/"
+      repos: "/mnt/d/Users/mammu/workspace/loputoo/repod/"
+      zips: "/mnt/d/Users/mammu/workspace/loputoo/zips/"
+      embeddabl: "/mnt/d/Users/mammu/workspace/loputoo/embeddabl/"
+   scripts:
+      pull: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/pullhook.sh"
+      hash: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/hashcreator.sh"
+      embeddabl: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/embeddabl.sh"
+      zip: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/zipper.sh"
+      copy: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/copyfiles.sh"
+      project: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/projectcreator.sh"
+   templates:
+      project: "/mnt/d/Users/mammu/workspace/loputoo/templates/Template/"

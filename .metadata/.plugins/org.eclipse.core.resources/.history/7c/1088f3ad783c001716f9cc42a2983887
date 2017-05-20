@@ -1,0 +1,14 @@
+package ee.ttu.kert.maria.mail;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class MailController {
+	
+	private MailGunService mailGunService;
+	
+	public MailController(MailGunService mailGunService) {
+		this.mailGunService = mailGunService;
+	}
+
+}

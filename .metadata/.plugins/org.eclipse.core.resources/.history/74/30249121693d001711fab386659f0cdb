@@ -1,0 +1,7 @@
+package ee.ttu.kert.maria.sandbox;
+
+public interface SandBoxService {
+	
+	public String update(SandBox sandBox);
+
+}

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
+import ee.ttu.kert.maria.submission.Submission;
 
 @Service
 @Transactional
@@ -33,17 +34,16 @@ public class EmbeddablService implements SandBoxService {
 	}
 	
 	@Override
-	public String sendProject(String uniid, String taskName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public String getMainPath(String uniid, String taskName) {
-		if (!repoPath.endsWith("/")) repoPath += "/";
-		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
-		String mainPath = reader.getMainPath(projectPath.replace("/mnt/d", "D:"));
-		return mainPath;
+	public SandBox updateSandBox(Submission submission) {
+		String uniid = submission.getStudentTask().getUniid();
+		String taskName = submission.getStudentTask().getTask().getName();
+		SandBox sandBox = submission.getSandBox();
+		
+		String mainPath = getMainPath(uniid, taskName);
+		String packagePath = getPackagePath(uniid, taskName);
+		sandBox.setMainPath(mainPath);
+		sandBox.setPackagePath(packagePath);
+		return sandBoxRepository.save(sandBox);
 	}
 	
 	@Override
@@ -58,19 +58,20 @@ public class EmbeddablService implements SandBoxService {
 		return scriptRunner.run(command2);
 	}
 	
-	@Override
-	public String getPackagePath(String uniid, String taskName) {
+	public SandBox save(SandBox sandBox) {
+		return sandBoxRepository.save(sandBox);
+	}
+
+	private String getMainPath(String uniid, String taskName) {
+		if (!repoPath.endsWith("/")) repoPath += "/";
+		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
+		String mainPath = reader.getMainPath(projectPath.replace("/mnt/d", "D:"));
+		return mainPath;
+	}
+	
+	private String getPackagePath(String uniid, String taskName) {
 		if (!repoPath.endsWith("/")) repoPath += "/";
 		String path = repoPath + uniid + "/" + taskName + "/src/";
 		return reader.getPackagePath(path.replace("/mnt/d", "D:"));
 	}
-	
-	public SandBox save(SandBox sandBox) {
-		return sandBoxRepository.save(sandBox);
-	}
-	
-	public SandBox getSandBoxById(long id) {
-		return sandBoxRepository.findOne(id);
-	}
-
 }

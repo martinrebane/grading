@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,8 +21,8 @@ public class StudentTaskController {
 		studentTaskService = service;
 	}
 	
-	@RequestMapping(value="/studenttask/{task}/{uniid}", method=RequestMethod.GET)
-	public @ResponseBody List<Submission> getSubmissions(@PathVariable Task task, @PathVariable String uniid) {
+	@RequestMapping(value="/studenttask/{uniid}", method=RequestMethod.POST)
+	public @ResponseBody List<Submission> getSubmissions(@RequestBody Task task, @PathVariable String uniid) {
 		StudentTask studentTask = studentTaskService.getByTaskAndUniid(task, uniid);
 		if (studentTask == null) return new ArrayList<>();
 		return studentTask.getSubmissions();

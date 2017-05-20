@@ -1,0 +1,15 @@
+package ee.ttu.kert.maria.sandbox;
+
+public interface ResultService {
+	
+	public String sendProject();
+	
+	public String getMainPath();
+	
+	public String zipProject();
+	
+	public SandBox save(SandBox sandBox);
+	
+	public SandBox get(long id);
+
+}

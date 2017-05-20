@@ -1,0 +1,42 @@
+package ee.ttu.kert.maria.configuration;
+
+public class Configuration {
+	
+	private static final String REPO_PATH = "";
+	
+	private static final String HASH_PATH = "";
+	
+	private static final String ZIP_PATH = "";
+	
+	private static final String PLAGIARISM_PATH = "";
+	
+	private static final String GITHUB_USER = "githubusername";
+	
+	private static final String GITHUB_PASS = "githubpassword";
+
+	public static String getRepoPath() {
+		return REPO_PATH;
+	}
+
+	public static String getHashPath() {
+		return HASH_PATH;
+	}
+
+	public static String getZipPath() {
+		return ZIP_PATH;
+	}
+
+	public static String getPlagiarismPath() {
+		return PLAGIARISM_PATH;
+	}
+
+	public static String getGithubUser() {
+		return GITHUB_USER;
+	}
+
+	public static String getGithubPass() {
+		return GITHUB_PASS;
+	}
+
+	
+}

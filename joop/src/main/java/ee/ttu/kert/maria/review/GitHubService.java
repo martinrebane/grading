@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ee.ttu.kert.maria.helpers.FileHandler;
+import ee.ttu.kert.maria.studenttask.StudentTask;
 
 @Service
 @Transactional
@@ -36,9 +37,6 @@ public class GitHubService implements ReviewService {
 
 	@Value("${github.pass}")
 	private String pass;
-	
-	@Value("${gist.link}")
-	private String gistTemplateLink;
 
 	public GitHubService(ReviewRepository reviewRepository) {
 		this.reviewRepository = reviewRepository;
@@ -49,36 +47,31 @@ public class GitHubService implements ReviewService {
 	}
 
 	@Override
-	public String getLink(String uniid, String taskName) {
-		Review review = reviewRepository.findByUniIdAndTaskName(uniid, taskName);
+	public Review updateReview(StudentTask studentTask) {
+		Review review = reviewRepository.findByStudentTask(studentTask);
+		String reviewId;
 		if (review.getReviewId() == null) {
-			return gistTemplateLink + createGist(uniid, taskName);
+			reviewId = createGist(studentTask.getUniid(), studentTask.getTask().getName());
+			review.setReviewId(reviewId);
+		} else {
+			reviewId = updateGist(review.getReviewId(), studentTask.getUniid(), studentTask.getTask().getName());
 		}
-		return gistTemplateLink + updateGist(review.getReviewId(), uniid, taskName);
+		return reviewRepository.save(review);
 	}
 
 	public Review saveReview(Review review) {
 		return reviewRepository.save(review);
 	}
 
-	public Review getReviewById(long reviewID) {
-		return reviewRepository.findOne(reviewID);
-	}
-
-	public Iterable<Review> getAllStudentReviews(String uniId) {
-		return reviewRepository.findByUniId(uniId);
-	}
-
 	private String createGist(String uniid, String taskName) {
+		//code snippets from http://bit.ly/2q7fUd1 (shortened GitHub link)
 		Authorization auth = getGistAuthorization();
 		Gist gist;
 
 		try {
-			// Create Gist service configured with OAuth2 token
 			GistService gistService = new GistService(client);
 			gistService.getClient().setOAuth2Token(auth.getToken());
 
-			// Create Gist
 			gist = new Gist();
 			gist.setPublic(false);
 			gist.setDescription("JOOP");
@@ -97,7 +90,7 @@ public class GitHubService implements ReviewService {
 	private String updateGist(String id, String uniid, String taskName) {
 		Authorization auth = getGistAuthorization();
 
-		// Create Gist service configured with OAuth2 token
+		//code snippets from http://bit.ly/2q7fUd1 (shortened GitHub link)
 		GistService gistService = new GistService(client);
 		gistService.getClient().setOAuth2Token(auth.getToken());
 		try {
@@ -131,6 +124,7 @@ public class GitHubService implements ReviewService {
 	}
 
 	private Authorization getGistAuthorization() {
+		//code snippets from http://bit.ly/2q7fUd1 (shortened GitHub link)
 		OAuthService oauthService = new OAuthService(client);
 		Authorization auth = new Authorization();
 		auth.setScopes(Arrays.asList("gist"));

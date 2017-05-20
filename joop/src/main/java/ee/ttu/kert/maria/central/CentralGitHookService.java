@@ -99,8 +99,6 @@ public class CentralGitHookService {
 			Review review = new Review();
 			Grade grade = new Grade();
 			grade.setStudentTask(studentTask);
-			review.setUniId(uniid);
-			review.setTaskName(taskName);
 			review.setStudentTask(studentTask);
 			studentTask.setReview(gitHubService.saveReview(review));
 			studentTask.setGrade(gradeService.saveGrade(grade));
@@ -121,11 +119,13 @@ public class CentralGitHookService {
 			System.out.println("creating submission");
 			Submission submission = new Submission();
 			SandBox sandBox = new SandBox();
-			embeddablService.zipProject(uniid, taskName);
+			String embeddablLocation = embeddablService.zipProject(uniid, taskName);
+			sandBox.setLocation(embeddablLocation);
 			submission.setSandBox(embeddablService.save(sandBox));
 			submission.setStudentTask(studentTask);
 			studentTask.getSubmissions().add(submission);
-			eclipseService.createProject(uniid, taskName);
+			String submissionLocation = eclipseService.createProject(uniid, taskName);
+			submission.setLocation(submissionLocation);
 			return submissionService.save(submission);
 		}
 		return null;

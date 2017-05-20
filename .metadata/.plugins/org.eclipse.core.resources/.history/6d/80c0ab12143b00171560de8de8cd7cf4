@@ -1,0 +1,7 @@
+package ee.ttu.kert.maria.ide;
+
+public interface IDEService {
+	
+	public void launch();
+
+}

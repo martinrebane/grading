@@ -1,15 +1,15 @@
 #!/bin/bash
 
-folderpath=$1
+sourcepath=$1
 destpath=$2
 
-echo $folderpath
+echo $sourcepath
 echo $destpath
 
 mkdir -p $destpath
-cd $folderpath
+cd $sourcepath
 
-for file in "$folderpath*" ; do
+for file in "$sourcepath*" ; do
 	echo $file
 	cp $file $destpath
 done

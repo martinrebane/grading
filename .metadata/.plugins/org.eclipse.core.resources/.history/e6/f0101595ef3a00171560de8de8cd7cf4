@@ -1,0 +1,26 @@
+package ee.ttu.kert.maria.central;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class CentralController {
+	
+	private CentralService centralService;
+	
+	public CentralController(CentralService centralService) {
+		this.centralService = centralService;
+	}
+	
+	@RequestMapping(value="/git/pull/{subjectCode}/{uniid}/", method=RequestMethod.GET, consumes="application/json")
+	public @ResponseBody String pull(@PathVariable String uniid, @PathVariable String subjectCode) {
+		
+	}
+
+}

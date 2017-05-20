@@ -1,7 +1,9 @@
 package ee.ttu.kert.maria.review;
 
+import ee.ttu.kert.maria.studenttask.StudentTask;
+
 public interface ReviewService {
 	
-	public String getLink(String uniid, String taskName);
+	public Review updateReview(StudentTask studentTask);
 
 }

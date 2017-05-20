@@ -1,14 +1,13 @@
 #!/bin/bash
-#tulevikus veel aasta ja subject
 
 task=$1
 uniid=$2
 
-repopath=$3 #"D:/Users/mammu/workspace/loputoo/repod"
-zippath=$4 #"D:/Users/mammu/workspace/loputoo/zips"
+repopath=$3 #"D:/Users/mammu/workspace/loputoo/repod/"
+zippath=$4 #"D:/Users/mammu/workspace/loputoo/embeddabl/"
 
 cd $repopath$uniid/$task/src/
-mkdir -p $zippath$task/ #../../zips/$task/'
+mkdir -p $zippath$task/ #../../embeddabl/$task/'
 
 mkdir -p $task
 
