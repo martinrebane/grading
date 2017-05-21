@@ -32,13 +32,13 @@ public class StudentTask {
 	@ManyToOne
 	private Task task;
 	
-	@OneToOne(mappedBy="studentTask", cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL)
 	private Review review;
 	
-	@OneToOne(mappedBy="studentTask", cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL)
 	private Grade grade;
 	
-	@OneToMany(mappedBy="studentTask", cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<Submission> submissions;
 
 }

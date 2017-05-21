@@ -27,10 +27,10 @@ public class Task {
 	
 	private String subjectCode;
 	
-	@OneToMany(mappedBy="task", cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<StudentTask> studentTasks;
 	
-	@OneToOne(mappedBy="task", cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL)
 	private Plagiarism plagiarism;
 
 }

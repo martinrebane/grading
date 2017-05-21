@@ -1,3 +1,5 @@
+#!/bin/bash
+
 projectpath=$1
 hashpath=$2 #"D:/Users/mammu/workspace/loputoo/hashes/"
 

@@ -1,11 +1,10 @@
 package ee.ttu.kert.maria.review;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import ee.ttu.kert.maria.studenttask.StudentTask;
 
 @Controller
 public class ReviewController {
@@ -16,9 +15,9 @@ public class ReviewController {
 		this.reviewService = reviewService;
 	}
 	
-	@RequestMapping(value = "/review/update", method = RequestMethod.POST)
-	public Review update(@RequestBody StudentTask studentTask) {
-		return reviewService.updateReview(studentTask);
+	@RequestMapping(value="/review/update/{uniid}/{taskName}", method=RequestMethod.POST)
+	public Review update(@RequestBody Review review, @PathVariable String uniid, @PathVariable String taskName) {
+		return reviewService.updateReview(uniid, taskName, review);
 	}
 	
 }

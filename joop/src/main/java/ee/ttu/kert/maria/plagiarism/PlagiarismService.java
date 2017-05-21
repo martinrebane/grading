@@ -1,10 +1,8 @@
 package ee.ttu.kert.maria.plagiarism;
 
-import ee.ttu.kert.maria.task.Task;
-
 public interface PlagiarismService {
 	
-	public Plagiarism run(Task task);
+	public Plagiarism run(String taskName, Plagiarism plagiarism);
 	
 	public void transferFiles(String uniid, String taskName);
 

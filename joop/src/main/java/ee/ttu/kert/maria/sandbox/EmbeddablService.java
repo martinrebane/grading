@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
-import ee.ttu.kert.maria.submission.Submission;
 
 @Service
 @Transactional
@@ -34,11 +33,7 @@ public class EmbeddablService implements SandBoxService {
 	}
 	
 	@Override
-	public SandBox updateSandBox(Submission submission) {
-		String uniid = submission.getStudentTask().getUniid();
-		String taskName = submission.getStudentTask().getTask().getName();
-		SandBox sandBox = submission.getSandBox();
-		
+	public SandBox updateSandBox(String uniid, String taskName, SandBox sandBox) {
 		String mainPath = getMainPath(uniid, taskName);
 		String packagePath = getPackagePath(uniid, taskName);
 		sandBox.setMainPath(mainPath);

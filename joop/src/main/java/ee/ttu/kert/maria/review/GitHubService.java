@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ee.ttu.kert.maria.helpers.FileHandler;
-import ee.ttu.kert.maria.studenttask.StudentTask;
 
 @Service
 @Transactional
@@ -43,18 +42,16 @@ public class GitHubService implements ReviewService {
 		reader = new FileHandler();
 		secureRandom = new SecureRandom();
 		client = new GitHubClient();
-		client.setCredentials(user, pass);
 	}
 
 	@Override
-	public Review updateReview(StudentTask studentTask) {
-		Review review = reviewRepository.findByStudentTask(studentTask);
-		String reviewId;
-		if (review.getReviewId() == null) {
-			reviewId = createGist(studentTask.getUniid(), studentTask.getTask().getName());
-			review.setReviewId(reviewId);
+	public Review updateReview(String uniid, String taskName, Review review) {
+		String reviewId = review.getReviewId();
+		if (reviewId == null) {
+			String gistId = createGist(uniid, taskName);
+			review.setReviewId(gistId);
 		} else {
-			reviewId = updateGist(review.getReviewId(), studentTask.getUniid(), studentTask.getTask().getName());
+			reviewId = updateGist(review.getReviewId(), uniid, taskName);
 		}
 		return reviewRepository.save(review);
 	}
@@ -82,6 +79,7 @@ public class GitHubService implements ReviewService {
 		} catch (IOException e) {
 			return null;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 		return gist.getId();
@@ -125,6 +123,7 @@ public class GitHubService implements ReviewService {
 
 	private Authorization getGistAuthorization() {
 		//code snippets from http://bit.ly/2q7fUd1 (shortened GitHub link)
+		client.setCredentials(user, pass);
 		OAuthService oauthService = new OAuthService(client);
 		Authorization auth = new Authorization();
 		auth.setScopes(Arrays.asList("gist"));

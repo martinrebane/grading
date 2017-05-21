@@ -2,6 +2,8 @@ package ee.ttu.kert.maria.submission;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +31,7 @@ public class Submission {
 	@ManyToOne
 	private StudentTask studentTask;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private SandBox sandBox;
 	
 	public Submission() {

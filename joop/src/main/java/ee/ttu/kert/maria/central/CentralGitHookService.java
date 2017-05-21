@@ -9,11 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ee.ttu.kert.maria.git.GitService;
 import ee.ttu.kert.maria.grading.Grade;
-import ee.ttu.kert.maria.grading.GradeService;
 import ee.ttu.kert.maria.ide.EclipseService;
 import ee.ttu.kert.maria.plagiarism.MossService;
 import ee.ttu.kert.maria.plagiarism.Plagiarism;
-import ee.ttu.kert.maria.review.GitHubService;
 import ee.ttu.kert.maria.review.Review;
 import ee.ttu.kert.maria.sandbox.EmbeddablService;
 import ee.ttu.kert.maria.sandbox.SandBox;
@@ -34,22 +32,17 @@ public class CentralGitHookService {
 	private StudentTaskService studentTaskService;
 	private SubmissionService submissionService;
 	private MossService mossService;
-	private GitHubService gitHubService;
-	private GradeService gradeService;
 	private EmbeddablService embeddablService;
 	private GitService gitService;
 	private EclipseService eclipseService;
 
 	public CentralGitHookService(TaskService taskService, StudentTaskService studentTaskService,
-			SubmissionService submissionService, MossService mossService, GitHubService gitHubService,
-			GradeService gradeService, EmbeddablService embeddablService, GitService gitService,
-			EclipseService eclipseService) {
+			SubmissionService submissionService, MossService mossService, EmbeddablService embeddablService,
+			GitService gitService, EclipseService eclipseService) {
 		this.taskService = taskService;
 		this.studentTaskService = studentTaskService;
 		this.submissionService = submissionService;
 		this.mossService = mossService;
-		this.gitHubService = gitHubService;
-		this.gradeService = gradeService;
 		this.embeddablService = embeddablService;
 		this.gitService = gitService;
 		this.eclipseService = eclipseService;
@@ -80,11 +73,9 @@ public class CentralGitHookService {
 			System.out.println("creating task");
 			task = new Task();
 			Plagiarism plagiarism = new Plagiarism();
-
 			task.setName(taskName);
 			plagiarism.setTask(task);
-			mossService.transferFiles(uniid, taskName);
-			task.setPlagiarism(mossService.save(plagiarism));
+			task.setPlagiarism(plagiarism);
 			task.setStudentTasks(new ArrayList<>());
 			return taskService.save(task);
 		}
@@ -100,8 +91,8 @@ public class CentralGitHookService {
 			Grade grade = new Grade();
 			grade.setStudentTask(studentTask);
 			review.setStudentTask(studentTask);
-			studentTask.setReview(gitHubService.saveReview(review));
-			studentTask.setGrade(gradeService.saveGrade(grade));
+			studentTask.setReview(review);
+			studentTask.setGrade(grade);
 			studentTask.setUniid(uniid);
 			studentTask.setSubmissions(new ArrayList<>());
 			studentTask.setTask(task);
@@ -119,13 +110,15 @@ public class CentralGitHookService {
 			System.out.println("creating submission");
 			Submission submission = new Submission();
 			SandBox sandBox = new SandBox();
+			mossService.transferFiles(uniid, taskName);
 			String embeddablLocation = embeddablService.zipProject(uniid, taskName);
 			sandBox.setLocation(embeddablLocation);
-			submission.setSandBox(embeddablService.save(sandBox));
+			sandBox.setSubmission(submission);
+			submission.setSandBox(sandBox);
 			submission.setStudentTask(studentTask);
-			studentTask.getSubmissions().add(submission);
 			String submissionLocation = eclipseService.createProject(uniid, taskName);
 			submission.setLocation(submissionLocation);
+			studentTask.getSubmissions().add(submission);
 			return submissionService.save(submission);
 		}
 		return null;

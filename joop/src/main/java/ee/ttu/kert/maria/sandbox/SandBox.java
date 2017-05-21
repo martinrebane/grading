@@ -1,6 +1,5 @@
 package ee.ttu.kert.maria.sandbox;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +29,7 @@ public class SandBox {
 	
 	private String packagePath;
 	
-	@OneToOne(mappedBy="sandBox", cascade=CascadeType.ALL)
+	@OneToOne
 	private Submission submission;
 
 }

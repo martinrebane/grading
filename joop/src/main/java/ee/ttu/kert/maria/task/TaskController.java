@@ -1,12 +1,10 @@
 package ee.ttu.kert.maria.task;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import ee.ttu.kert.maria.studenttask.StudentTask;
 
@@ -20,15 +18,12 @@ public class TaskController {
 	}
 	
 	@RequestMapping(value="/task/{taskName}", method=RequestMethod.GET)
-	public @ResponseBody List<StudentTask> getStudentTasks(@PathVariable String taskName) {
-		Task task = taskService.getByName(taskName);
-		System.out.println(task);
-		if (task == null) return new ArrayList<>();
-		return task.getStudentTasks();
+	public List<StudentTask> getStudentTasks(@PathVariable String taskName) {
+		return taskService.getStudentTasks(taskName);
 	}
 	
 	@RequestMapping(value="/task/get", method=RequestMethod.GET)
-	public @ResponseBody Iterable<Task> getAllTasks() {
+	public Iterable<Task> getAllTasks() {
 		return taskService.getAll();
 	}
 }

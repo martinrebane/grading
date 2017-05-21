@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ee.ttu.kert.maria.task.Task;
-
 @Controller
 public class PlagiarismController {
 	
@@ -18,9 +16,9 @@ public class PlagiarismController {
 		this.mossService = mossService;
 	}
 	
-	@RequestMapping(value="/plagiarism/run", method=RequestMethod.POST)
-	public @ResponseBody Plagiarism run(@RequestBody Task task) {
-		return mossService.run(task);
+	@RequestMapping(value="/plagiarism/run/{taskName}", method=RequestMethod.POST)
+	public @ResponseBody Plagiarism run(@PathVariable String taskName, @RequestBody Plagiarism plagiarism) {
+		return mossService.run(taskName, plagiarism);
 	}
 
 }

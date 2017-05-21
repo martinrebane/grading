@@ -16,7 +16,7 @@ public class CentralGitHookController {
 	}
 	
 	@RequestMapping(value="/central/{uniid}/{subjectCode}", method=RequestMethod.GET)
-	public @ResponseBody String get(@PathVariable String uniid, @PathVariable String subjectCode) {
+	public @ResponseBody String init(@PathVariable String uniid, @PathVariable String subjectCode) {
 		centralService.init(uniid, subjectCode);
 		return "done";
 	}

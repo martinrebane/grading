@@ -15,7 +15,7 @@ public class MailController {
 		this.mailGunService = mailGunService;
 	}
 
-	@RequestMapping(value = "/mail/send/{uniid}/{reviewId}/{subject}", method = RequestMethod.POST)
+	@RequestMapping(value="/mail/send/{uniid}/{reviewId}/{subject}", method=RequestMethod.GET)
 	public @ResponseBody String send(@PathVariable String uniid, @PathVariable String reviewId,
 			@PathVariable String subject) {
 		return mailGunService.sendFeedback(uniid, reviewId, subject);

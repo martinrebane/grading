@@ -22,7 +22,7 @@ public class MailGunService implements MailService {
 	
 	@Override
 	public String sendFeedback(String uniid, String reviewId, String subject) {
-		ClientResponse response = sendEmail(uniid, reviewId, subject);
+		ClientResponse response = sendEmailWorking(uniid, reviewId, subject);
 		if (response == null) return null;
 		return "sent";
 	}
@@ -47,7 +47,7 @@ public class MailGunService implements MailService {
 	
 	private ClientResponse sendEmailWorking(String uniid, String reviewId, String subject) {
         Client client = Client.create();
-        client.addFilter(new HTTPBasicAuthFilter("api", subject));
+        client.addFilter(new HTTPBasicAuthFilter("api", apiKey));
         WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +
                 "e0324f65ae848f4bc645132e.mailgun.org/messages");
         MultivaluedMapImpl formData = new MultivaluedMapImpl();

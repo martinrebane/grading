@@ -14,7 +14,7 @@ public class GradeController {
 		this.gradeService = gradeService;
 	}
 	
-	@RequestMapping(value = "/grade/update", method = RequestMethod.POST)
+	@RequestMapping(value="/grade/update", method=RequestMethod.POST)
 	public Grade update(@RequestBody Grade grade) {
 		return gradeService.saveGrade(grade);
 	}
