@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ee.ttu.kert.maria.task.Task;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +24,7 @@ public class Plagiarism {
 	private String result;
 	
 	@OneToOne
+	@JsonIgnore
 	private Task task;
 
 }

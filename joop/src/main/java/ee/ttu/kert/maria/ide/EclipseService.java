@@ -3,12 +3,10 @@ package ee.ttu.kert.maria.ide;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 
 @Service
-@Transactional
 public class EclipseService implements IDEService {
 
 	@Value("${paths.files.repos}")

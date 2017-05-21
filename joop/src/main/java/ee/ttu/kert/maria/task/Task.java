@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ee.ttu.kert.maria.plagiarism.Plagiarism;
 import ee.ttu.kert.maria.studenttask.StudentTask;
 import lombok.Getter;
@@ -28,6 +30,7 @@ public class Task {
 	private String subjectCode;
 	
 	@OneToMany(cascade=CascadeType.ALL)
+	@JsonIgnore
 	private List<StudentTask> studentTasks;
 	
 	@OneToOne(cascade=CascadeType.ALL)

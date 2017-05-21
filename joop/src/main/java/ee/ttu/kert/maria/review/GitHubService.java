@@ -16,11 +16,9 @@ import org.eclipse.egit.github.core.service.GistService;
 import org.eclipse.egit.github.core.service.OAuthService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ee.ttu.kert.maria.helpers.FileHandler;
 
 @Service
-@Transactional
 public class GitHubService implements ReviewService {
 
 	private ReviewRepository reviewRepository;

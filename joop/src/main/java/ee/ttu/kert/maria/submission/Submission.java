@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ee.ttu.kert.maria.sandbox.SandBox;
 import ee.ttu.kert.maria.studenttask.StudentTask;
 import lombok.Getter;
@@ -29,6 +32,7 @@ public class Submission {
 	private String location;
 	
 	@ManyToOne
+	@JsonIgnore
 	private StudentTask studentTask;
 	
 	@OneToOne(cascade = CascadeType.ALL)

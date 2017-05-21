@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import ee.ttu.kert.maria.studenttask.StudentTask;
 
 @Service
-@Transactional
 public class TaskService {
 	
 	private TaskRepository taskRepository;

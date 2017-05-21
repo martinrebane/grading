@@ -2,12 +2,10 @@ package ee.ttu.kert.maria.git;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 
 @Service
-@Transactional
 public class GitService implements VersionControlService {
 	
 	@Value("${paths.scripts.pull}")

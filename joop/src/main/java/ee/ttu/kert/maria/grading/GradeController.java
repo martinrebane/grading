@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class GradeController {
@@ -15,7 +16,7 @@ public class GradeController {
 	}
 	
 	@RequestMapping(value="/grade/update", method=RequestMethod.POST)
-	public Grade update(@RequestBody Grade grade) {
+	public @ResponseBody Grade update(@RequestBody Grade grade) {
 		return gradeService.saveGrade(grade);
 	}
 

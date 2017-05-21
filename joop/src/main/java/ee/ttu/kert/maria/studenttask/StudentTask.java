@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ee.ttu.kert.maria.grading.Grade;
 import ee.ttu.kert.maria.review.Review;
 import ee.ttu.kert.maria.submission.Submission;
@@ -30,6 +32,7 @@ public class StudentTask {
 	private String uniid;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Task task;
 	
 	@OneToOne(cascade=CascadeType.ALL)
@@ -39,6 +42,7 @@ public class StudentTask {
 	private Grade grade;
 	
 	@OneToMany(cascade=CascadeType.ALL)
+	@JsonIgnore
 	private List<Submission> submissions;
 
 }

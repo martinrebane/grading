@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ee.ttu.kert.maria.submission.Submission;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +32,7 @@ public class SandBox {
 	private String packagePath;
 	
 	@OneToOne
+	@JsonIgnore
 	private Submission submission;
 
 }

@@ -11,14 +11,12 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 import it.zielke.moji.MossException;
 import it.zielke.moji.SocketClient;
 
 @Service
-@Transactional
 public class MossService implements PlagiarismService {
 
 	private PlagiarismRepository plagiarismRepository;

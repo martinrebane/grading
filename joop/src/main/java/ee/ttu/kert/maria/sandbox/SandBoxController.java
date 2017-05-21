@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class SandBoxController {
@@ -16,7 +17,7 @@ public class SandBoxController {
 	}
 	
 	@RequestMapping(value="/sandbox/update/{uniid}/{taskName}", method=RequestMethod.POST)
-	public SandBox update(@PathVariable String uniid, @PathVariable String taskName, @RequestBody SandBox sandBox) {
+	public @ResponseBody SandBox update(@PathVariable String uniid, @PathVariable String taskName, @RequestBody SandBox sandBox) {
 		return sandBoxService.updateSandBox(uniid, taskName, sandBox);
 	}
 }
