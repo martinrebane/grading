@@ -22,12 +22,13 @@ public class MailGunService implements MailService {
 	
 	@Override
 	public String sendFeedback(String uniid, String reviewId, String subject) {
-		ClientResponse response = sendEmailWorking(uniid, reviewId, subject);
+		ClientResponse response = sendEmail(uniid, reviewId, subject);
 		if (response == null) return null;
 		return "sent";
 	}
 	
 	private ClientResponse sendEmail(String uniid, String reviewId, String subject) {
+		//currently MailGun only supports sandbox emails
 		try {
 			Client client = Client.create();
 	        client.addFilter(new HTTPBasicAuthFilter("api", apiKey));
@@ -35,7 +36,7 @@ public class MailGunService implements MailService {
 	                "e0324f65ae848f4bc645132e.mailgun.org/messages");
 	        MultivaluedMapImpl formData = new MultivaluedMapImpl();
 	        formData.add("from", "Mailgun Sandbox <postmaster@sandbox040c037ae0324f65ae848f4bc645132e.mailgun.org>");
-	        formData.add("to", uniid + " <" + uniid + "@ttu.ee>");
+	        formData.add("to", "Maria Kert <kertmaria@gmail.com>");
 	        formData.add("subject", subject);
 	        formData.add("text", "Tagasiside asub lingil: " + gistLink + reviewId);
 	        return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
@@ -43,20 +44,6 @@ public class MailGunService implements MailService {
 		} catch (Exception e) {
 			return null;
 		}
-    }
-	
-	private ClientResponse sendEmailWorking(String uniid, String reviewId, String subject) {
-        Client client = Client.create();
-        client.addFilter(new HTTPBasicAuthFilter("api", apiKey));
-        WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox040c037a" +
-                "e0324f65ae848f4bc645132e.mailgun.org/messages");
-        MultivaluedMapImpl formData = new MultivaluedMapImpl();
-        formData.add("from", "Mailgun Sandbox <postmaster@sandbox040c037ae0324f65ae848f4bc645132e.mailgun.org>");
-        formData.add("to", "Maria Kert <kertmaria@gmail.com>");
-        formData.add("subject", subject);
-        formData.add("text", "Tagasiside asub lingil: " + gistLink + reviewId);
-        return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
-                post(ClientResponse.class, formData);
     }
 
 }
