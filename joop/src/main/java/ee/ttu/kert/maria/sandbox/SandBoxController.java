@@ -9,15 +9,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class SandBoxController {
-	
-	private EmbeddablService sandBoxService;
-	
+
+	private EmbeddablService embeddablService;
+
 	public SandBoxController(EmbeddablService embeddablService) {
-		sandBoxService = embeddablService;
+		this.embeddablService = embeddablService;
 	}
-	
-	@RequestMapping(value="/sandbox/update/{uniid}/{taskName}", method=RequestMethod.POST)
-	public @ResponseBody SandBox update(@PathVariable String uniid, @PathVariable String taskName, @RequestBody SandBox sandBox) {
-		return sandBoxService.updateSandBox(uniid, taskName, sandBox);
+
+	@RequestMapping(value = "/sandbox/update/{uniid}/{taskName}", method = RequestMethod.POST)
+	public @ResponseBody SandBox update(@PathVariable String uniid, @PathVariable String taskName,
+			@RequestBody SandBox sandBox) {
+		return embeddablService.updateSandBox(uniid, taskName, sandBox);
 	}
 }

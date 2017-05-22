@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ReviewController {
 
-	private GitHubService reviewService;
+	private GitHubService gitHubService;
 
-	public ReviewController(GitHubService reviewService) {
-		this.reviewService = reviewService;
+	public ReviewController(GitHubService gitHubService) {
+		this.gitHubService = gitHubService;
 	}
 
 	@RequestMapping(value = "/review/update/{uniid}/{taskName}", method = RequestMethod.POST)
 	public @ResponseBody Review update(@RequestBody Review review, @PathVariable String uniid,
 			@PathVariable String taskName) {
-		return reviewService.updateReview(uniid, taskName, review);
+		return gitHubService.updateReview(uniid, taskName, review);
 	}
 
 }
