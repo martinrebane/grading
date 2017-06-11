@@ -102,14 +102,11 @@ public class CentralGitHookService {
 	}
 
 	private Submission makeSubmission(String uniid, String taskName, StudentTask studentTask) {
-		String currentHash = gitService.getHash(uniid, taskName);
-		if (currentHash != null) currentHash.replaceAll("\n", "");
-		String newHash = gitService.createHash(uniid, taskName).replaceAll("\n", "");
 
-		if (!newHash.equals(currentHash)) {
+		if (gitService.hasChanged(uniid, taskName)) {
 			System.out.println("creating submission");
 			Submission submission = new Submission();
-			SandBox sandBox = new SandBox();
+			SandBox sandBox = embeddablService.create(uniid, taskName);
 			mossService.transferFiles(uniid, taskName);
 			String embeddablLocation = embeddablService.zipProject(uniid, taskName);
 			sandBox.setLocation(embeddablLocation);

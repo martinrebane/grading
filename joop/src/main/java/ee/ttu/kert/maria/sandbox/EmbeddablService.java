@@ -31,12 +31,21 @@ public class EmbeddablService implements SandBoxService {
 	}
 	
 	@Override
-	public SandBox updateSandBox(String uniid, String taskName, SandBox sandBox) {
+	public SandBox create(String uniid, String taskName) {
+		SandBox sandBox = new SandBox();
 		String mainPath = getMainPath(uniid, taskName);
 		String packagePath = getPackagePath(uniid, taskName);
 		sandBox.setMainPath(mainPath);
 		sandBox.setPackagePath(packagePath);
 		return sandBoxRepository.save(sandBox);
+	}
+	
+	@Override
+	public SandBox update(SandBox sandBox) {
+		SandBox sb = sandBoxRepository.findOne(sandBox.getId());
+		sb.setStdout(sandBox.getStdout());
+		sb.setStderr(sandBox.getStderr());
+		return sandBoxRepository.save(sb);
 	}
 	
 	@Override

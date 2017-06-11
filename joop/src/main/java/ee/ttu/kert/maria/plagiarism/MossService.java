@@ -55,8 +55,9 @@ public class MossService implements PlagiarismService {
 			}
 			client.sendQuery();
 			URL results = client.getResultURL();
-			plagiarism.setResult(results.toString());
-			return plagiarismRepository.save(plagiarism);
+			Plagiarism pl = plagiarismRepository.findOne(plagiarism.getId());
+			pl.setResult(results.toString());
+			return plagiarismRepository.save(pl);
 		} catch (MossException e) {
 			e.printStackTrace();
 		} catch (UnknownHostException e) {

@@ -12,7 +12,9 @@ public class GradeService {
 	}
 	
 	public Grade saveGrade(Grade grade) {
-		return gradeRepository.save(grade);
+		Grade gr = gradeRepository.findOne(grade.getId());
+		gr.setGrade(grade.getGrade());
+		return gradeRepository.save(gr);
 	}
 
 }

@@ -33,23 +33,32 @@ public class GitService implements VersionControlService {
 		scriptRunner = new ScriptRunner();
 		return scriptRunner.run(command);
 	}
-
+	
 	@Override
-	public String getHash(String uniid, String taskName) {
+	public boolean hasChanged(String uniid, String taskName) {
+		String currentHash = getHash(uniid, taskName);
+		String newHash = createHash(uniid, taskName);
+		return currentHash != newHash;
+	}
+
+	private String getHash(String uniid, String taskName) {
 		if (!hashPath.endsWith("/")) hashPath += "/";
 		String path = hashPath + uniid + "/" + taskName + ".txt";
 		path = path.replace("/mnt/d", "D:");
 		FileHandler reader = new FileHandler();
-		return reader.read(path);
+		String ret = reader.read(path);
+		if (ret != null) ret.replaceAll("\n", "");
+		return ret;
 	}
 
-	@Override
-	public String createHash(String uniid, String taskName) {
+	private String createHash(String uniid, String taskName) {
 		if (!repoPath.endsWith("/")) repoPath += "/";
 		if (!hashPath.endsWith("/")) hashPath += "/";
 		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
 		scriptRunner = new ScriptRunner();
 		String[] command = {"bash", hashScriptPath, projectPath, hashPath};
-		return scriptRunner.run(command);
+		String ret = scriptRunner.run(command);
+		if (ret != null) ret.replaceAll("\n", "");
+		return ret;
 	}
 }

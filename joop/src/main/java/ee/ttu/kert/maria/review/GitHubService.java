@@ -44,14 +44,15 @@ public class GitHubService implements ReviewService {
 
 	@Override
 	public Review updateReview(String uniid, String taskName, Review review) {
+		Review rw = reviewRepository.findOne(review.getId());
 		String reviewId = review.getReviewId();
 		if (reviewId == null) {
-			String gistId = createGist(uniid, taskName);
-			review.setReviewId(gistId);
+			reviewId = createGist(uniid, taskName);
 		} else {
 			reviewId = updateGist(review.getReviewId(), uniid, taskName);
 		}
-		return reviewRepository.save(review);
+		rw.setReviewId(reviewId);
+		return reviewRepository.save(rw);
 	}
 
 	public Review saveReview(Review review) {
