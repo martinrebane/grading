@@ -71,12 +71,10 @@ public class MossService implements PlagiarismService {
 	public void transferFiles(String uniid, String taskName) {
 		if (!repoPath.endsWith("/")) repoPath += "/";
 		if (!plagiarismPath.endsWith("/")) plagiarismPath += "/";
-		System.out.println(uniid);
 		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
 		String destPath = plagiarismPath + taskName + "/" + uniid + "/";
 
 		FileHandler reader = new FileHandler();
-		System.out.println(projectPath.replace("/mnt/d", "D:"));
 		List<File> files = reader.getAllFiles(projectPath.replace("/mnt/d", "D:"));
 		ScriptRunner scriptRunner = new ScriptRunner();
 		List<String> folderPaths = new ArrayList<>();
@@ -91,9 +89,8 @@ public class MossService implements PlagiarismService {
 		}
 
 		for (String folderPath : folderPaths) {
-			System.out.println(folderPath);
 			String[] command = { "bash", copyScriptPath, folderPath, destPath };
-			System.out.println(scriptRunner.run(command));
+			scriptRunner.run(command);
 		}
 	}
 }

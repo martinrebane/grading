@@ -46,7 +46,6 @@ public class EmbeddablService implements SandBoxService {
 		String[] command = {"bash", embeddablScriptPath, taskName, uniid, repoPath, zipPath};
 		String source = scriptRunner.run(command);
 		source = source.substring(0, source.lastIndexOf("/"));
-		System.out.println("Source: " + source);
 		String[] command2 = {"bash", zipScriptPath, uniid, taskName, source, zipPath + taskName};
 		return scriptRunner.run(command2);
 	}

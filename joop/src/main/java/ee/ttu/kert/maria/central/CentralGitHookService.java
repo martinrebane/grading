@@ -53,24 +53,23 @@ public class CentralGitHookService {
 
 		String path = repoPath.replace("/mnt/d", "D:");
 		path += uniid;
-		System.out.println(path);
 		File repo = new File(path);
 		File[] allTasks = repo.listFiles();
 
 		for (File taskFolder : allTasks) {
 			String taskName = taskFolder.getName();
 			if (!taskName.startsWith(".")) {
-				Task task = makeTask(uniid, taskName);
+				Task task = makeTask(taskName);
 				StudentTask studentTask = makeStudentTask(uniid, taskName, task);
 				makeSubmission(uniid, taskName, studentTask);
 			}
 		}
 	}
 
-	private Task makeTask(String uniid, String taskName) {
+	private Task makeTask(String taskName) {
 		Task task = taskService.getByName(taskName);
 		if (task == null) {
-			System.out.println("creating task");
+			System.out.println("creating task " + taskName);
 			task = new Task();
 			Plagiarism plagiarism = new Plagiarism();
 			task.setName(taskName);
@@ -104,7 +103,8 @@ public class CentralGitHookService {
 
 	private Submission makeSubmission(String uniid, String taskName, StudentTask studentTask) {
 		String currentHash = gitService.getHash(uniid, taskName);
-		String newHash = gitService.createHash(uniid, taskName);
+		if (currentHash != null) currentHash.replaceAll("\n", "");
+		String newHash = gitService.createHash(uniid, taskName).replaceAll("\n", "");
 
 		if (!newHash.equals(currentHash)) {
 			System.out.println("creating submission");

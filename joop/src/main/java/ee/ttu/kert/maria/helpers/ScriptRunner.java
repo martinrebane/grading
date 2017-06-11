@@ -17,7 +17,6 @@ public class ScriptRunner {
 			String line;
 
 			while ((line = processIn.readLine()) != null) {
-				System.out.println(line);
 				ret += line;
 			}
 
