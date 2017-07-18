@@ -44,6 +44,139 @@ app.controller('appController', function($scope, $http) {
             console.log(error);
         });
     }
+    
+    $scope.getSubmissions = function(index) {
+        var studentTask = $scope.studentTasks[index];
+        var id = studentTask.id;
+        var url = 'http://localhost:8080/studenttask/' + id;
+        console.log(url);
+        $http({
+            method: 'GET',
+            url: url
+        }).then(function(response) {
+            console.log(response);
+        }, function(error) {
+            console.log(error);
+        });
+    }
+    
+    $scope.setGrade = function() {
+        var url = "http://localhost:8080/grade/update";
+        var grade = null;
+        $http({
+            method: 'POST',
+            url: url,
+            data: grade
+        }).then(function(response) {
+            console.log(response);
+        }, function(error) {
+            console.log(error);
+        });
+    }
+    
+    $scope.sendMail = function() {
+        var uniid = null;
+        var reviewId = null;
+        var subject = null;
+        var url = "http://localhost:8080/mail/send/${uniid}/${reviewId}/${subject}";
+        $http({
+            method: 'GET',
+            url: url
+        }).then(function(response) {
+            console.log(response);
+        }, function(error) {
+            console.log(error);
+        });
+    }
+    
+    $scope.runPlagiarism = function() {
+        var taskName = null;
+        var plagiarism = null;
+        var url = "http://localhost:8080/plagiarism/run/${taskName}";
+        $http({
+            method: 'POST',
+            url: url,
+            data: plagiarism
+        }).then(function(response) {
+            console.log(response);
+        }, function(error) {
+            console.log(error);
+        });
+    }
+    
+    $scope.updateReview = function() {
+        var uniid = null;
+        var taskName = null;
+        var review = null;
+        var url = "http://localhost:8080/review/update/${uniid}/${taskName}";
+        $http({
+            method: 'POST',
+            url: url,
+            data: review
+        }).then(function(response) {
+            console.log(response);
+        }, function(error) {
+            console.log(error);
+        });
+    }
+    
+    $scope.updateSandBox = function() {
+        var sandBox = null;
+        var url = "http://localhost:8080/sandbox/update";
+        $http({
+            method: 'POST',
+            url: url,
+            data: sandBox
+        }).then(function(response) {
+            console.log(response);
+        }, function(error) {
+            console.log(error);
+        });
+    }
+    
+    $scope.embeddablSendFiles = function() {
+
+        $http({
+            method: 'POST',
+            url: 'http://api.embeddabl.com/save-files',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            data: {
+                type: "ZIP",
+                name: "maria.kert",
+                url: "http://dijkstra.cs.ttu.ee/~Maria.Kert/loputoo/maria.kert.zip",
+                user: "JOOP"
+            }
+        }).then(function(response) {
+            console.log(response);
+        }, function(error) {
+            console.log(error);
+        });
+    }
+
+    $scope.embeddablRun = function() {
+        
+        $http({
+            method: 'POST',
+            url: "http://api.embeddabl.com/run",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            data: {
+                "file": {
+                    "path": "maria.kert/EX05/ee/ttu/java/albumcreation/Band.java"
+                },
+                "classpath": "maria.kert/EX05",
+                "package": "ee.ttu.java.albumcreation",
+                "user": "JOOP"
+            }
+        }).then(function(response) {
+            console.log(response.data.stdout);
+        }, function(error) {
+            console.log(error);
+        });
+    }
 
     $scope.allTasks = $scope.getAllTasks();
 });

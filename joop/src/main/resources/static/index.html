@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Häälduste andmebaas</title>
+    <title></title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -12,15 +12,15 @@
 <body>
     <div class="container" ng-app="gradingApp" ng-controller="tabController as tabs">
         <div class="header">
-            <h3 class="text-muted">Häälduste andmebaas</h3>
+            <h3 class="text-muted"></h3>
         </div>
         <div class="navbar navbar-default">
             <ul class="nav nav-pills navbar-nav">
                 <li ng-class="{active: tabs.isSet(1)}">
-                    <a href ng-click="tabs.setTab(1)">Otsi</a>
+                    <a href ng-click="tabs.setTab(1)">Link 1</a>
                 </li>
                 <li ng-class="{active: tabs.isSet(2)}">
-                    <a href ng-click="tabs.setTab(2)">Lisa</a>
+                    <a href ng-click="tabs.setTab(2)">Link 2</a>
                 </li>
             </ul>
         </div>
@@ -33,9 +33,9 @@
                         <option data-ng-repeat="task in allTasks" value="{{ task.name }}">{{ task.name }}</option>
                     </select>
                     <br>
-                    <form>
+                    <!--form>
                         <input type="text" ng-model="query" class="form-control">
-                    </form>
+                    </form-->
                 </div>
                 <br>
                 <div class="table-responsive">
@@ -43,15 +43,16 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Sõna</th>
-                                <th></th>
+                                <th>uniID</th>
+                                <th>grade</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="word in data | filter:query | orderBy:'word' track by $index">
-                                <th scope="row">{{'{{$index+1}}'}}</th>
-                                <td>{{'{{word.word}}'}}</td>
-                                <td><a href="" ng-click="play(word, $index)"><span id="playButton{{ '{{$index}}' }}" class="glyphicon glyphicon-play"></span></a></td>
+                            <!--tr ng-repeat="studentTask in studentTasks | filter:query | orderBy:'uniid' track by $index"-->
+                            <tr ng-repeat="studentTask in studentTasks track by $index" ng-click="getSubmissions($index)">
+                                <th scope="row">{{ $index + 1 }}</th>
+                                <td>{{ studentTask.uniid }}</td>
+                                <td>{{ studentTask.grade.grade }}</td>
                             </tr>
                         </tbody>
                     </table>
