@@ -38,7 +38,10 @@ public class MossService implements PlagiarismService {
 	}
 
 	@Override
-	public Plagiarism run(String taskName, Plagiarism plagiarism) {
+	public Plagiarism run(Plagiarism plagiarism) {
+		Plagiarism plag = plagiarismRepository.findOne(plagiarism.getId());
+		String taskName = plag.getTask().getName();
+		
 		if (!plagiarismPath.endsWith("/")) plagiarismPath += "/";
 		String path = plagiarismPath + taskName;
 		path = path.replace("/mnt/d", "D:");

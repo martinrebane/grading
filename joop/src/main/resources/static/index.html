@@ -30,9 +30,10 @@
                 <div>
                     <!--button type="button" ng-click="getAllTasks()" class="form-control btn btn-primary">Get all tasks</button-->
                     <select id="allTasks" class="form-control" ng-model="selectedTask" ng-change="getAllStudentTasks()">
-                        <option data-ng-repeat="task in allTasks" value="{{ task.name }}">{{ task.name }}</option>
+                        <option data-ng-repeat="task in allTasks" value="{{ task }}">{{ task.name }}</option>
                     </select>
                     <br>
+                    <button type="button" ng-click="runPlagiarism()" class="btn btn-primary">Run plagiarism</button>
                     <!--form>
                         <input type="text" ng-model="query" class="form-control">
                     </form-->
@@ -45,6 +46,7 @@
                                 <th>#</th>
                                 <th>uniID</th>
                                 <th>grade</th>
+                                <th>last changed</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,6 +55,7 @@
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ studentTask.uniid }}</td>
                                 <td>{{ studentTask.grade.grade }}</td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>

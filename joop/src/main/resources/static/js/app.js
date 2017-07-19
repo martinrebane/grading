@@ -3,12 +3,12 @@ var app = angular.module('gradingApp', []);
 app.controller('tabController', function() {
     this.tab = 1;
 
-    this.setTab = function(newTab){
-      this.tab = newTab;
+    this.setTab = function(newTab) {
+        this.tab = newTab;
     };
 
-    this.isSet = function(tabNum){
-      return this.tab === tabNum;
+    this.isSet = function(tabNum) {
+        return this.tab === tabNum;
     };
 });
 
@@ -17,6 +17,7 @@ app.controller('appController', function($scope, $http) {
     $scope.data = [];
     $scope.allTasks = [];
     $scope.studentTasks = [];
+    $scope.selectedTask = {};
     
     $scope.getAllTasks = function() {
         $http({
@@ -31,7 +32,7 @@ app.controller('appController', function($scope, $http) {
     }
     
     $scope.getAllStudentTasks = function() {
-        var taskName = $("#allTasks").val();
+        var taskName = JSON.parse($scope.selectedTask).name;
         var url = 'http://localhost:8080/task/' + taskName;
         console.log(url);
         $http({
@@ -62,7 +63,13 @@ app.controller('appController', function($scope, $http) {
     
     $scope.setGrade = function() {
         var url = "http://localhost:8080/grade/update";
-        var grade = null;
+        var id = 0;
+        var gr = 0;
+        var grade = {
+            id: id,
+            grade: gr
+        };
+        
         $http({
             method: 'POST',
             url: url,
@@ -90,9 +97,13 @@ app.controller('appController', function($scope, $http) {
     }
     
     $scope.runPlagiarism = function() {
-        var taskName = null;
-        var plagiarism = null;
-        var url = "http://localhost:8080/plagiarism/run/${taskName}";
+        var id = JSON.parse($scope.selectedTask).id;
+        console.log(id);
+        var plagiarism = {
+            id: id
+        };
+        var url = "http://localhost:8080/plagiarism/run";
+        
         $http({
             method: 'POST',
             url: url,
