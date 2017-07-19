@@ -17,10 +17,13 @@
         <div class="navbar navbar-default">
             <ul class="nav nav-pills navbar-nav">
                 <li ng-class="{active: tabs.isSet(1)}">
-                    <a href ng-click="tabs.setTab(1)">Link 1</a>
+                    <a href ng-click="tabs.setTab(1)">Tasks</a>
                 </li>
                 <li ng-class="{active: tabs.isSet(2)}">
-                    <a href ng-click="tabs.setTab(2)">Link 2</a>
+                    <a href ng-click="tabs.setTab(2)">Submissions</a>
+                </li>
+                <li ng-class="{active: tabs.isSet(3)}">
+                    <a href ng-click="tabs.setTab(3)">Grading</a>
                 </li>
             </ul>
         </div>
@@ -51,7 +54,7 @@
                         </thead>
                         <tbody>
                             <!--tr ng-repeat="studentTask in studentTasks | filter:query | orderBy:'uniid' track by $index"-->
-                            <tr ng-repeat="studentTask in studentTasks track by $index" ng-click="getSubmissions($index)">
+                            <tr ng-repeat="studentTask in studentTasks track by $index" ng-click="getSubmissions($index); tabs.setTab(2)">
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ studentTask.uniid }}</td>
                                 <td>{{ studentTask.grade.grade }}</td>
@@ -63,77 +66,37 @@
             </div>
             <div ng-show="tabs.isSet(2)">
                 <div class="col-sm-offset-2 col-sm-8">
-                    <form>
-                        <p>Sõna:</p>
-                        <input type="text" ng-model="inputWord.word" class="form-control">
-                        <br>
-                        <button type="button" class="form-control btn btn-primary" ng-click="getWord()">Salvesta hääldus</button>
-                    </form>
-                </div>
-                <!-- Recording Modal -->
-                <div id="recordModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Salvesta hääldus</h4>
-                            </div>
-                            <div class="modal-body" style="text-align: center">
-                                <p><a href="" ng-click="record()"><span id="recordButton" class="glyphicon glyphicon-play"></span></a></p>
-                            </div>
-                            <div class="modal-footer">
-                                <span id="saveButton" style="display: none;"><button type="button" class="btn btn-success" data-dismiss="modal" ng-click="chooseSavingMethod(); hideButton()">Salvesta</button></span>
-                                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="hideButton()">Loobu</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                 <!-- Alert Modal -->
-                <div id="alertModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Hoiatus</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>Hääldus juba eksisteerib andmebaasis. Salvestamisel kirjutate olemasoleva häälduse üle. </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="$('#recordModal').modal()">Jätka</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Loobu</button>
-                            </div>
-                        </div>
-
+                    <div class="table-responsive">
+                        <table id="submissions" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>stdout</th>
+                                    <th>stderr</th>
+                                    <th>date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--tr ng-repeat="studentTask in studentTasks | filter:query | orderBy:'uniid' track by $index"-->
+                                <tr ng-repeat="submission in submissions track by $index" ng-click="setSelectedSubmission(submission); tabs.setTab(3)">
+                                    <th scope="row">{{ $index + 1 }}</th>
+                                    <td>{{ submission.sandbox.stdout }}</td>
+                                    <td>{{ submission.sandbox.stderr }}</td>
+                                    <td>{{ submission.date }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <!--div ng-show="tabs.isSet(3)">
+            <div ng-show="tabs.isSet(3)">
                 <div class="col-sm-offset-2 col-sm-8">
-                    <form>
-                        <p>Nimi:</p>
-                        <input type="text" ng-model="sighting.name" class="form-control">
-                        <br>
-                        <p>Asukoht:</p>
-                        <input type="text" ng-model="sighting.location" class="form-control">
-                        <br>
-                        <p>Kuupäev:</p>
-                        <input type="date" ng-model="sighting.sight_date" class="form-control">
-                        <br>
-                        <p>Kellaaeg:</p>
-                        <input type="time" ng-model="sighting.time" class="form-control">
-                        <br>
-                        <button type="button" class="form-control btn btn-primary" ng-click="addSighting()">Salvesta</button>
-                    </form>
+                    <p>Grade</p>
+                    <input type="number" ng-model="gradeInput" class="form-control">
+                    <button type="button" ng-click="setGrade(gradeInput)" class="btn btn-primary">Submit grade</button>
                 </div>
             </div>
-            <div ng-show="tabs.isSet(4)">
+            <!--div ng-show="tabs.isSet(4)">
                 <div class="col-sm-offset-2 col-sm-8">
                     <h1>{{ '{{animal.name}}' }}</h1>
                     <form>

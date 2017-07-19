@@ -43,8 +43,10 @@ public class GitHubService implements ReviewService {
 	}
 
 	@Override
-	public Review updateReview(String uniid, String taskName, Review review) {
+	public Review updateReview(Review review) {
 		Review rw = reviewRepository.findOne(review.getId());
+		String uniid = rw.getStudentTask().getUniid();
+		String taskName = rw.getStudentTask().getTask().getName();
 		String reviewId = review.getReviewId();
 		if (reviewId == null) {
 			reviewId = createGist(uniid, taskName);
