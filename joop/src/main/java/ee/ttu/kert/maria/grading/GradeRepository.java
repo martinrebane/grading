@@ -2,6 +2,11 @@ package ee.ttu.kert.maria.grading;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface GradeRepository extends CrudRepository<Grade, Long>{
+/**
+ * Interface that interacts with the database's Grade table.
+ * @author Maria Kert
+ *
+ */
+public interface GradeRepository extends CrudRepository<Grade, Long> {
 
 }

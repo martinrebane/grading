@@ -9,20 +9,42 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles reading from and writing to a file.
+ * @author Maria Kert
+ *
+ */
 public class FileHandler {
 
 	private File startFolder;
-
+	
+	/**
+	 * Method to get main class path from the project path.
+	 * @param path Project path
+	 * @return Main path for the project if exists, null otherwise
+	 */
 	public String getMainPath(String path) {
 		setPath(path);
 		return getMainPath(startFolder);
 	}
-
+	
+	/**
+	 * Gets all files from given folder path.
+	 * @param path Folder path
+	 * @return List of all files if any exist, empty list otherwise
+	 */
 	public List<File> getAllFiles(String path) {
 		setPath(path);
 		return getAllFiles(startFolder, new ArrayList<>());
 	}
 	
+	/**
+	 * Method to read a file from the given file path.
+	 * @param filePath Given file path
+	 * @return Contents of the file as a String. Null if 
+	 * there is an error, file is empty or file path doesn't
+	 * exist
+	 */
 	public String read(String filePath) {
 		if (filePath == null) return null;
 		
@@ -46,6 +68,12 @@ public class FileHandler {
 		}
 	}
 	
+	/**
+	 * Method to read all lines from given file path.
+	 * @param filePath Given file path
+	 * @return List of every single line from the file;
+	 * null if there is an error or file path doesn't exist
+	 */
 	public List<String> readAllLines(String filePath) {
 		if (filePath == null) return null;
 		
@@ -59,6 +87,13 @@ public class FileHandler {
 		}
 	}
 	
+	/**
+	 * Method to get the package path for the class that
+	 * contains main method.
+	 * @param path Project path
+	 * @return Package path if one exists, empty String if
+	 * default package, null otherwise
+	 */
 	public String getPackagePath(String path) {
 		setPath(path);
 		String mainPath = getMainPath(startFolder);
@@ -71,6 +106,12 @@ public class FileHandler {
 		}
 	}
 	
+	/**
+	 * Writes lines to a file with the given path.
+	 * @param lines Lines to write
+	 * @param path File path
+	 * @return true if successful, false otherwise
+	 */
 	public boolean writeLines(List<String> lines, String path) {
 		Path p = Paths.get(path);
 		try {
@@ -81,12 +122,22 @@ public class FileHandler {
 			return false;
 		}
 	}
-
+	
+	/**
+	 * Setter for startFolder.
+	 * @param path File path
+	 */
 	private void setPath(String path) {
 		File startFolder = new File(path);
 		this.startFolder = startFolder;
 	}
-
+	
+	/**
+	 * Method to get all files in the given folder and subfolders.
+	 * @param folder Starting folder for getting files 
+	 * @param files List to store all files
+	 * @return List of files in the folder and subfolders
+	 */
 	private List<File> getAllFiles(File folder, List<File> files) {
 		File[] listOfFiles = folder.listFiles();
 
@@ -99,7 +150,12 @@ public class FileHandler {
 		}
 		return files;
 	}
-
+	
+	/**
+	 * Method for getting current project's main class path.
+	 * @param folder Project folder
+	 * @return Main class path if main method exists, null otherwise
+	 */
 	private String getMainPath(File folder) {
 		File[] listOfFiles = folder.listFiles();
 
@@ -125,6 +181,11 @@ public class FileHandler {
 		return null;
 	}
 
+	/**
+	 * Method to determine whether given file contains main method.
+	 * @param path File path
+	 * @return true if file contains main method, false if not
+	 */
 	private boolean isMain(String path) {
 		Path filePath = Paths.get(path);
 		String result;

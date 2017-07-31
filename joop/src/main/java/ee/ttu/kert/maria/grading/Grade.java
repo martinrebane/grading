@@ -15,6 +15,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+/**
+ * Grade object.
+ * @author Maria Kert
+ *
+ */
 public class Grade {
 	
 	@Id

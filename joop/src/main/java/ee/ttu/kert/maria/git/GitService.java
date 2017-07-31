@@ -6,6 +6,11 @@ import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 
 @Service
+/**
+ * Service that implements VersionControlService interface.
+ * @author Maria Kert
+ *
+ */
 public class GitService implements VersionControlService {
 	
 	@Value("${paths.scripts.pull}")
@@ -25,7 +30,7 @@ public class GitService implements VersionControlService {
 	public GitService() {
 		scriptRunner = new ScriptRunner();
 	}
-	
+
 	@Override
 	public String pull(String uniid, String subjectCode) {
 		if (!repoPath.endsWith("/")) repoPath += "/";
@@ -40,7 +45,13 @@ public class GitService implements VersionControlService {
 		String newHash = createHash(uniid, taskName);
 		return currentHash != newHash;
 	}
-
+	
+	/**
+	 * Method to get a submission's hash from a file.
+	 * @param uniid Part of the submission's hash file path
+	 * @param taskName Part of the submission's hash file path
+	 * @return hash if one exists, null otherwise
+	 */
 	private String getHash(String uniid, String taskName) {
 		if (!hashPath.endsWith("/")) hashPath += "/";
 		String path = hashPath + uniid + "/" + taskName + ".txt";
@@ -50,7 +61,13 @@ public class GitService implements VersionControlService {
 		if (ret != null) ret.replaceAll("\n", "");
 		return ret;
 	}
-
+	
+	/**
+	 * Method to create a hash for a submission by running a script.
+	 * @param uniid Part of the submission's hash file path
+	 * @param taskName Part of the submission's hash file path
+	 * @return hash if one exists, null otherwise
+	 */
 	private String createHash(String uniid, String taskName) {
 		if (!repoPath.endsWith("/")) repoPath += "/";
 		if (!hashPath.endsWith("/")) hashPath += "/";

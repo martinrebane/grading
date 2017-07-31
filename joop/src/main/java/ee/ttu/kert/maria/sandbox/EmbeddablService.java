@@ -35,8 +35,10 @@ public class EmbeddablService implements SandBoxService {
 		SandBox sandBox = new SandBox();
 		String mainPath = getMainPath(uniid, taskName);
 		String packagePath = getPackagePath(uniid, taskName);
+		String classPath = getClassPath(mainPath);
 		sandBox.setMainPath(mainPath);
 		sandBox.setPackagePath(packagePath);
+		sandBox.setClassPath(classPath);
 		return sandBoxRepository.save(sandBox);
 	}
 	
@@ -67,12 +69,21 @@ public class EmbeddablService implements SandBoxService {
 		if (!repoPath.endsWith("/")) repoPath += "/";
 		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
 		String mainPath = reader.getMainPath(projectPath.replace("/mnt/d", "D:"));
-		return mainPath;
+		
+		if (mainPath == null) return null;
+		return uniid + "/" + mainPath;
 	}
 	
 	private String getPackagePath(String uniid, String taskName) {
 		if (!repoPath.endsWith("/")) repoPath += "/";
 		String path = repoPath + uniid + "/" + taskName + "/src/";
 		return reader.getPackagePath(path.replace("/mnt/d", "D:"));
+	}
+	
+	private String getClassPath(String mainPath) {
+		if (mainPath == null) return null;
+		String[] folders = mainPath.split("/");
+		if (folders.length == 2) return folders[0];
+		return folders[0] + "/" + folders[1];
 	}
 }

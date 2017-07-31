@@ -31,6 +31,8 @@ public class SandBox {
 	
 	private String packagePath;
 	
+	private String classPath;
+	
 	@OneToOne
 	@JsonIgnore
 	private Submission submission;

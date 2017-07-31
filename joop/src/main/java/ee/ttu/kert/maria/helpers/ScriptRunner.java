@@ -4,8 +4,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Class for running Bash scripts.
+ * @author Maria Kert
+ *
+ */
 public class ScriptRunner {
 
+	/**
+	 * Method to run a script with given commands.
+	 * @param command Given commands
+	 * @return Script results if successful, null otherwise
+	 */
 	public String run(String[] command) {
 		try {
 			Process process = Runtime.getRuntime().exec(command);

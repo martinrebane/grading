@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+/**
+ * Central controller activated by Git hook.
+ * @author Maria Kert
+ *
+ */
 public class CentralGitHookController {
 	
 	private CentralGitHookService centralService;

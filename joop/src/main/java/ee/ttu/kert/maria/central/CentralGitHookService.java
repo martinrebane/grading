@@ -24,6 +24,11 @@ import ee.ttu.kert.maria.task.TaskService;
 
 @Service
 @Transactional
+/**
+ * Central service activated by the central controller.
+ * @author Maria Kert
+ *
+ */
 public class CentralGitHookService {
 
 	@Value("${paths.files.repos}")
@@ -47,7 +52,14 @@ public class CentralGitHookService {
 		this.gitService = gitService;
 		this.eclipseService = eclipseService;
 	}
-
+	
+	/**
+	 * Method to initialize Tasks, StudentTasks and Submissions.
+	 * Method is activated by a Git hook. It goes through each
+	 * folder in a student's repository and creates instances.
+	 * @param uniid Student identification 
+	 * @param subjectCode Subject identification
+	 */
 	public void init(String uniid, String subjectCode) {
 		gitService.pull(uniid, "");
 
@@ -60,12 +72,19 @@ public class CentralGitHookService {
 			String taskName = taskFolder.getName();
 			if (!taskName.startsWith(".")) {
 				Task task = makeTask(taskName);
-				StudentTask studentTask = makeStudentTask(uniid, taskName, task);
+				StudentTask studentTask = makeStudentTask(uniid, task);
 				makeSubmission(uniid, taskName, studentTask);
 			}
 		}
 	}
-
+	
+	/**
+	 * Task creation. Method checks if there already exists
+	 * a task by the given taskName. If not, creates a new instance
+	 * and saves it to the database.
+	 * @param taskName Given task name
+	 * @return Task from the database if one exists, new instance otherwise
+	 */
 	private Task makeTask(String taskName) {
 		Task task = taskService.getByName(taskName);
 		if (task == null) {
@@ -80,8 +99,16 @@ public class CentralGitHookService {
 		}
 		return task;
 	}
-
-	private StudentTask makeStudentTask(String uniid, String taskName, Task task) {
+	
+	/**
+	 * StudentTask creation. Method checks if there already exists
+	 * a StudentTask that is associated with the given uniid and task. 
+	 * If not, creates a new instance and saves it to the database.
+	 * @param uniid Student identification
+	 * @param task Given task
+	 * @return StudentTask from the database if one exists, new instance otherwise
+	 */
+	private StudentTask makeStudentTask(String uniid, Task task) {
 		StudentTask studentTask = studentTaskService.getByTaskAndUniid(task, uniid);
 		if (studentTask == null) {
 			System.out.println("creating studenttask");
@@ -100,7 +127,17 @@ public class CentralGitHookService {
 		}
 		return studentTask;
 	}
-
+	
+	/**
+	 * Submission creation. Method checks if there already exists
+	 * a Submission that is associated with the given uniid, task 
+	 * name and StudentTask. If not, creates a new instance and 
+	 * saves it to the database.
+	 * @param uniid Student identification
+	 * @param taskName Given task name
+	 * @param studentTask Given StudentTask
+	 * @return Submission from the database if one exists, new instance otherwise
+	 */
 	private Submission makeSubmission(String uniid, String taskName, StudentTask studentTask) {
 
 		if (gitService.hasChanged(uniid, taskName)) {

@@ -83,6 +83,7 @@ app.controller('appController', function($scope, $http) {
             data: grade
         }).then(function(response) {
             console.log(response);
+            $scope.studentTasks = $scope.getAllStudentTasks();
         }, function(error) {
             console.log(error);
         });
@@ -126,7 +127,7 @@ app.controller('appController', function($scope, $http) {
     }
     
     $scope.updateReview = function() {
-        var id = null;
+        var id = $scope.selectedStudentTask.review.id;
         var review = {
             id: id
         };
@@ -143,8 +144,14 @@ app.controller('appController', function($scope, $http) {
         });
     }
     
-    $scope.updateSandBox = function() {
-        var sandBox = null;
+    $scope.updateSandBox = function(stdout, stderr) {
+        var id = $scope.selectedSubmission.sandBox.id;
+        var sandBox = {
+            id: id,
+            stdout: stdout,
+            stderr: stderr
+        };
+        
         var url = "http://localhost:8080/sandbox/update";
         
         $http({
@@ -159,6 +166,8 @@ app.controller('appController', function($scope, $http) {
     }
     
     $scope.embeddablSendFiles = function() {
+        var name = $scope.selectedSubmission.date;
+        var location = $scope.selectedSubmission.sandBox.location;
 
         $http({
             method: 'POST',
@@ -168,18 +177,26 @@ app.controller('appController', function($scope, $http) {
             },
             data: {
                 type: "ZIP",
-                name: "maria.kert",
-                url: "http://dijkstra.cs.ttu.ee/~Maria.Kert/loputoo/maria.kert.zip",
+                name: name,
+                url: "http://localhost:8080" + location,
                 user: "JOOP"
             }
         }).then(function(response) {
             console.log(response);
+            if (response.data.state) {
+                $scope.embeddablRun();
+            } else {
+                $scope.embeddablSendFiles();
+            }
         }, function(error) {
             console.log(error);
         });
     }
 
     $scope.embeddablRun = function() {
+        var path = $scope.selectedSubmission.sandBox.location;
+        var package = $scope.selectedSubmission.sandBox.packagePath;
+        var classPath = $scope.selectedSubmission.sandBox.classPath;
         
         $http({
             method: 'POST',
@@ -189,14 +206,15 @@ app.controller('appController', function($scope, $http) {
             },
             data: {
                 "file": {
-                    "path": "maria.kert/EX05/ee/ttu/java/albumcreation/Band.java"
+                    "path": path
                 },
-                "classpath": "maria.kert/EX05",
-                "package": "ee.ttu.java.albumcreation",
+                "classpath": classPath,
+                "package": package,
                 "user": "JOOP"
             }
         }).then(function(response) {
             console.log(response.data.stdout);
+            $scope.updateSandBox(response.data.stdout, response.data.stderr);
         }, function(error) {
             console.log(error);
         });

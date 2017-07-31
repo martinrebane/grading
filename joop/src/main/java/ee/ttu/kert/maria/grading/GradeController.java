@@ -7,6 +7,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+/**
+ * Controller for grading students' assignments.
+ * The controller is user activated only.
+ * @author Maria Kert
+ *
+ */
 public class GradeController {
 	
 	private GradeService gradeService;
