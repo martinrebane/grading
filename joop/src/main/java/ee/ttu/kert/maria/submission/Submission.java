@@ -21,6 +21,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+/**
+ * Lower type of exercise that stores information about
+ * the StudentTask it's associated with and the sandbox 
+ * object associated with it.
+ * @author Maria Kert
+ *
+ */
 public class Submission {
 	
 	@Id

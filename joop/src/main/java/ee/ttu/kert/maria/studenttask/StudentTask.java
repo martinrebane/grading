@@ -23,6 +23,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+/**
+ * Exercise middle type. Stores information about the task and student 
+ * it's associated with, review and grade objects associated with it
+ * and a list of submissions.
+ * @author Maria Kert
+ *
+ */
 public class StudentTask {
 	
 	@Id

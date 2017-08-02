@@ -17,6 +17,11 @@ import it.zielke.moji.MossException;
 import it.zielke.moji.SocketClient;
 
 @Service
+/**
+ * Plagiarism service using MOSS (Measure of Software Similarity) technology.
+ * @author Maria Kert
+ *
+ */
 public class MossService implements PlagiarismService {
 
 	private PlagiarismRepository plagiarismRepository;

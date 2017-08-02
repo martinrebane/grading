@@ -7,6 +7,11 @@ import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 
 @Service
+/**
+ * Eclipse based IDE service.
+ * @author Maria Kert
+ *
+ */
 public class EclipseService implements IDEService {
 
 	@Value("${paths.files.repos}")
@@ -57,6 +62,13 @@ public class EclipseService implements IDEService {
 		return scriptRunner.run(zipProject);
 	}
 
+	/**
+	 * Method to replace a line in a list of lines.
+	 * @param lines List of lines
+	 * @param search Line to change
+	 * @param replace Line to replace with
+	 * @return List of lines with the replaced line
+	 */
 	private List<String> replaceLine(List<String> lines, String search, String replace) {
 		for (int i = 0; i < lines.size(); i++) {
 			if (lines.get(i).trim().startsWith(search)) {

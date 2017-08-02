@@ -3,6 +3,12 @@ package ee.ttu.kert.maria.grading;
 import org.springframework.stereotype.Service;
 
 @Service
+/**
+ * Service that handles queries about Grade objects
+ * and directs them to the database interface.
+ * @author Maria Kert
+ *
+ */
 public class GradeService {
 	
 	private GradeRepository gradeRepository;

@@ -15,6 +15,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+/**
+ * Object that contains student feedback data.
+ * @author Maria Kert
+ *
+ */
 public class Review {
 	
 	@Id

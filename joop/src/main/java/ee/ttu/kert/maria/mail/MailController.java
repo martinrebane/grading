@@ -7,6 +7,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+/**
+ * Controller that interacts with the email service.
+ * Controller is user activated.
+ * @author Maria Kert
+ *
+ */
 public class MailController {
 
 	private MailGunService mailGunService;

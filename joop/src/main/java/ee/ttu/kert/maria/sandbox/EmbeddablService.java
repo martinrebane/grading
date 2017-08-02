@@ -6,6 +6,11 @@ import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
 
 @Service
+/**
+ * Service that handles queries about SandBox objects.
+ * @author Maria Kert
+ *
+ */
 public class EmbeddablService implements SandBoxService {
 	
 	private SandBoxRepository sandBoxRepository;
@@ -61,10 +66,21 @@ public class EmbeddablService implements SandBoxService {
 		return scriptRunner.run(command2);
 	}
 	
+	/**
+	 * Method to save sandbox objects to the database.
+	 * @param sandBox Object to save
+	 * @return Saved sandbox object
+	 */
 	public SandBox save(SandBox sandBox) {
 		return sandBoxRepository.save(sandBox);
 	}
 
+	/**
+	 * Method for getting main class path from the specified task.
+	 * @param uniid Student identification
+	 * @param taskName Task identification
+	 * @return Path to main class
+	 */
 	private String getMainPath(String uniid, String taskName) {
 		if (!repoPath.endsWith("/")) repoPath += "/";
 		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
@@ -74,12 +90,23 @@ public class EmbeddablService implements SandBoxService {
 		return uniid + "/" + mainPath;
 	}
 	
+	/**
+	 * Method for getting package path to main class of the specified task.
+	 * @param uniid Student identification
+	 * @param taskName Task identification
+	 * @return Package path to main class
+	 */
 	private String getPackagePath(String uniid, String taskName) {
 		if (!repoPath.endsWith("/")) repoPath += "/";
 		String path = repoPath + uniid + "/" + taskName + "/src/";
 		return reader.getPackagePath(path.replace("/mnt/d", "D:"));
 	}
 	
+	/**
+	 * Method for getting the class path for running the project.
+	 * @param mainPath Project's main class path
+	 * @return Class path to run the project
+	 */
 	private String getClassPath(String mainPath) {
 		if (mainPath == null) return null;
 		String[] folders = mainPath.split("/");

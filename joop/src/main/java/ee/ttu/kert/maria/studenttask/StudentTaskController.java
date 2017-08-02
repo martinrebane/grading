@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ee.ttu.kert.maria.submission.Submission;
 
 @Controller
+/**
+ * Controller that handles queries about StudentTask objects
+ * and redirects them to StudentTaskService.
+ * @author Maria Kert
+ *
+ */
 public class StudentTaskController {
 	
 	private StudentTaskService studentTaskService;

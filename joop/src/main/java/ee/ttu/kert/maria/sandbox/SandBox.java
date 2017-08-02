@@ -15,6 +15,12 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+/**
+ * Entity to store values needed for running a project and
+ * the results of running it.
+ * @author Maria Kert
+ *
+ */
 public class SandBox {
 	
 	@Id

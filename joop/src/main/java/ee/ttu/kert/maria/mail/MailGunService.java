@@ -12,6 +12,11 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 @Service
+/**
+ * Service that interacts with MailGun servers.
+ * @author Maria Kert
+ *
+ */
 public class MailGunService implements MailService {
 	
 	@Value("${mailgun.apikey}")
@@ -27,6 +32,13 @@ public class MailGunService implements MailService {
 		return "sent";
 	}
 	
+	/**
+	 * Method that interacts with MailGun server.
+	 * @param uniid Student identification, email username
+	 * @param reviewId Gist identification, student's feedback id
+	 * @param subject Email title
+	 * @return ClientResponse if successuf, null otherwise
+	 */
 	private ClientResponse sendEmail(String uniid, String reviewId, String subject) {
 		//currently MailGun only supports sandbox emails
 		try {

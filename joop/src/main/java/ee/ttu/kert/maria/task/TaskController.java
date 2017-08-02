@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ee.ttu.kert.maria.studenttask.StudentTask;
 
 @Controller
+/**
+ * Controller that handles queries about Task objects
+ * and directs them to TaskService.
+ * @author Maria Kert
+ *
+ */
 public class TaskController {
 	
 	private TaskService taskService;
@@ -24,7 +30,7 @@ public class TaskController {
 	}
 	
 	@RequestMapping(value="/task/get", method=RequestMethod.GET)
-	public @ResponseBody Iterable<Task> getAllTasks() {
+	public @ResponseBody List<Task> getAllTasks() {
 		return taskService.getAll();
 	}
 }

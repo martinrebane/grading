@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+/**
+ * Controller that handles student feedback data and is user activated.
+ * @author Maria Kert
+ *
+ */
 public class ReviewController {
 
 	private GitHubService gitHubService;

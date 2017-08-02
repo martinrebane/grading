@@ -1,13 +1,18 @@
 package ee.ttu.kert.maria.plagiarism;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+/**
+ * Controller that handles plagiarism execution and is 
+ * user activated.
+ * @author Maria Kert
+ *
+ */
 public class PlagiarismController {
 	
 	private MossService mossService;

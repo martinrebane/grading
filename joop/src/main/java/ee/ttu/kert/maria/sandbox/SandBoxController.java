@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+/**
+ * Controller that handles querys about sandbox objects.
+ * @author Maria Kert
+ *
+ */
 public class SandBoxController {
 
 	private EmbeddablService embeddablService;

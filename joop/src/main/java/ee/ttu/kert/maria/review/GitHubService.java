@@ -19,6 +19,11 @@ import org.springframework.stereotype.Service;
 import ee.ttu.kert.maria.helpers.FileHandler;
 
 @Service
+/**
+ * Service that interacts with GitHub servers.
+ * @author Maria Kert
+ *
+ */
 public class GitHubService implements ReviewService {
 
 	private ReviewRepository reviewRepository;
@@ -57,10 +62,22 @@ public class GitHubService implements ReviewService {
 		return reviewRepository.save(rw);
 	}
 
+	/**
+	 * Saves review to the database using review database interface.
+	 * @param review Review to save
+	 * @return Saved review
+	 */
 	public Review saveReview(Review review) {
 		return reviewRepository.save(review);
 	}
 
+	/**
+	 * Creates a new gist from the files associated with the
+	 * uniid and task name.
+	 * @param uniid Student identification
+	 * @param taskName Task identification
+	 * @return Gist id
+	 */
 	private String createGist(String uniid, String taskName) {
 		//code snippets from http://bit.ly/2q7fUd1 (shortened GitHub link)
 		Authorization auth = getGistAuthorization();
@@ -86,6 +103,13 @@ public class GitHubService implements ReviewService {
 		return gist.getId();
 	}
 
+	/**
+	 * Updates an existing gist by uploading new files to it.
+	 * @param id Gist identification
+	 * @param uniid Student identification
+	 * @param taskName Task identification
+	 * @return Updated gist id
+	 */
 	private String updateGist(String id, String uniid, String taskName) {
 		Authorization auth = getGistAuthorization();
 
@@ -103,6 +127,11 @@ public class GitHubService implements ReviewService {
 		}
 	}
 
+	/**
+	 * Adds all files to a map that can be forwarded to GitHub servers.
+	 * @param taskPath Path to the task where all the submission files are
+	 * @return Map with every single file associated with the project
+	 */
 	private Map<String, GistFile> addAllFiles(String taskPath) {
 		String path = repoPath + taskPath + "/src/";
 		List<File> files = reader.getAllFiles(path.replace("/mnt/d", "D:"));
@@ -118,10 +147,18 @@ public class GitHubService implements ReviewService {
 		return fileMap;
 	}
 
+	/**
+	 * Creates a random string for GitHub authorization.
+	 * @return Random string
+	 */
 	private String getRandomString() {
 		return new BigInteger(130, secureRandom).toString(32);
 	}
 
+	/**
+	 * Gets GitHub authorization for accessing, creating and editing gists.
+	 * @return Authorization object if successful, null otherwise.
+	 */
 	private Authorization getGistAuthorization() {
 		//code snippets from http://bit.ly/2q7fUd1 (shortened GitHub link)
 		client.setCredentials(user, pass);

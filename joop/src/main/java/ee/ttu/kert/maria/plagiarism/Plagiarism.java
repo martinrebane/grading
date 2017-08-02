@@ -15,6 +15,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+/**
+ * Plagiarism object.
+ * @author Maria Kert
+ *
+ */
 public class Plagiarism {
 	
 	@Id

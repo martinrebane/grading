@@ -19,6 +19,12 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+/**
+ * Upper type of exercise that stores information about
+ * the StudentTask and Plagiarism objects associated with it.
+ * @author Maria Kert
+ *
+ */
 public class Task {
 	
 	@Id
