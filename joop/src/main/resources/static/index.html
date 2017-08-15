@@ -7,94 +7,119 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="/js/app.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 </head>
 <body>
     <div class="container" ng-app="gradingApp" ng-controller="tabController as tabs">
         <div class="header">
             <h3 class="text-muted"></h3>
         </div>
-        <div class="navbar navbar-default">
-            <ul class="nav nav-pills navbar-nav">
-                <li ng-class="{active: tabs.isSet(1)}">
-                    <a href ng-click="tabs.setTab(1)">Tasks</a>
-                </li>
-                <li ng-class="{active: tabs.isSet(2)}">
-                    <a href ng-click="tabs.setTab(2)">Submissions</a>
-                </li>
-                <li ng-class="{active: tabs.isSet(3)}">
-                    <a href ng-click="tabs.setTab(3)">Grading</a>
-                </li>
-            </ul>
-        </div>
+        
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item" ng-class="{active: tabs.isSet(1)}">
+                        <a class="nav-link" href ng-click="tabs.setTab(1)">Tasks</a>
+                    </li>
+                    <li class="nav-item" ng-class="{active: tabs.isSet(2)}">
+                        <a class="nav-link" href ng-click="tabs.setTab(2)">Submissions</a>
+                    </li>
+                    <li class="nav-item" ng-class="{active: tabs.isSet(3)}">
+                        <a class="nav-link" href ng-click="tabs.setTab(3)">Grading</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <br>
 
         <div ng-controller="appController as app">
-            <div ng-show="tabs.isSet(1)" class="col-sm-offset-2 col-sm-8">
-                <div>
-                    <!--button type="button" ng-click="getAllTasks()" class="form-control btn btn-primary">Get all tasks</button-->
-                    <select id="allTasks" class="form-control" ng-model="selectedTask" ng-change="getAllStudentTasks()">
-                        <option data-ng-repeat="task in allTasks" value="{{ task }}">{{ task.name }}</option>
-                    </select>
-                    <br>
-                    <button type="button" ng-click="runPlagiarism()" class="btn btn-primary">Run plagiarism</button>
-                    <button type="button" onclick="" class="btn btn-primary" id="plagiarismResults">Results</button>
-                    <!--form>
-                        <input type="text" ng-model="query" class="form-control">
-                    </form-->
-                </div>
-                <br>
-                <div class="table-responsive">
-                    <table id="results" class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>uniID</th>
-                                <th>grade</th>
-                                <th>last changed</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!--tr ng-repeat="studentTask in studentTasks | filter:query | orderBy:'uniid' track by $index"-->
-                            <tr ng-repeat="studentTask in studentTasks track by $index" ng-click="getSubmissions($index); tabs.setTab(2)">
-                                <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ studentTask.uniid }}</td>
-                                <td>{{ studentTask.grade.grade }}</td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div ng-show="tabs.isSet(2)">
-                <div class="col-sm-offset-2 col-sm-8">
-                    <div class="table-responsive">
-                        <table id="submissions" class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>stdout</th>
-                                    <th>stderr</th>
-                                    <th>date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!--tr ng-repeat="studentTask in studentTasks | filter:query | orderBy:'uniid' track by $index"-->
-                                <tr ng-repeat="submission in submissions track by $index" ng-click="setSelectedSubmission(submission); tabs.setTab(3)">
-                                    <th scope="row">{{ $index + 1 }}</th>
-                                    <td>{{ submission.sandbox.stdout }}</td>
-                                    <td>{{ submission.sandbox.stderr }}</td>
-                                    <td>{{ submission.date }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+            <div ng-show="tabs.isSet(1)">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <!--button type="button" ng-click="getAllTasks()" class="form-control btn btn-primary">Get all tasks</button-->
+                        <select id="allTasks" class="form-control" ng-model="selectedTask" ng-change="getAllStudentTasks()">
+                            <option data-ng-repeat="task in allTasks" value="{{ task }}">{{ task.name }}</option>
+                        </select>
+                        <!--form>
+                            <input type="text" ng-model="query" class="form-control">
+                        </form-->
+
+                        <br>
+                        <div class="table-responsive">
+                            <table id="results" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>uniID</th>
+                                        <th>grade</th>
+                                        <th>last changed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--tr ng-repeat="studentTask in studentTasks | filter:query | orderBy:'uniid' track by $index"-->
+                                    <tr ng-repeat="studentTask in studentTasks track by $index" ng-click="getSubmissions($index); tabs.setTab(2)">
+                                        <th scope="row">{{ $index + 1 }}</th>
+                                        <td>{{ studentTask.uniid }}</td>
+                                        <td>{{ studentTask.grade.grade }}</td>
+                                        <td>{{ studentTask.submissions[studentTask.submissions.length - 1].date }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 ml-auto">
+                        <button type="button" ng-click="runPlagiarism()" class="btn btn-primary">Run plagiarism</button>
+                        <button type="button" onclick="" class="btn btn-primary" id="plagiarismResults">Results</button>
                     </div>
                 </div>
             </div>
+            
+            <div ng-show="tabs.isSet(2)">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="table-responsive">
+                            <table id="submissions" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>stdout</th>
+                                        <th>stderr</th>
+                                        <th>date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--tr ng-repeat="studentTask in studentTasks | filter:query | orderBy:'uniid' track by $index"-->
+                                    <tr ng-repeat="submission in submissions track by $index" ng-click="setSelectedSubmission(submission); tabs.setTab(3)">
+                                        <th scope="row">{{ $index + 1 }}</th>
+                                        <td>{{ submission.sandbox.stdout }}</td>
+                                        <td>{{ submission.sandbox.stderr }}</td>
+                                        <td>{{ submission.date }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+            </div>
+            
             <div ng-show="tabs.isSet(3)">
-                <div class="col-sm-offset-2 col-sm-8">
-                    <p>Grade</p>
-                    <input type="number" ng-model="gradeInput" class="form-control">
-                    <button type="button" ng-click="setGrade(gradeInput)" class="btn btn-primary">Submit grade</button>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p>Grade</p>
+                        <input type="number" ng-model="gradeInput" class="form-control">
+                        <br>
+                        <button type="button" ng-click="setGrade(gradeInput); tabs.setTab(1)" class="btn btn-primary">Submit grade</button>
+                    </div>
+                    <div class="col">
+
+                    </div>
                 </div>
             </div>
             <!--div ng-show="tabs.isSet(4)">

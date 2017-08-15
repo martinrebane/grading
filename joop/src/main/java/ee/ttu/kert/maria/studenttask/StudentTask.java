@@ -49,7 +49,6 @@ public class StudentTask {
 	private Grade grade;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	@JsonIgnore
 	private List<Submission> submissions;
 
 }

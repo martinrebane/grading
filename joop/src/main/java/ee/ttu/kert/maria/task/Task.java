@@ -36,7 +36,6 @@ public class Task {
 	private String subjectCode;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	@JsonIgnore
 	private List<StudentTask> studentTasks;
 	
 	@OneToOne(cascade=CascadeType.ALL)
