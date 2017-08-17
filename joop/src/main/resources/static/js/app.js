@@ -21,6 +21,8 @@ app.controller('appController', function($scope, $http) {
     $scope.selectedTask = null;
     $scope.selectedStudentTask = null;
     $scope.selectedSubmission = null;
+    $scope.selectedReview = null;
+    $scope.selectedPlagiarism = null;
     
     $scope.getAllTasks = function() {
         $http({
@@ -35,7 +37,10 @@ app.controller('appController', function($scope, $http) {
     }
     
     $scope.getAllStudentTasks = function() {
-        var taskName = JSON.parse($scope.selectedTask).name;
+        var task = JSON.parse($scope.selectedTask);
+        var taskName = task.name;
+        $scope.selectedPlagiarism = task.plagiarism;
+        console.log($scope.selectedPlagiarism)
         var url = 'http://localhost:8080/task/' + taskName;
         console.log(url);
         
@@ -53,6 +58,7 @@ app.controller('appController', function($scope, $http) {
     $scope.getSubmissions = function(index) {
         var studentTask = $scope.studentTasks[index];
         $scope.selectedStudentTask = studentTask;
+        $scope.selectedReview = studentTask.review;
         var id = studentTask.id;
         var url = 'http://localhost:8080/studenttask/' + id;
         console.log(url);
@@ -120,6 +126,7 @@ app.controller('appController', function($scope, $http) {
                 data: plagiarism
             }).then(function(response) {
                 console.log(response);
+                $scope.selectedPlagiarism = response.data;
             }, function(error) {
                 console.log(error);
             });
@@ -139,6 +146,7 @@ app.controller('appController', function($scope, $http) {
             data: review
         }).then(function(response) {
             console.log(response);
+            $scope.selectedReview = response.data;
         }, function(error) {
             console.log(error);
         });

@@ -9,6 +9,7 @@
     <script src="/js/app.js"></script>
     <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style/style.css">
 </head>
 <body>
     <div class="container" ng-app="gradingApp" ng-controller="tabController as tabs">
@@ -72,8 +73,12 @@
                         </div>
                     </div>
                     <div class="col-sm-3 ml-auto">
-                        <button type="button" ng-click="runPlagiarism()" class="btn btn-primary">Run plagiarism</button>
-                        <button type="button" onclick="" class="btn btn-primary" id="plagiarismResults">Results</button>
+                        <ul>
+                            <li><a href="" ng-click="runPlagiarism()">Run plagiarism</a></li>
+                            <li><a href="{{ selectedPlagiarism.result }}" ng-click="" target="_blank">Plagiarism results</a></li>
+                        </ul>
+                        <!--button type="button" ng-click="runPlagiarism()" class="btn btn-primary">Run plagiarism</button>
+                        <button type="button" onclick="" class="btn btn-primary" id="plagiarismResults">Results</button-->
                     </div>
                 </div>
             </div>
@@ -89,6 +94,7 @@
                                         <th>stdout</th>
                                         <th>stderr</th>
                                         <th>date</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -98,13 +104,18 @@
                                         <td>{{ submission.sandbox.stdout }}</td>
                                         <td>{{ submission.sandbox.stderr }}</td>
                                         <td>{{ submission.date }}</td>
+                                        <td><a href="{{ submission.location }}" target="_blank">Download</a></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="col">
-
+                    <div class="col-sm-3 ml-auto">
+                        <ul>
+                            <li><a href="" ng-click="updateReview()">Create review</a></li>
+                            <li><a href="" ng-click="">Open review</a></li>
+                            <li><a href="" ng-click="sendMail()">Send feedback</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -117,8 +128,7 @@
                         <br>
                         <button type="button" ng-click="setGrade(gradeInput); tabs.setTab(1)" class="btn btn-primary">Submit grade</button>
                     </div>
-                    <div class="col">
-
+                    <div class="col-sm-3 ml-auto">
                     </div>
                 </div>
             </div>
