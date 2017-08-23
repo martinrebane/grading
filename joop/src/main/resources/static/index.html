@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="col-sm-8">
                         <!--button type="button" ng-click="getAllTasks()" class="form-control btn btn-primary">Get all tasks</button-->
-                        <select id="allTasks" class="form-control" ng-model="selectedTask" ng-change="getAllStudentTasks()">
+                        <select id="allTasks" class="form-control" ng-model="currentTask" ng-change="getAllStudentTasks()">
                             <option data-ng-repeat="task in allTasks" value="{{ task }}">{{ task.name }}</option>
                         </select>
                         <!--form>
@@ -75,7 +75,7 @@
                     <div class="col-sm-3 ml-auto">
                         <ul>
                             <li><a href="" ng-click="runPlagiarism()">Run plagiarism</a></li>
-                            <li><a href="{{ selectedPlagiarism.result }}" ng-click="" target="_blank">Plagiarism results</a></li>
+                            <li><a href="{{ selectedTask.plagiarism.result }}" ng-click="" target="_blank">Plagiarism results</a></li>
                         </ul>
                         <!--button type="button" ng-click="runPlagiarism()" class="btn btn-primary">Run plagiarism</button>
                         <button type="button" onclick="" class="btn btn-primary" id="plagiarismResults">Results</button-->
@@ -113,7 +113,7 @@
                     <div class="col-sm-3 ml-auto">
                         <ul>
                             <li><a href="" ng-click="updateReview()">Create review</a></li>
-                            <li><a href="" ng-click="">Open review</a></li>
+                            <li><a href="{{ selectedStudentTask.review.link }}" ng-click="" target="_blank">Open review</a></li>
                             <li><a href="" ng-click="sendMail()">Send feedback</a></li>
                         </ul>
                     </div>
@@ -132,26 +132,6 @@
                     </div>
                 </div>
             </div>
-            <!--div ng-show="tabs.isSet(4)">
-                <div class="col-sm-offset-2 col-sm-8">
-                    <h1>{{ '{{animal.name}}' }}</h1>
-                    <form>
-                        <p>Liik:</p>
-                        <input type="text" ng-model="animal.species" class="form-control">
-                        <br>
-                        <p>Asukoht:</p>
-                        <input type="text" ng-model="sighting.location" class="form-control">
-                        <br>
-                        <p>Kuupäev:</p>
-                        <input type="date" ng-model="sighting.sight_date" class="form-control">
-                        <br>
-                        <p>Kellaaeg:</p>
-                        <input type="time" ng-model="sighting.time" class="form-control">
-                        <br>
-                        <button type="button" class="form-control btn btn-primary" ng-click="updateSighting(); tabs.setTab(1)">Salvesta</button>
-                    </form>
-                </div>
-            </div-->
         </div>
     </div>
 </body>

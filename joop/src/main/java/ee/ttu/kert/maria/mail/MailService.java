@@ -11,9 +11,8 @@ public interface MailService {
 	 * Method to send students feedback for their assignment.
 	 * @param uniid Student identification, email username
 	 * @param reviewId Id for the review that contains feedback for student
-	 * @param subject Email subject
 	 * @return Null if there is an error, "sent" otherwise
 	 */
-	public String sendFeedback(String uniid, String reviewId, String subject);
+	public String sendFeedback(String uniid, String reviewId);
 
 }

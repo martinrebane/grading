@@ -21,8 +21,6 @@ app.controller('appController', function($scope, $http) {
     $scope.selectedTask = null;
     $scope.selectedStudentTask = null;
     $scope.selectedSubmission = null;
-    $scope.selectedReview = null;
-    $scope.selectedPlagiarism = null;
     
     $scope.getAllTasks = function() {
         $http({
@@ -37,10 +35,9 @@ app.controller('appController', function($scope, $http) {
     }
     
     $scope.getAllStudentTasks = function() {
-        var task = JSON.parse($scope.selectedTask);
+        var task = JSON.parse($scope.currentTask);
+        $scope.selectedTask = task;
         var taskName = task.name;
-        $scope.selectedPlagiarism = task.plagiarism;
-        console.log($scope.selectedPlagiarism)
         var url = 'http://localhost:8080/task/' + taskName;
         console.log(url);
         
@@ -58,7 +55,6 @@ app.controller('appController', function($scope, $http) {
     $scope.getSubmissions = function(index) {
         var studentTask = $scope.studentTasks[index];
         $scope.selectedStudentTask = studentTask;
-        $scope.selectedReview = studentTask.review;
         var id = studentTask.id;
         var url = 'http://localhost:8080/studenttask/' + id;
         console.log(url);
@@ -89,17 +85,16 @@ app.controller('appController', function($scope, $http) {
             data: grade
         }).then(function(response) {
             console.log(response);
-            $scope.studentTasks = $scope.getAllStudentTasks();
+            $scope.getAllStudentTasks();
         }, function(error) {
             console.log(error);
         });
     }
     
     $scope.sendMail = function() {
-        var uniid = null;
-        var reviewId = null;
-        var subject = null;
-        var url = "http://localhost:8080/mail/send/${uniid}/${reviewId}/${subject}";
+        var uniid = $scope.selectedStudentTask.uniid;
+        var reviewId = $scope.selectedStudentTask.review.reviewId;
+        var url = "http://localhost:8080/mail/send/${uniid}/" + reviewId;
         
         $http({
             method: 'GET',
@@ -113,7 +108,7 @@ app.controller('appController', function($scope, $http) {
     
     $scope.runPlagiarism = function() {
         if ($scope.selectedTask != null) {
-            var id = JSON.parse($scope.selectedTask).id;
+            var id = $scope.selectedTask.id;
             console.log(id);
             var plagiarism = {
                 id: id
@@ -126,7 +121,7 @@ app.controller('appController', function($scope, $http) {
                 data: plagiarism
             }).then(function(response) {
                 console.log(response);
-                $scope.selectedPlagiarism = response.data;
+                $scope.selectedTask.plagiarism = response.data;
             }, function(error) {
                 console.log(error);
             });
@@ -146,7 +141,7 @@ app.controller('appController', function($scope, $http) {
             data: review
         }).then(function(response) {
             console.log(response);
-            $scope.selectedReview = response.data;
+            $scope.selectedStudentTask.review = response.data;
         }, function(error) {
             console.log(error);
         });
@@ -232,5 +227,5 @@ app.controller('appController', function($scope, $http) {
         $scope.selectedSubmission = submission;
     }
 
-    $scope.allTasks = $scope.getAllTasks();
+    $scope.getAllTasks();
 });

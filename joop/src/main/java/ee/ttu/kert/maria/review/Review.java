@@ -28,6 +28,8 @@ public class Review {
 	
 	private String reviewId;
 	
+	private String link;
+	
 	@OneToOne
 	@JsonIgnore
 	private StudentTask studentTask;

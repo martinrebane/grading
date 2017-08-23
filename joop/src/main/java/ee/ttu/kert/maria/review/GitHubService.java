@@ -39,6 +39,9 @@ public class GitHubService implements ReviewService {
 
 	@Value("${github.pass}")
 	private String pass;
+	
+	@Value("${github.gistlink}")
+	private String gistLink;
 
 	public GitHubService(ReviewRepository reviewRepository) {
 		this.reviewRepository = reviewRepository;
@@ -52,13 +55,14 @@ public class GitHubService implements ReviewService {
 		Review rw = reviewRepository.findOne(review.getId());
 		String uniid = rw.getStudentTask().getUniid();
 		String taskName = rw.getStudentTask().getTask().getName();
-		String reviewId = review.getReviewId();
+		String reviewId = rw.getReviewId();
 		if (reviewId == null) {
 			reviewId = createGist(uniid, taskName);
 		} else {
-			reviewId = updateGist(review.getReviewId(), uniid, taskName);
+			reviewId = updateGist(rw.getReviewId(), uniid, taskName);
 		}
 		rw.setReviewId(reviewId);
+		rw.setLink(gistLink + reviewId);
 		return reviewRepository.save(rw);
 	}
 
