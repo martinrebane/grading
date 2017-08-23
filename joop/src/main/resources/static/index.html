@@ -41,7 +41,6 @@
             <div ng-show="tabs.isSet(1)">
                 <div class="row">
                     <div class="col-sm-8">
-                        <!--button type="button" ng-click="getAllTasks()" class="form-control btn btn-primary">Get all tasks</button-->
                         <select id="allTasks" class="form-control" ng-model="currentTask" ng-change="getAllStudentTasks()">
                             <option data-ng-repeat="task in allTasks" value="{{ task }}">{{ task.name }}</option>
                         </select>
@@ -74,11 +73,9 @@
                     </div>
                     <div class="col-sm-3 ml-auto">
                         <ul>
-                            <li><a href="" ng-click="runPlagiarism()">Run plagiarism</a></li>
-                            <li><a href="{{ selectedTask.plagiarism.result }}" ng-click="" target="_blank">Plagiarism results</a></li>
+                            <li><a id="runPlagiarism" href="" ng-click="runPlagiarism()" ng-disabled="isDisabled(selectedTask, '#runPlagiarism')">Run plagiarism</a></li>
+                            <li><a id="plagiarismResults" href="{{ selectedTask.plagiarism.result }}" ng-disabled="isDisabled(selectedTask.plagiarism.result, '#plagiarismResults')" target="_blank">Plagiarism results</a></li>
                         </ul>
-                        <!--button type="button" ng-click="runPlagiarism()" class="btn btn-primary">Run plagiarism</button>
-                        <button type="button" onclick="" class="btn btn-primary" id="plagiarismResults">Results</button-->
                     </div>
                 </div>
             </div>
@@ -95,16 +92,18 @@
                                         <th>stderr</th>
                                         <th>date</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <!--tr ng-repeat="studentTask in studentTasks | filter:query | orderBy:'uniid' track by $index"-->
-                                    <tr ng-repeat="submission in submissions track by $index" ng-click="setSelectedSubmission(submission); tabs.setTab(3)">
+                                    <tr ng-repeat="submission in submissions track by $index">
                                         <th scope="row">{{ $index + 1 }}</th>
                                         <td>{{ submission.sandbox.stdout }}</td>
                                         <td>{{ submission.sandbox.stderr }}</td>
                                         <td>{{ submission.date }}</td>
                                         <td><a href="{{ submission.location }}" target="_blank">Download</a></td>
+                                        <td><a href="" ng-click="setSelectedSubmission(submission); tabs.setTab(3)">Grade</a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -112,9 +111,9 @@
                     </div>
                     <div class="col-sm-3 ml-auto">
                         <ul>
-                            <li><a href="" ng-click="updateReview()">Create review</a></li>
-                            <li><a href="{{ selectedStudentTask.review.link }}" ng-click="" target="_blank">Open review</a></li>
-                            <li><a href="" ng-click="sendMail()">Send feedback</a></li>
+                            <li><a id="createReview" href="" ng-click="updateReview()" ng-disabled="isDisabled(selectedStudentTask, '#createReview')">Create review</a></li>
+                            <li><a id="openReview" href="{{ selectedStudentTask.review.link }}" target="_blank" ng-disabled="isDisabled(selectedStudentTask.review.link, '#openReview')">Open review</a></li>
+                            <li><a id="sendFeedback" href="" ng-click="sendMail()" ng-disabled="isDisabled(selectedStudentTask.review.reviewId, '#sendFeedback')">Send feedback</a></li>
                         </ul>
                     </div>
                 </div>

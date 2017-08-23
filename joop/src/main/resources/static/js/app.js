@@ -226,6 +226,15 @@ app.controller('appController', function($scope, $http) {
     $scope.setSelectedSubmission = function(submission) {
         $scope.selectedSubmission = submission;
     }
+    
+    $scope.isDisabled = function(variable, element) {
+        if (variable == null) {
+            $(element).addClass("disabled");
+            return true;
+        }
+        $(element).removeClass("disabled");
+        return false;
+    }
 
     $scope.getAllTasks();
 });
