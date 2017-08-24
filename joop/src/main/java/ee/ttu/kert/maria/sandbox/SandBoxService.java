@@ -1,5 +1,7 @@
 package ee.ttu.kert.maria.sandbox;
 
+import ee.ttu.kert.maria.submission.Submission;
+
 /**
  * Interface that handles SandBox object creation, 
  * updating and compressing into the right format.
@@ -30,5 +32,17 @@ public interface SandBoxService {
 	 * @return Zip file location
 	 */
 	public String zipProject(String uniid, String taskName);
+	
+	/**
+	 * Adds submission to queue in order to run it.
+	 * @param submission Submission to add.
+	 */
+	public void addSubmissionToQueue(Submission submission);
+	
+	/**
+	 * Gets first added submission from the queue.
+	 * @return Submission from the queue
+	 */
+	public Submission getSubmissionFromQueue();
 
 }

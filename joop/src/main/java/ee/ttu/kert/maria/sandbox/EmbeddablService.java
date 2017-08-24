@@ -1,9 +1,13 @@
 package ee.ttu.kert.maria.sandbox;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ee.ttu.kert.maria.helpers.FileHandler;
 import ee.ttu.kert.maria.helpers.ScriptRunner;
+import ee.ttu.kert.maria.submission.Submission;
 
 @Service
 /**
@@ -16,6 +20,7 @@ public class EmbeddablService implements SandBoxService {
 	private SandBoxRepository sandBoxRepository;
 	private FileHandler reader;
 	private ScriptRunner scriptRunner;
+	private Queue<Submission> embeddablQueue;
 	
 	@Value("${paths.files.repos}")
 	private String repoPath;
@@ -33,6 +38,7 @@ public class EmbeddablService implements SandBoxService {
 		this.sandBoxRepository = sandBoxRepository;
 		reader = new FileHandler();
 		scriptRunner = new ScriptRunner();
+		embeddablQueue = new LinkedList<>();
 	}
 	
 	@Override
@@ -64,6 +70,16 @@ public class EmbeddablService implements SandBoxService {
 		source = source.substring(0, source.lastIndexOf("/"));
 		String[] command2 = {"bash", zipScriptPath, uniid, taskName, source, zipPath + taskName};
 		return scriptRunner.run(command2);
+	}
+	
+	@Override
+	public void addSubmissionToQueue(Submission submission) {
+		embeddablQueue.add(submission);
+	}
+
+	@Override
+	public Submission getSubmissionFromQueue() {
+		return embeddablQueue.remove();
 	}
 	
 	/**
@@ -113,4 +129,5 @@ public class EmbeddablService implements SandBoxService {
 		if (folders.length == 2) return folders[0];
 		return folders[0] + "/" + folders[1];
 	}
+
 }

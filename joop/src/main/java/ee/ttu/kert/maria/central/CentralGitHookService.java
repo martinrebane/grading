@@ -73,7 +73,8 @@ public class CentralGitHookService {
 			if (!taskName.startsWith(".")) {
 				Task task = makeTask(taskName);
 				StudentTask studentTask = makeStudentTask(uniid, task);
-				makeSubmission(uniid, taskName, studentTask);
+				Submission submission = makeSubmission(uniid, taskName, studentTask);
+				embeddablService.addSubmissionToQueue(submission);
 			}
 		}
 	}
