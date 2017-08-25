@@ -14,7 +14,6 @@ app.controller('tabController', function() {
 
 app.controller('appController', function($scope, $http) {
 
-    $scope.data = [];
     $scope.allTasks = [];
     $scope.studentTasks = [];
     $scope.submissions = [];
