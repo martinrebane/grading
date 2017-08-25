@@ -43,6 +43,7 @@ public class MailGunService implements MailService {
 	 */
 	private ClientResponse sendEmail(String uniid, String reviewId) {
 		//currently MailGun only supports sandbox emails
+		String email = uniid + "@ttu.ee";
 		try {
 			Client client = Client.create();
 	        client.addFilter(new HTTPBasicAuthFilter("api", apiKey));
@@ -50,7 +51,7 @@ public class MailGunService implements MailService {
 	                "e0324f65ae848f4bc645132e.mailgun.org/messages");
 	        MultivaluedMapImpl formData = new MultivaluedMapImpl();
 	        formData.add("from", "Mailgun Sandbox <postmaster@sandbox040c037ae0324f65ae848f4bc645132e.mailgun.org>");
-	        formData.add("to", "Maria Kert <kertmaria@gmail.com>");
+	        formData.add("to", "Maria Kert <kertmaria@gmail.com>"); //teine argument vahetada email muutujaga
 	        formData.add("subject", SUBJECT);
 	        formData.add("text", "Tagasiside asub lingil: " + gistLink + reviewId);
 	        return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).

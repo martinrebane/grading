@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import ee.ttu.kert.maria.plagiarism.Plagiarism;
 import ee.ttu.kert.maria.studenttask.StudentTask;
 import lombok.Getter;

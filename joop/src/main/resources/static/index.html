@@ -54,14 +54,23 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>uniID</th>
-                                        <th>grade</th>
-                                        <th>last changed</th>
+                                        <th>
+                                            <a class="table-link" ng-click="studentTaskSort('uniid')">uniID</a>
+                                            <span class="sortorder" ng-show="studentTaskProperty === 'uniid'" ng-class="{reverse: studentTaskReverse}"></span>
+                                        </th>
+                                        <th>
+                                            <a class="table-link" ng-click="studentTaskSort('grade.grade')">grade</a>
+                                            <span class="sortorder" ng-show="studentTaskProperty === 'grade.grade'" ng-class="{reverse: studentTaskReverse}"></span>
+                                        </th>
+                                        <th>
+                                            <a class="table-link" ng-click="studentTaskSort('submissions[studentTask.submissions.length - 1].date')">last changed</a>
+                                            <span class="sortorder" ng-show="studentTaskProperty === 'submissions[studentTask.submissions.length - 1].date'" ng-class="{reverse: studentTaskReverse}"></span>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <!--tr ng-repeat="studentTask in studentTasks | filter:query | orderBy:'uniid' track by $index"-->
-                                    <tr ng-repeat="studentTask in studentTasks track by $index" ng-click="getSubmissions($index); tabs.setTab(2)">
+                                    <tr ng-repeat="studentTask in studentTasks | orderBy:studentTaskProperty:studentTaskReverse track by $index" ng-click="getSubmissions(studentTask); tabs.setTab(2)">
                                         <th scope="row">{{ $index + 1 }}</th>
                                         <td>{{ studentTask.uniid }}</td>
                                         <td>{{ studentTask.grade.grade }}</td>
@@ -97,13 +106,13 @@
                                 </thead>
                                 <tbody>
                                     <!--tr ng-repeat="studentTask in studentTasks | filter:query | orderBy:'uniid' track by $index"-->
-                                    <tr ng-repeat="submission in submissions track by $index">
+                                    <tr ng-repeat="submission in submissions | orderBy:date:true track by $index" ng-click="setSelectedSubmission(submission)">
                                         <th scope="row">{{ $index + 1 }}</th>
                                         <td>{{ submission.sandbox.stdout }}</td>
                                         <td>{{ submission.sandbox.stderr }}</td>
                                         <td>{{ submission.date }}</td>
                                         <td><a href="{{ submission.location }}" target="_blank">Download</a></td>
-                                        <td><a href="" ng-click="setSelectedSubmission(submission); tabs.setTab(3)">Grade</a></td>
+                                        <td><a href="" ng-click="tabs.setTab(3)">Grade</a></td>
                                     </tr>
                                 </tbody>
                             </table>

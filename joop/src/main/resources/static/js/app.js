@@ -20,13 +20,14 @@ app.controller('appController', function($scope, $http) {
     $scope.selectedTask = null;
     $scope.selectedStudentTask = null;
     $scope.selectedSubmission = null;
+    $scope.studentTaskProperty = 'uniid';
+    $scope.studentTaskReverse = false;
     
     $scope.getAllTasks = function() {
         $http({
             method: 'GET',
             url: 'http://localhost:8080/task/get'
         }).then(function(response) {
-            console.log(response);
             $scope.allTasks = response.data;
         }, function(error) {
             console.log(error);
@@ -44,15 +45,13 @@ app.controller('appController', function($scope, $http) {
             method: 'GET',
             url: url
         }).then(function(response) {
-            console.log(response);
             $scope.studentTasks = response.data;
         }, function(error) {
             console.log(error);
         });
     }
     
-    $scope.getSubmissions = function(index) {
-        var studentTask = $scope.studentTasks[index];
+    $scope.getSubmissions = function(studentTask) {
         $scope.selectedStudentTask = studentTask;
         var id = studentTask.id;
         var url = 'http://localhost:8080/studenttask/' + id;
@@ -62,7 +61,6 @@ app.controller('appController', function($scope, $http) {
             method: 'GET',
             url: url
         }).then(function(response) {
-            console.log(response);
             $scope.submissions = response.data;
         }, function(error) {
             console.log(error);
@@ -83,7 +81,6 @@ app.controller('appController', function($scope, $http) {
             url: url,
             data: grade
         }).then(function(response) {
-            console.log(response);
             $scope.getAllStudentTasks();
         }, function(error) {
             console.log(error);
@@ -99,7 +96,7 @@ app.controller('appController', function($scope, $http) {
             method: 'GET',
             url: url
         }).then(function(response) {
-            console.log(response);
+            
         }, function(error) {
             console.log(error);
         });
@@ -119,7 +116,6 @@ app.controller('appController', function($scope, $http) {
                 url: url,
                 data: plagiarism
             }).then(function(response) {
-                console.log(response);
                 $scope.selectedTask.plagiarism = response.data;
             }, function(error) {
                 console.log(error);
@@ -139,7 +135,6 @@ app.controller('appController', function($scope, $http) {
             url: url,
             data: review
         }).then(function(response) {
-            console.log(response);
             $scope.selectedStudentTask.review = response.data;
         }, function(error) {
             console.log(error);
@@ -161,7 +156,6 @@ app.controller('appController', function($scope, $http) {
             url: url,
             data: sandBox
         }).then(function(response) {
-            console.log(response);
             $scope.getSubmissionFromQueue();
         }, function(error) {
             console.log(error);
@@ -175,7 +169,6 @@ app.controller('appController', function($scope, $http) {
             method: 'GET',
             url: url
         }).then(function(response) {
-            console.log(response);
             if (response.data.length == 0) {
                 setTimeout($scope.getSubmissionFromQueue, 1000);
             } else {
@@ -207,7 +200,7 @@ app.controller('appController', function($scope, $http) {
             if (response.data.state) {
                 $scope.embeddablRun(submission);
             } else {
-                $scope.embeddablSendFiles(submission);
+                setTimeout($scope.embeddablSendFiles(submission), 1000);
             }
         }, function(error) {
             console.log(error);
@@ -234,9 +227,9 @@ app.controller('appController', function($scope, $http) {
                 "user": "JOOP"
             }
         }).then(function(response) {
-            console.log(response.data.stdout);
             if (response.data.error) {
-                $scope.embeddablRun(submission);
+                console.log(response);
+                setTimeout($scope.embeddablRun(submission), 1000);
             } else {
                 $scope.updateSandBox(response.data.stdout, response.data.stderr);
             }
@@ -257,6 +250,11 @@ app.controller('appController', function($scope, $http) {
         $(element).removeClass("disabled");
         return false;
     }
+
+    $scope.studentTaskSort = function(propertyName) {
+        $scope.studentTaskReverse = ($scope.studentTaskProperty === propertyName) ? !$scope.studentTaskReverse : false;
+        $scope.studentTaskProperty = propertyName;
+    };
 
     $scope.getAllTasks();
     $scope.getSubmissionFromQueue();
