@@ -163,14 +163,34 @@ app.controller('appController', function($scope, $http) {
             data: sandBox
         }).then(function(response) {
             console.log(response);
+            $scope.getSubmissionFromQueue();
         }, function(error) {
             console.log(error);
         });
     }
     
-    $scope.embeddablSendFiles = function() {
-        var name = $scope.selectedSubmission.date;
-        var location = $scope.selectedSubmission.sandBox.location;
+    $scope.getSubmissionFromQueue = function() {
+        var url = "http://localhost:8080/sandbox/get";
+        
+        $http({
+            method: 'GET',
+            url: url
+        }).then(function(response) {
+            console.log(response);
+            var submission = response.data;
+            if (submission == null) {
+                setTimeout($scope.getSubmissionFromQueue, 1000);
+            } else {
+                $scope.embeddablSendFiles(submission);
+            }
+        }, function(error) {
+            console.log(error);
+        });
+    }
+    
+    $scope.embeddablSendFiles = function(submission) {
+        var name = submission.date;
+        var location = submission.sandBox.location;
 
         $http({
             method: 'POST',
@@ -187,19 +207,19 @@ app.controller('appController', function($scope, $http) {
         }).then(function(response) {
             console.log(response);
             if (response.data.state) {
-                $scope.embeddablRun();
+                $scope.embeddablRun(submission);
             } else {
-                $scope.embeddablSendFiles();
+                $scope.embeddablSendFiles(submission);
             }
         }, function(error) {
             console.log(error);
         });
     }
 
-    $scope.embeddablRun = function() {
-        var path = $scope.selectedSubmission.sandBox.location;
-        var package = $scope.selectedSubmission.sandBox.packagePath;
-        var classPath = $scope.selectedSubmission.sandBox.classPath;
+    $scope.embeddablRun = function(submission) {
+        var path = submission.sandBox.location;
+        var package = submission.sandBox.packagePath;
+        var classPath = submission.sandBox.classPath;
         
         $http({
             method: 'POST',
@@ -217,7 +237,11 @@ app.controller('appController', function($scope, $http) {
             }
         }).then(function(response) {
             console.log(response.data.stdout);
-            $scope.updateSandBox(response.data.stdout, response.data.stderr);
+            if (response.data.error) {
+                $scope.embeddablRun(submission);
+            } else {
+                $scope.updateSandBox(response.data.stdout, response.data.stderr);
+            }
         }, function(error) {
             console.log(error);
         });
@@ -237,4 +261,5 @@ app.controller('appController', function($scope, $http) {
     }
 
     $scope.getAllTasks();
+    $scope.getSubmissionFromQueue();
 });
