@@ -27,7 +27,7 @@ public class SandBoxController {
 		return embeddablService.update(sandBox);
 	}
 	
-	@RequestMapping(value = "/sandbox/get", method = RequestMethod.POST)
+	@RequestMapping(value = "/sandbox/get", method = RequestMethod.GET)
 	public @ResponseBody Submission getSubmissionFromQueue() {
 		return embeddablService.getSubmissionFromQueue();
 	}

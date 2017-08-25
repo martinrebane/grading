@@ -79,6 +79,9 @@ public class EmbeddablService implements SandBoxService {
 
 	@Override
 	public Submission getSubmissionFromQueue() {
+		if (embeddablQueue.peek() == null) {
+			return null;
+		}
 		return embeddablQueue.remove();
 	}
 	

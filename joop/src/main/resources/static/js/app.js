@@ -177,11 +177,10 @@ app.controller('appController', function($scope, $http) {
             url: url
         }).then(function(response) {
             console.log(response);
-            var submission = response.data;
-            if (submission == null) {
+            if (response.data.length == 0) {
                 setTimeout($scope.getSubmissionFromQueue, 1000);
             } else {
-                $scope.embeddablSendFiles(submission);
+                $scope.embeddablSendFiles(response.data);
             }
         }, function(error) {
             console.log(error);
