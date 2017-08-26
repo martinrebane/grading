@@ -26,7 +26,7 @@ app.controller('appController', function($scope, $http) {
     $scope.getAllTasks = function() {
         $http({
             method: 'GET',
-            url: 'http://localhost:8080/task/get'
+            url: 'http://localhost:8090/task/get'
         }).then(function(response) {
             $scope.allTasks = response.data;
         }, function(error) {
@@ -38,7 +38,7 @@ app.controller('appController', function($scope, $http) {
         var task = JSON.parse($scope.currentTask);
         $scope.selectedTask = task;
         var taskName = task.name;
-        var url = 'http://localhost:8080/task/' + taskName;
+        var url = 'http://localhost:8090/task/' + taskName;
         console.log(url);
         
         $http({
@@ -54,7 +54,7 @@ app.controller('appController', function($scope, $http) {
     $scope.getSubmissions = function(studentTask) {
         $scope.selectedStudentTask = studentTask;
         var id = studentTask.id;
-        var url = 'http://localhost:8080/studenttask/' + id;
+        var url = 'http://localhost:8090/studenttask/' + id;
         console.log(url);
         
         $http({
@@ -68,7 +68,7 @@ app.controller('appController', function($scope, $http) {
     }
     
     $scope.setGrade = function(gr) {
-        var url = "http://localhost:8080/grade/update";
+        var url = "http://localhost:8090/grade/update";
         var submission = $scope.selectedSubmission;
         var id = submission.id;
         var grade = {
@@ -90,7 +90,7 @@ app.controller('appController', function($scope, $http) {
     $scope.sendMail = function() {
         var uniid = $scope.selectedStudentTask.uniid;
         var reviewId = $scope.selectedStudentTask.review.reviewId;
-        var url = "http://localhost:8080/mail/send/${uniid}/" + reviewId;
+        var url = "http://localhost:8090/mail/send/${uniid}/" + reviewId;
         
         $http({
             method: 'GET',
@@ -109,7 +109,7 @@ app.controller('appController', function($scope, $http) {
             var plagiarism = {
                 id: id
             };
-            var url = "http://localhost:8080/plagiarism/run";
+            var url = "http://localhost:8090/plagiarism/run";
 
             $http({
                 method: 'POST',
@@ -128,7 +128,7 @@ app.controller('appController', function($scope, $http) {
         var review = {
             id: id
         };
-        var url = "http://localhost:8080/review/update";
+        var url = "http://localhost:8090/review/update";
         
         $http({
             method: 'POST',
@@ -149,7 +149,7 @@ app.controller('appController', function($scope, $http) {
             stderr: stderr
         };
         
-        var url = "http://localhost:8080/sandbox/update";
+        var url = "http://localhost:8090/sandbox/update";
         
         $http({
             method: 'POST',
@@ -163,7 +163,7 @@ app.controller('appController', function($scope, $http) {
     }
     
     $scope.getSubmissionFromQueue = function() {
-        var url = "http://localhost:8080/sandbox/get";
+        var url = "http://localhost:8090/sandbox/get";
         
         $http({
             method: 'GET',
@@ -192,7 +192,7 @@ app.controller('appController', function($scope, $http) {
             data: {
                 type: "ZIP",
                 name: name,
-                url: "http://localhost:8080" + location,
+                url: "http://localhost:8090" + location,
                 user: "JOOP"
             }
         }).then(function(response) {
