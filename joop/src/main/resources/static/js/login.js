@@ -46,12 +46,12 @@ app.controller('loginController', function($http, $location) {
                         $("#alert-div").removeClass("alert-danger");
                         $("#alert-div").html("");
                         window.location = '/index.html';
-                    } else {
-                        $("#alert-div").addClass("alert");
-                        $("#alert-div").addClass("alert-danger");
-                        $("#alert-div").html("Wrong username or password");
                     }
                 }
+            } else {
+                $("#alert-div").addClass("alert");
+                $("#alert-div").addClass("alert-danger");
+                $("#alert-div").html("Wrong username or password");
             }
         }, function(error) {
             console.log(error);
