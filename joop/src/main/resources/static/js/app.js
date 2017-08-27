@@ -1,6 +1,25 @@
-var app = angular.module('gradingApp', []);
+var app = angular.module('gradingApp', ["ngRoute"]);
+
+app.config(function($routeProvider) {
+    $routeProvider
+    .when("/", {
+        templateUrl : "index.html"
+    })
+    .when("/login", {
+        templateUrl : "login.html"
+    });
+});
 
 app.controller('tabController', function() {
+    
+    if (typeof(Storage) !== undefined) {
+        if (!sessionStorage.username) {
+            window.location = '/login.html';
+        }
+    } else {
+        window.location = '/login.html';
+    }
+    
     this.tab = 1;
 
     this.setTab = function(newTab) {
@@ -12,7 +31,7 @@ app.controller('tabController', function() {
     };
 });
 
-app.controller('appController', function($scope, $http) {
+app.controller('appController', function($scope, $http, $location) {
 
     $scope.allTasks = [];
     $scope.studentTasks = [];

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="/js/login.js"></script>
+    <!--script src="/js/routing.js"></script-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style/login.css">
+</head>
+
+<body>
+<div class="wrapper" ng-app="gradingApp" ng-controller="loginController as login">
+    <div id="alert-div"></div>
+    <div ng.view></div>
+    <form class="form-signin">
+        <input type="text" class="form-control" id="username" placeholder="Email Address" required="" autofocus="true" />
+        <input type="password" class="form-control" id="password" placeholder="Password" required=""/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login.login()">Login</button>
+    </form>
+</div>
+
+</body>
+</html>

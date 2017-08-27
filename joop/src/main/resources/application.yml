@@ -8,6 +8,9 @@ spring:
    jpa:
       hibernate:
          ddl-auto: update
+app:
+   user: joop
+   pass: joopapplication2017
 moss:
    userid: "567472279"
 github:
