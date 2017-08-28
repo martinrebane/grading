@@ -1,3 +1,13 @@
+if (typeof(Storage) !== undefined) {
+    if (sessionStorage.username) {
+        window.location = '/index.html';
+    }
+} else {
+    $("#alert-div").addClass("alert");
+    $("#alert-div").addClass("alert-danger");
+    $("#alert-div").html("Sorry, your browser does not support web storage...");
+}
+
 var app = angular.module('gradingApp', ["ngRoute"]);
 
 app.config(function($routeProvider) {
@@ -11,16 +21,6 @@ app.config(function($routeProvider) {
 });
 
 app.controller('loginController', function($http, $location) {
-    
-    if (typeof(Storage) !== undefined) {
-        if (sessionStorage.username) {
-            window.location = '/index.html';
-        }
-    } else {
-        $("#alert-div").addClass("alert");
-        $("#alert-div").addClass("alert-danger");
-        $("#alert-div").html("Sorry, your browser does not support web storage...");
-    }
     
     this.login = function() {
         var username = $("#username").val();

@@ -1,3 +1,11 @@
+if (typeof(Storage) !== undefined) {
+    if (!sessionStorage.username) {
+        window.location = '/login.html';
+    }
+} else {
+    window.location = '/login.html';
+}
+
 var app = angular.module('gradingApp', ["ngRoute"]);
 
 app.config(function($routeProvider) {
@@ -11,14 +19,6 @@ app.config(function($routeProvider) {
 });
 
 app.controller('tabController', function() {
-    
-    if (typeof(Storage) !== undefined) {
-        if (!sessionStorage.username) {
-            window.location = '/login.html';
-        }
-    } else {
-        window.location = '/login.html';
-    }
     
     this.tab = 1;
 

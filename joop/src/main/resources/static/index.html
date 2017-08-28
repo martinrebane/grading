@@ -8,7 +8,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="/js/app.js"></script>
-    <!--script src="/js/routing.js"></script-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link rel="stylesheet" href="../style/style.css">
 </head>
@@ -71,7 +70,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!--tr ng-repeat="studentTask in studentTasks | filter:query | orderBy:'uniid' track by $index"-->
                                     <tr ng-repeat="studentTask in studentTasks | orderBy:studentTaskProperty:studentTaskReverse track by $index" ng-click="getSubmissions(studentTask); tabs.setTab(2)">
                                         <th scope="row">{{ $index + 1 }}</th>
                                         <td>{{ studentTask.uniid }}</td>
@@ -107,8 +105,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!--tr ng-repeat="studentTask in studentTasks | filter:query | orderBy:'uniid' track by $index"-->
-                                    <tr ng-repeat="submission in submissions | orderBy:date:true track by $index" ng-click="setSelectedSubmission(submission)">
+                                    <tr ng-repeat="submission in submissions | orderBy:$index:true track by $index" ng-click="setSelectedSubmission(submission)">
                                         <th scope="row">{{ $index + 1 }}</th>
                                         <td>{{ submission.sandbox.stdout }}</td>
                                         <td>{{ submission.sandbox.stderr }}</td>
