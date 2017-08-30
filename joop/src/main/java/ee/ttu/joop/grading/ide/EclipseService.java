@@ -44,7 +44,7 @@ public class EclipseService implements IDEService {
 
 		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
 		String templateFilePath = projectTemplatePath + ".project";
-		templateFilePath = templateFilePath.replace("/mnt/d", "D:");
+		//templateFilePath = templateFilePath.replace("/mnt/d", "D:");
 
 		FileHandler handler = new FileHandler();
 		List<String> lines = handler.readAllLines(templateFilePath);
@@ -53,7 +53,7 @@ public class EclipseService implements IDEService {
 		String[] createProject = new String[] { "bash", projectCreatorPath, taskName, uniid, repoPath, zipPath,
 				projectTemplatePath };
 		String newProjectFolder = scriptRunner.run(createProject);
-		newProjectFolder = newProjectFolder.replace("/mnt/d", "D:");
+		//newProjectFolder = newProjectFolder.replace("/mnt/d", "D:");
 
 		boolean written = handler.writeLines(lines, newProjectFolder + "/.project");
 

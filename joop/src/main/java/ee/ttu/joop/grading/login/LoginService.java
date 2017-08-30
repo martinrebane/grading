@@ -14,6 +14,12 @@ public class LoginService {
 	
 	public LoginService() {}
 	
+	/**
+	 * Validates login data.
+	 * @param user username entered in UI
+	 * @param pass password entered in UI
+	 * @return true if user and pass match with app.user and app.pass, false otherwise
+	 */
 	public boolean login(String user, String pass) {
 		if (user.equals(username) && pass.equals(password)) {
 			return true;
