@@ -14,9 +14,9 @@
 
 <body>
 <div class="wrapper" ng-app="gradingApp" ng-controller="loginController as login">
-    <div id="alert-div"></div>
     <div ng.view></div>
     <form class="form-signin">
+        <div id="alert-div"></div>
         <input type="text" class="form-control" id="username" placeholder="Email Address" required="" autofocus="true" />
         <input type="password" class="form-control" id="password" placeholder="Password" required=""/>
         <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login.login()">Login</button>

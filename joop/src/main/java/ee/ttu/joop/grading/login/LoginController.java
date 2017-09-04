@@ -17,7 +17,6 @@ public class LoginController {
 	
 	@RequestMapping(value = "/app/login", method = RequestMethod.POST)
 	public @ResponseBody boolean login(@RequestBody User user) {
-		System.out.println(user.getUsername() + " " + user.getPassword());
 		return loginService.login(user.getUsername(), user.getPassword());
 	}
 

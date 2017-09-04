@@ -1,0 +1,329 @@
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <title>JoopApplication juhend</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div id="navbar" class="clearfix col-sm-4">
+                    <ul id="nav">
+                        <li><a href="#headline1">Oluline info</a></li>
+                        <li><a href="#headline2">ee.ttu.joop.grading</a></li>
+                        <li><a href="#headline3">ee.ttu.joop.grading.central</a></li>
+                        <li><a href="#headline4">ee.ttu.joop.grading.git</a></li>
+                        <li><a href="#headline5">ee.ttu.joop.grading.grading</a></li>
+                        <li><a href="#headline6">ee.ttu.joop.grading.helpers</a></li>
+                        <li><a href="#headline7">ee.ttu.joop.grading.ide</a></li>
+                        <li><a href="#headline8">ee.ttu.joop.grading.login</a></li>
+                        <li><a href="#headline9">ee.ttu.joop.grading.mail</a></li>
+                        <li><a href="#headline10">ee.ttu.joop.grading.plagiarism</a></li>
+                        <li><a href="#headline11">ee.ttu.joop.grading.review</a></li>
+                        <li><a href="#headline12">ee.ttu.joop.grading.sandbox</a></li>
+                        <li><a href="#headline13">ee.ttu.joop.grading.studenttask</a></li>
+                        <li><a href="#headline14">ee.ttu.joop.grading.submission</a></li>
+                        <li><a href="#headline15">ee.ttu.joop.grading.task</a></li>
+                    </ul>
+                </div>
+
+                <div id="page" class="col-sm-8">
+                    <div class="section">
+                        <h1><a name="headline1">Oluline info</a></h1>
+                        <p>Enamik rakenduse vajalikke andmeid on <b>application.yml</b> (src/main/resources) failis</p>
+                        <ul>
+                            <li>Server jookseb pordil <b>8090</b></li>
+                            <li><b>Repod tuleb kloonida ssh-ga, muidu rakendus ei tööta ja vajab Git pull tegemiseks parooli.</b> Repod tuleb kloonida paths.files.repo kausta</li>
+                            <li></li>
+                            <li>Rakenduse login andmed on app.user ja app.pass, mida võib vastavalt soovile muuta. Samuti võib hakata User andmetüüpe andmebaasis hoiustama, aga sel juhul tuleks registreerimisleht ja andmebaasiliides implementeerida</li>
+                            <li>Vaja oleks välja vahetada github.user, github.pass ja github.gistlink muutujad (nt teha õppeainele oma githubi konto ja giste sinna laadida)</li>
+                            <li>Codereview serveris MariaDB parool on joop</li>
+                            <li>MailGun API toimib hetkel ainult sandboxis ja võimaldab saata emaile ainult ühele aadressile, milleks on mailgun.apikey omanik. Selleks, et MailGun tööle saada, tuleks teha sinna uus kasutaja, vahetada apikey ära ja registreerida domeen, millelt tahetakse emaile saata. Siis saab ka minu arusaamist mööda teistele aadressidele emaile saata</li>
+                            <li>templates.project pathis peab olema märgitud kaust, milles asub Eclipse'i Java 8 (edaspidi ehk kõrgema versiooni) projekti template</li>
+                            <li>Olemas on Javadoc, kui meetoditest aru ei saa. Siin meetodeid eraldi ei kirjelda</li>
+                        </ul>
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline2">ee.ttu.joop.grading</a></h1>
+                        <p>Programmi alguspunkt. JoopApplication klassis asub main meetod, mis käivitab rakenduse.</p>
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline3">ee.ttu.joop.grading.central</a></h1>
+                        <h2><a name="headline3-1">CentralGitHookController</a></h2>
+                        <p>Võtab vastu päringud TTÜ Gitist. Päring peaks tulema kujul *domain-name*/central/uniid/subjectCode. Hetkel ei ole implementatsioonis arvestatud mitme ainega, kuid selle saab juurde tekitada. Kontroller saadab info edasi CentralGitHookService'ile init(uniid, subjectCode) meetodiga</p>
+
+                        <h2><a name="headline3-2">CentralGitHookService</a></h2>
+                        <p>Teenus on üles ehitatud nii, et hakkab käima iga init meetodist saadud uniid repositooriumi kausta ja loob muudatuste põhjal andmebaasi uusi ülesandeid</p>
+                        <p>Ülesandeid on kolme tüüpi: <a href="#">Task</a>, <a href="#">StudentTask</a> ja <a href="#">Submission</a></p>
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline4">ee.ttu.joop.grading.git</a></h1>
+                        <h2><a name="headline4-1">VersionControlService</a></h2>
+                        <p>Liides, kus on kirjeldatud meetodid, mida on vaja versioonihaldusteenuse jooksutamiseks. Implementatsioon sõltub kasutatud vahenditest</p>
+
+                        <h2><a name="headline4-2">GitService</a></h2>
+                        <p>Teenus, mis tõmbab Gitist uuendusi alla ja kontrollib muudatusi failisüsteemis. Failisüsteemi muudatuste kontroll käib räsi kontrollimise kaudu. Selleks kontrollitakse, kas kausta eelmine ja praegune räsi kattuvad.</p>
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline5">ee.ttu.joop.grading.grading</a></h1>
+                        <h2><a name="headline5-1">Grade</a></h2>
+                        <p>Hinde objekt, milles talletatakse id-d, hinnet ja StudentTaski, millega hinne seotud on</p>
+
+                        <h2><a name="headline5-2">GradeController</a></h2>
+                        <p>Kontroller, mis tegeleb hinde muutmisega.</p>
+                        <pre>
+                        <b>url:</b> http://localhost:8090/grade/update
+                        <b>method:</b> POST
+                        <b>data:</b>
+                        {
+                            id: 1,
+                            grade: 1
+                        }
+                        </pre>
+                        <p>Sätib id-ga 1 Grade objektile hindeks 1, kasutades GradeService'i saveGrade meetodit.</p>
+
+
+                        <h2><a name="headline5-3">GradeService</a></h2>
+                        <p>Teenus, mis salvestab hindeid andmebaasi. saveGrade meetod leiab andmebaasist vastava id-ga Grade objekti ja muudab selle hinnet</p>
+
+                        <h2><a name="headline5-4">GradeRepository</a></h2>
+                        <p>Andmebaasiliides, mis suhtleb andmebaasi Grade tabeliga</p>
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline6">ee.ttu.joop.grading.helpers</a></h1>
+                        <h2><a name="headline6-1">FileHandler</a></h2>
+                        <p>Tegeleb failist lugemise ja sinna kirjutamisega</p>
+
+                        <h2><a name="headline6-2">ScriptRunner</a></h2>
+                        <p>Tegeleb <b>paths.scripts</b> skriptide jooksutamisega</p>
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline7">ee.ttu.joop.grading.ide</a></h1>
+                        <h2><a name="headline7-1">IDEService</a></h2>
+                        <p>Liides, kus on kirjeldatud meetodid IDE teenuse jooksutamiseks. Implementatsioon sõltub kasutatud vahenditest</p>
+
+                        <h2><a name="headline7-2">EclipseService</a></h2>
+                        <p>Teenus, mis tegeleb Eclipse'i projektide loomisega, et õppejõud neid vajadusel alla laadida saaks</p>
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline8">ee.ttu.joop.grading.login</a></h1>
+                        <h2><a name="headline8-1">User</a></h2>
+                        <p>Objekt, mida kasutatakse sisselogimise info valideerimiseks. Objektil on kaks välja: username ja password</p>
+
+                        <h2><a name="headline8-2">LoginController</a></h2>
+                        <p>Kontroller, mis tegeleb sisselogimise info edastamisega LoginService'ile.</p>
+                        <pre>
+                        <b>url:</b> http://localhost:8090/app/login
+                        <b>method:</b> POST
+                        <b>data:</b>
+                        {
+                            username: "username",
+                            password: "password"
+                        }
+                        </pre>
+                        <p>Edastab LoginService'ile kontrolliks kasutajanime ja parooli. Kui andmed on õiged, tagastatakse true, vastasel juhul false</p>
+
+                        <h2><a name="headline8-3">LoginService</a></h2>
+                        <p>Tegeleb sisselogimise andmete valideerimisega. Kontrollib kasutajanime ja parooli kattumist app.user ja app.pass väärtustega ning tagastab sobivuse korral true, vastasel juhul false</p>
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline9">ee.ttu.joop.grading.mail</a></h1>
+                        <h2><a name="headline9-1">MailController</a></h2>
+                        <p>Kontroller, mis tegeleb emailide saatmise info edastamisega MailGunService'ile</p>
+
+                        <pre>
+                        <b>url:</b> http://localhost:8090/mail/send/uniid/reviewId
+                        <b>method:</b> GET
+                        </pre>
+
+                        <h2><a name="headline9-2">MailService</a></h2>
+                        <p>Liides, mis kirjeldab ära meetodid, mis on vajalikud meiliteenuse jooksutamiseks</p>
+
+                        <h2><a name="headline9-3">MailGunService</a></h2>
+                        <p>Teenus, mille abil saab MailGun serveri kaudu emaile saata. Hetkel töötab vaid sandboxis ja tuleb seadistada, nagu on kirjas <a href="#headline1">olulise info</a> all</p>
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline10">ee.ttu.joop.grading.plagiarism</a></h1>
+                        <h2><a name="headline10-1">Plagiarism</a></h2>
+                        <p>Andmebaasiobjekt, mis hoiab infot plagiaadi kohta. Plagiaadil on id, result, kuhu salvestatakse tulemuste link ja task, mis näitab, millise Taskiga vastav objekt seotud on</p>
+
+                        <h2><a name="headline10-2">PlagiarismController</a></h2>
+                        <p>Kontroller plagiaadikontrolli jooksutamiseks</p>
+                        <pre>
+                        <b>url:</b> http://localhost:8090/plagiarism/run
+                        <b>method:</b> POST
+                        <b>data:</b>
+                        {
+                            id: 1
+                        }
+                        </pre>
+
+                        <h2><a name="headline10-3">PlagiarismService</a></h2>
+                        <p>Liides, kus on kirjeldatud kõik vajalikud meetodid plagiaadikontrolli jooksutamiseks</p>
+
+                        <h2><a name="headline10-4">MossService</a></h2>
+                        <p>Teenus, mis kasutab MOSS plagiaadikontrolliteenust ja salvestab selle tulemusi andmebaasi. MOSSi jooksutamiseks on vaja moss userid-d, mida tingimata vahetama ei pea, aga soovi korral võib. Iseenesest see midagi juurde ei anna. Praegu on teenusesse hardcode'itud, et jooksutatakse Java koodi. Seda on võimalik muuta</p>
+
+                        <h2><a name="headline10-5">PlagiarismRepository</a></h2>
+                        <p>Andmebaasiliides, mis suhtleb andmebaasi Plagiarism tabeliga</p>
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline11">ee.ttu.joop.grading.review</a></h1>
+                        <h2><a name="headline11-1">Review</a></h2>
+                        <p>Andmebaasiobjekt, milles salvestatakse koodi ülevaatusega seonduvat. Reviewl on id, reviewId, mis siis sisuliselt on Gisti id, link (review asukoht veebis) ja sellega seonduv <a href="#">StudentTask</a></p>
+
+                        <h2><a name="headline11-2">ReviewController</a></h2>
+                        <p>Kontroller, mis edastab päringuid Review objektide kohta.</p>
+                        <pre>
+                        <b>url:</b> http://localhost:8090/review/update
+                        <b>method:</b> POST
+                        <b>data:</b>
+                        {
+                            id: 1
+                        }
+                        </pre>
+
+                        <h2><a name="headline11-3">ReviewService</a></h2>
+                        <p>Liides, kus on kirjeldatud vajaminevad meetodid koodi levaatuse teostamiseks</p>
+
+                        <h2><a name="headline11-4">GitHubService</a></h2>
+                        <p>Implementeerib ReviewService liidest. Suhtlus toimub GitHub Java API-ga, et genereerida tudengite töödele Giste. application.yml failis on olemas parameetrid github.user ja github.pass, mis tuleks ära vahetada aine ametliku GitHubi konto vastu nt.</p>
+
+                        <h2><a name="headline11-5">ReviewRepository</a></h2>
+                        <p>Liides, mis suhtleb andmebaasi Review tabeliga.</p>
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline12">ee.ttu.joop.grading.sandbox</a></h1>
+                        <h2><a name="headline12-1">SandBox</a></h2>
+                        <p>Objekt, milles salvestatakse rakenduse välise käivitamise tulemused. SandBox objekti salvestatakse objekti id, koodu jooksutamise stdout ja stderr, jooksutamiseks vajaliku zip-faili asukoht kettal, main klassi package path, src kausta class path ning Submission objekt, millega vastav objekt seotud on</p>
+
+                        <h2><a name="headline12-2">SandBoxController</a></h2>
+                        <p>Kontroller, mis vahendab infot SandBox objektide kohta.</p>
+                        <p>SandBox objekti uuendamine:</p>
+                        <pre>
+                        <b>url:</b> http://localhost:8090/sandbox/update
+                        <b>method:</b> POST
+                        <b>data:</b>
+                        {
+                            id: 1,
+                            stdout: "some output",
+                            stderr: "some error"
+                        }
+                        </pre>
+
+                        <p>SandBox objekti võtmine järjekorrast:</p>
+                        <pre>
+                        <b>url:</b> http://localhost:8090/sandbox/get
+                        <b>method:</b> GET
+                        </pre>
+
+                        <h2><a name="headline12-3">SandBoxService</a></h2>
+                        <p>Liides, kus on kirjeldatud meetodid SandBox teenuse jooksutamiseks.</p>
+
+                        <h2><a name="headline12-4">EmbeddablService</a></h2>
+                        <p>Implementeerib SandBoxService liidest ning tegeleb SandBox objektide loomise ja uuendamisega. Samuti on üks teenuse tegevustest projekti pakkimine Embeddabl API jaoks arusaadavaks zip-failiks</p>
+
+                        <h2><a name="headline12-5">SandBoxRepository</a></h2>
+                        <p>Liides, mis suhtleb andmebaasi SandBox tabeliga</p>
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline13">ee.ttu.joop.grading.studenttask</a></h1>
+                        <h2><a name="headline13-1">StudentTask</a></h2>
+                        <p>Andmebaasiobjekt, ülesande kesktüüp, kus hoistatakse infot uniid, koodiülevaatuse ja hinde kohta. StudentTask objektiga on seotud alamtüüp Submissionid ning objekt ise on seotud ülemtüüp Taskiga</p>
+                        
+                        <h2><a name="headline13-2">StudentTaskController</a></h2>
+                        <p>Kontroller, mis vahendab infot StudentTask objektide kohta</p>
+                        <pre>
+                        <b>url:</b> http://localhost:8090/studenttask/{id}
+                        <b>method:</b> GET
+                        </pre>
+                        
+                        <h2><a name="headline13-3">StudentTaskService</a></h2>
+                        <p>Teenus, mis suhtleb andmebaasiga ning võimaldab StudentTask objekte sinna lisada, neid pärida, muuta ja kustutada</p>
+                        
+                        <h2><a name="headline13-4">StudentTaskRepository</a></h2>
+                        <p>Andmebaasiliides, mis suhtleb andmebaasi StudentTask tabeliga. Liidesesse on lisatud meetod, mis võimaldab leida StudentTaske Task objekti ja uniid järgi</p>
+                        
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline14">ee.ttu.joop.grading.submission</a></h1>
+                        <h2><a name="headline14-1">Submission</a></h2>
+                        <p>Ülesande alamtüüp, kus hoiustatakse üles laadimise kuupäeva, projekti asukohta kettal, SandBox objekti, mis antud Submissioniga seotud on ja StudentTask objekti, millega Submission seotud on</p>
+                        
+                        <h2><a name="headline14-2">SubmissionService</a></h2>
+                        <p>Teenus, mis suhtleb andmebaasiliidesega ning võimaldab Submission objekte savestada, pärida, muuta ja kustutada</p>
+                        
+                        <h2><a name="headline14-3">SubmissionRepository</a></h2>
+                        <p>Andmebaasiliides, mis suhtleb andmebaasi Submission tabeliga</p>
+                        
+                    </div>
+
+                    <div class="section">
+                        <h1><a name="headline15">ee.ttu.joop.grading.task</a></h1>
+                        <h2><a name="headline15-1">Task</a></h2>
+                        <p>Ülesande ülemtüüp, kus hoiustatakse infot ülesande nime, ainekoodi ja plagiaadikontrolli ning Taskiga seotud StudentTaskide kohta</p>
+                        
+                        <h2><a name="headline15-2">TaskController</a></h2>
+                        <p>Kontroller, mis vahendab infot Task objektidega seonduva kohta</p>
+                        <p>Taskiga seonduvate StudentTask objektide pärimine:</p>
+                        <pre>
+                        <b>url:</b> http://localhost:8090/task/{taskName}
+                        <b>method:</b> GET
+                        </pre>
+
+                        <p>Kõikide Taskide pärimine:</p>
+                        <pre>
+                        <b>url:</b> http://localhost:8090/task/get
+                        <b>method:</b> GET
+                        </pre>
+                        
+                        <h2><a name="headline15-3">TaskService</a></h2>
+                        <p>Teenus, mis suhtleb andmebaasiliidesega ning võimaldab Task objekte savestada, pärida, muuta ja kustutada</p>
+                        
+                        <h2><a name="headline15-4">TaskRepository</a></h2>
+                        <p>Andmebaasiliides, mis suhtleb andmebaasi Task tabeliga. Liideses on lisaks meetod, mis lubab andmebaasist otsida Taski nime järgi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {  
+                // check where the shoppingcart-div is  
+                var offset = $('#navbar').offset();  
+
+                $(window).scroll(function () {  
+                    var scrollTop = $(window).scrollTop(); // check the visible top of the browser
+                    var pos = $("#page").position();
+                    var left = pos.left;
+
+                    if (offset.top<scrollTop) {
+                        $('#navbar').addClass('fixed');
+                        $('#page').css("left", left);
+                    } else {
+                        $('#navbar').removeClass('fixed');
+                        $('#page').css("left", 0);
+                    }
+                });  
+            }); 
+        </script>
+    </body>
+
+</html>

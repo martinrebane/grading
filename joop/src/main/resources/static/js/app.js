@@ -89,7 +89,7 @@ app.controller('appController', function($scope, $http, $location) {
     $scope.setGrade = function(gr) {
         var url = "http://localhost:8090/grade/update";
         var submission = $scope.selectedSubmission;
-        var id = submission.id;
+        var id = submission.studentTask.grade.id;
         var grade = {
             id: id,
             grade: gr
