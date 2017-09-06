@@ -30,10 +30,10 @@ public class ScriptRunner {
 				ret += line;
 			}
 
-			BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+			/*BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 			while ((line = stdError.readLine()) != null) {
 			    System.out.println(line);
-			}
+			}*/
 
 			if (ret.equals("")) {
 				return null;

@@ -45,7 +45,7 @@ app.controller('appController', function($scope, $http, $location) {
     $scope.getAllTasks = function() {
         $http({
             method: 'GET',
-            url: 'http://localhost:8090/task/get'
+            url: 'http://codereview.ee:8090/task/get'
         }).then(function(response) {
             $scope.allTasks = response.data;
         }, function(error) {
@@ -57,7 +57,7 @@ app.controller('appController', function($scope, $http, $location) {
         var task = JSON.parse($scope.currentTask);
         $scope.selectedTask = task;
         var taskName = task.name;
-        var url = 'http://localhost:8090/task/' + taskName;
+        var url = 'http://codereview.ee:8090/task/' + taskName;
         console.log(url);
         
         $http({
@@ -73,7 +73,7 @@ app.controller('appController', function($scope, $http, $location) {
     $scope.getSubmissions = function(studentTask) {
         $scope.selectedStudentTask = studentTask;
         var id = studentTask.id;
-        var url = 'http://localhost:8090/studenttask/' + id;
+        var url = 'http://codereview.ee:8090/studenttask/' + id;
         console.log(url);
         
         $http({
@@ -87,9 +87,9 @@ app.controller('appController', function($scope, $http, $location) {
     }
     
     $scope.setGrade = function(gr) {
-        var url = "http://localhost:8090/grade/update";
+        var url = "http://codereview.ee:8090/grade/update";
         var submission = $scope.selectedSubmission;
-        var id = submission.studentTask.grade.id;
+        var id = $scope.selectedStudentTask.grade.id;
         var grade = {
             id: id,
             grade: gr
@@ -109,7 +109,7 @@ app.controller('appController', function($scope, $http, $location) {
     $scope.sendMail = function() {
         var uniid = $scope.selectedStudentTask.uniid;
         var reviewId = $scope.selectedStudentTask.review.reviewId;
-        var url = "http://localhost:8090/mail/send/${uniid}/" + reviewId;
+        var url = "http://codereview.ee:8090/mail/send/${uniid}/" + reviewId;
         
         $http({
             method: 'GET',
@@ -128,7 +128,7 @@ app.controller('appController', function($scope, $http, $location) {
             var plagiarism = {
                 id: id
             };
-            var url = "http://localhost:8090/plagiarism/run";
+            var url = "http://codereview.ee:8090/plagiarism/run";
 
             $http({
                 method: 'POST',
@@ -147,7 +147,7 @@ app.controller('appController', function($scope, $http, $location) {
         var review = {
             id: id
         };
-        var url = "http://localhost:8090/review/update";
+        var url = "http://codereview.ee:8090/review/update";
         
         $http({
             method: 'POST',
@@ -168,7 +168,7 @@ app.controller('appController', function($scope, $http, $location) {
             stderr: stderr
         };
         
-        var url = "http://localhost:8090/sandbox/update";
+        var url = "http://codereview.ee:8090/sandbox/update";
         
         $http({
             method: 'POST',
@@ -182,7 +182,7 @@ app.controller('appController', function($scope, $http, $location) {
     }
     
     $scope.getSubmissionFromQueue = function() {
-        var url = "http://localhost:8090/sandbox/get";
+        var url = "http://codereview.ee:8090/sandbox/get";
         
         $http({
             method: 'GET',
@@ -211,7 +211,7 @@ app.controller('appController', function($scope, $http, $location) {
             data: {
                 type: "ZIP",
                 name: name,
-                url: "http://localhost:8090" + location,
+                url: "http://codereview.ee:8090" + location,
                 user: "JOOP"
             }
         }).then(function(response) {
@@ -222,6 +222,7 @@ app.controller('appController', function($scope, $http, $location) {
                 setTimeout($scope.embeddablSendFiles(submission), 1000);
             }
         }, function(error) {
+            //setTimeout($scope.embeddablSendFiles(submission), 1000);
             console.log(error);
         });
     }
@@ -254,6 +255,7 @@ app.controller('appController', function($scope, $http, $location) {
             }
         }, function(error) {
             console.log(error);
+            setTimeout($scope.embeddablRun(submission), 1000);
         });
     }
     

@@ -63,8 +63,7 @@ public class CentralGitHookService {
 	public void init(String uniid, String subjectCode) {
 		gitService.pull(uniid, "");
 
-		String path = repoPath.replace("/mnt/d", "D:");
-		path += uniid;
+		String path = repoPath + uniid;
 		File repo = new File(path);
 		File[] allTasks = repo.listFiles();
 
@@ -146,12 +145,12 @@ public class CentralGitHookService {
 			Submission submission = new Submission();
 			SandBox sandBox = embeddablService.create(uniid, taskName);
 			mossService.transferFiles(uniid, taskName);
-			String embeddablLocation = embeddablService.zipProject(uniid, taskName);
+			String embeddablLocation = "/file" + embeddablService.zipProject(uniid, taskName);
 			sandBox.setLocation(embeddablLocation);
 			sandBox.setSubmission(submission);
 			submission.setSandBox(sandBox);
 			submission.setStudentTask(studentTask);
-			String submissionLocation = eclipseService.createProject(uniid, taskName);
+			String submissionLocation = "/file" + eclipseService.createProject(uniid, taskName);
 			submission.setLocation(submissionLocation);
 			studentTask.getSubmissions().add(submission);
 			return submissionService.save(submission);

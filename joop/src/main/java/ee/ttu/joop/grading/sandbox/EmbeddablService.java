@@ -70,12 +70,13 @@ public class EmbeddablService implements SandBoxService {
 		String source = scriptRunner.run(command);
 		source = source.substring(0, source.lastIndexOf("/"));
 		String[] command2 = {"bash", zipScriptPath, uniid, taskName, source, zipPath + taskName};
-		return scriptRunner.run(command2);
+		String result = scriptRunner.run(command2).split("static")[1];
+		return result;
 	}
 	
 	@Override
 	public void addSubmissionToQueue(Submission submission) {
-		embeddablQueue.add(submission);
+		if (submission!= null) embeddablQueue.add(submission);
 	}
 
 	@Override
@@ -104,7 +105,7 @@ public class EmbeddablService implements SandBoxService {
 	private String getMainPath(String uniid, String taskName) {
 		if (!repoPath.endsWith("/")) repoPath += "/";
 		String projectPath = repoPath + uniid + "/" + taskName + "/src/";
-		String mainPath = reader.getMainPath(projectPath.replace("/mnt/d", "D:"));
+		String mainPath = reader.getMainPath(projectPath);
 		
 		if (mainPath == null) return null;
 		return uniid + "/" + mainPath;
@@ -119,7 +120,7 @@ public class EmbeddablService implements SandBoxService {
 	private String getPackagePath(String uniid, String taskName) {
 		if (!repoPath.endsWith("/")) repoPath += "/";
 		String path = repoPath + uniid + "/" + taskName + "/src/";
-		return reader.getPackagePath(path.replace("/mnt/d", "D:"));
+		return reader.getPackagePath(path);
 	}
 	
 	/**

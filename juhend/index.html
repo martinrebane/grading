@@ -39,8 +39,9 @@
                         <ul>
                             <li>Server jookseb pordil <b>8090</b></li>
                             <li><b>Repod tuleb kloonida ssh-ga, muidu rakendus ei tööta ja vajab Git pull tegemiseks parooli.</b> Repod tuleb kloonida paths.files.repo kausta</li>
-                            <li></li>
+                            <li>Kui on vaja Gradle build teha, siis testid (mida pole) millegipärast ei tööta ja tuleb joksutada gradle build -x test</li>
                             <li>Rakenduse login andmed on app.user ja app.pass, mida võib vastavalt soovile muuta. Samuti võib hakata User andmetüüpe andmebaasis hoiustama, aga sel juhul tuleks registreerimisleht ja andmebaasiliides implementeerida</li>
+                            <li>Logimine toimib sessionStorage kaudu, seega kui tab kinni panna, oled automaatselt välja logitud</li>
                             <li>Vaja oleks välja vahetada github.user, github.pass ja github.gistlink muutujad (nt teha õppeainele oma githubi konto ja giste sinna laadida)</li>
                             <li>Codereview serveris MariaDB parool on joop</li>
                             <li>MailGun API toimib hetkel ainult sandboxis ja võimaldab saata emaile ainult ühele aadressile, milleks on mailgun.apikey omanik. Selleks, et MailGun tööle saada, tuleks teha sinna uus kasutaja, vahetada apikey ära ja registreerida domeen, millelt tahetakse emaile saata. Siis saab ka minu arusaamist mööda teistele aadressidele emaile saata</li>
@@ -57,7 +58,7 @@
                     <div class="section">
                         <h1><a name="headline3">ee.ttu.joop.grading.central</a></h1>
                         <h2><a name="headline3-1">CentralGitHookController</a></h2>
-                        <p>Võtab vastu päringud TTÜ Gitist. Päring peaks tulema kujul *domain-name*/central/uniid/subjectCode. Hetkel ei ole implementatsioonis arvestatud mitme ainega, kuid selle saab juurde tekitada. Kontroller saadab info edasi CentralGitHookService'ile init(uniid, subjectCode) meetodiga</p>
+                        <p>Võtab vastu päringud TTÜ Gitist. Päring peaks tulema kujul http://codereview.ee:8090/central/uniid/subjectCode. Hetkel ei ole implementatsioonis arvestatud mitme ainega, kuid selle saab juurde tekitada. Kontroller saadab info edasi CentralGitHookService'ile init(uniid, subjectCode) meetodiga</p>
 
                         <h2><a name="headline3-2">CentralGitHookService</a></h2>
                         <p>Teenus on üles ehitatud nii, et hakkab käima iga init meetodist saadud uniid repositooriumi kausta ja loob muudatuste põhjal andmebaasi uusi ülesandeid</p>

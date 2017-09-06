@@ -139,7 +139,7 @@ public class GitHubService implements ReviewService {
 	 */
 	private Map<String, GistFile> addAllFiles(String taskPath) {
 		String path = repoPath + taskPath + "/src/";
-		List<File> files = reader.getAllFiles(path.replace("/mnt/d", "D:"));
+		List<File> files = reader.getAllFiles(path);
 		Map<String, GistFile> fileMap = new HashMap<>();
 
 		files.forEach(file -> {

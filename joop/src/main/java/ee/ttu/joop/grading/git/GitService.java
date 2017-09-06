@@ -56,7 +56,6 @@ public class GitService implements VersionControlService {
 	private String getHash(String uniid, String taskName) {
 		if (!hashPath.endsWith("/")) hashPath += "/";
 		String path = hashPath + uniid + "/" + taskName + ".txt";
-		path = path.replace("/mnt/d", "D:");
 		FileHandler reader = new FileHandler();
 		String ret = reader.read(path);
 		if (ret != null) ret.replaceAll("\n", "");

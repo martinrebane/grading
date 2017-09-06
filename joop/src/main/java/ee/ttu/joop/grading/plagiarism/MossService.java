@@ -16,6 +16,7 @@ import ee.ttu.joop.grading.helpers.FileHandler;
 import ee.ttu.joop.grading.helpers.ScriptRunner;
 import it.zielke.moji.MossException;
 import it.zielke.moji.SocketClient;
+import it.zielke.moji.Stage;
 
 @Service
 /**
@@ -50,7 +51,6 @@ public class MossService implements PlagiarismService {
 		
 		if (!plagiarismPath.endsWith("/")) plagiarismPath += "/";
 		String path = plagiarismPath + taskName;
-		path = path.replace("/mnt/d", "D:");
 		
 		//code from https://github.com/nordicway/moji
 		Collection<File> studentFiles = FileUtils.listFiles(new File(path), new String[] { "java" }, true);
@@ -62,6 +62,7 @@ public class MossService implements PlagiarismService {
 			for (File file : studentFiles) {
 				client.uploadFile(file);
 			}
+			System.out.println(client.getCurrentStage() == Stage.AWAITING_QUERY);
 			client.sendQuery();
 			URL results = client.getResultURL();
 			Plagiarism pl = plagiarismRepository.findOne(plagiarism.getId());
@@ -85,14 +86,13 @@ public class MossService implements PlagiarismService {
 		String destPath = plagiarismPath + taskName + "/" + uniid + "/";
 
 		FileHandler reader = new FileHandler();
-		List<File> files = reader.getAllFiles(projectPath.replace("/mnt/d", "D:"));
+		List<File> files = reader.getAllFiles(projectPath);
 		ScriptRunner scriptRunner = new ScriptRunner();
 		List<String> folderPaths = new ArrayList<>();
 
 		for (File file : files) {
 			String fullPath = file.getAbsolutePath();
-			String folderPath = fullPath.substring(0, fullPath.lastIndexOf("\\") + 1).replaceAll("\\\\", "/")
-					.replace("D:", "/mnt/d");
+			String folderPath = fullPath.substring(0, fullPath.lastIndexOf("/") + 1);
 			if (!folderPaths.contains(folderPath)) {
 				folderPaths.add(folderPath);
 			}

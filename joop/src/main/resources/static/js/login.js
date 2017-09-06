@@ -25,7 +25,7 @@ app.controller('loginController', function($http, $location) {
     this.login = function() {
         var username = $("#username").val();
         var password = $("#password").val();
-        var url = 'http://localhost:8090/app/login';
+        var url = 'http://codereview.ee:8090/app/login';
         var user = {
             username: username,
             password: password

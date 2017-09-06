@@ -53,14 +53,14 @@ public class EclipseService implements IDEService {
 		String[] createProject = new String[] { "bash", projectCreatorPath, taskName, uniid, repoPath, zipPath,
 				projectTemplatePath };
 		String newProjectFolder = scriptRunner.run(createProject);
-		//newProjectFolder = newProjectFolder.replace("/mnt/d", "D:");
 
 		boolean written = handler.writeLines(lines, newProjectFolder + "/.project");
 
 		if (!written) return null;
 		
 		String[] zipProject = new String[] {"bash", zipScriptPath, uniid, taskName, projectPath, zipPath + taskName};
-		return scriptRunner.run(zipProject);
+		String result = scriptRunner.run(zipProject).split("static")[1];
+		return result;
 	}
 
 	/**
