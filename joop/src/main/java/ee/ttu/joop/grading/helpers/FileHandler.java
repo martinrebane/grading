@@ -170,7 +170,7 @@ public class FileHandler {
 				if (finalPath != null) {
 					if (folder.equals(startFolder)) {
 						String absolutePath = folder.getAbsolutePath();
-						String[] pathFolders = absolutePath.split("\\\\");
+						String[] pathFolders = absolutePath.split("/");
 						String taskFolder = pathFolders[pathFolders.length - 2] + "/";
 						return taskFolder + file.getName() + "/" + finalPath;
 					}
