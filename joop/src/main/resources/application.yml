@@ -4,7 +4,7 @@ spring:
    datasource:
       url: jdbc:mariadb://localhost:3306/joopdatabase
       username: root
-      password: Parool123
+      password: joop
    jpa:
       hibernate:
          ddl-auto: update
@@ -21,17 +21,17 @@ mailgun:
    apikey: key-530340de58ee7be39a1358ae50b0d786
 paths:
    files:
-      hash: "/mnt/d/Users/mammu/workspace/loputoo/hashes/"
-      plagiarism: "/mnt/d/Users/mammu/workspace/loputoo/plagiarism/"
-      repos: "/mnt/d/Users/mammu/workspace/loputoo/repod/"
-      zips: "/mnt/d/Users/mammu/workspace/loputoo/zips/"
-      embeddabl: "/mnt/d/Users/mammu/workspace/loputoo/embeddabl/"
+      hash: "/home/phabricator/joop/hashes/"
+      plagiarism: "/home/phabricator/joop/plagiarism/"
+      repos: "/home/phabricator/joop/repod/"
+      zips: "/home/phabricator/joop/static/zips/"
+      embeddabl: "/home/phabricator/joop/static/embeddabl/"
    scripts:
-      pull: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/pull.sh"
-      hash: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/hashcreator.sh"
-      embeddabl: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/embeddabl.sh"
-      zip: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/zipper.sh"
-      copy: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/copyfiles.sh"
-      project: "/mnt/d/Users/mammu/workspace/loputoo/loputoo/bash/projectcreator.sh"
+      pull: "/home/phabricator/joop/bash/pull.sh"
+      hash: "/home/phabricator/joop/bash/hashcreator.sh"
+      embeddabl: "/home/phabricator/joop/bash/embeddabl.sh"
+      zip: "/home/phabricator/joop/bash/zipper.sh"
+      copy: "/home/phabricator/joop/bash/copyfiles.sh"
+      project: "/home/phabricator/joop/bash/projectcreator.sh"
    templates:
-      project: "/mnt/d/Users/mammu/workspace/loputoo/templates/Template/"
+      project: "/home/phabricator/joop/templates/Template/"
