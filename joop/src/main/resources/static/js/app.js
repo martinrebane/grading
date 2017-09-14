@@ -222,8 +222,7 @@ app.controller('appController', function($scope, $http, $location) {
                 setTimeout($scope.embeddablSendFiles(submission), 1000);
             }
         }, function(error) {
-            //setTimeout($scope.embeddablSendFiles(submission), 1000);
-            console.log(error);
+            setTimeout($scope.embeddablSendFiles(submission), 1000);
         });
     }
 
